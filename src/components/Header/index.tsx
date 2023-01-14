@@ -4,7 +4,7 @@ import * as S from "./styles";
 
 export const Header = () => {
   const { colorMode } = useColorMode();
-  console.log(colorMode);
+
   return (
     <S.HeaderContainer>
       <Image

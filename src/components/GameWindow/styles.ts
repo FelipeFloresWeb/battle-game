@@ -10,8 +10,11 @@ export const GameWindowContainer = styled(Flex)`
   margin: 0 auto;
   flex-direction: column;
   z-index: 0;
-  /* cursor: url(https://ani.cursors-4u.net/cursors/cur-13/cur1165.ani),
-    url(https://ani.cursors-4u.net/cursors/cur-13/cur1165.png), auto; */
+
+  background-image: url(${(props) => props.stage});
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 `;
 
 export const TrainerContainer = styled(Flex)`
@@ -22,9 +25,6 @@ export const TrainerContainer = styled(Flex)`
   width: 10vw;
   height: 10vh;
   :hover {
-    /* Start https://www.cursors-4u.com */
-
-    /* cursor: url(https://cdn-icons-png.flaticon.com/128/2466/2466937.png), auto !important; */
     cursor: url(${(props) => props.imageString}), auto !important;
   }
 `;

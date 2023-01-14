@@ -5,6 +5,7 @@ import { Cursor } from "../components/Cursor";
 
 import { GameWindow } from "../components/GameWindow";
 import { Header } from "../components/Header";
+import { LinksReferers } from "../components/LinksReferers";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
@@ -20,6 +21,7 @@ export default function Home() {
         <Header />
         <GameWindow />
         <Cursor />
+        <LinksReferers />
       </Flex>
     </>
   );
