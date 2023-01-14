@@ -14,8 +14,6 @@ export const Cursor = () => {
   const imageURL4 = "https://cdn-icons-png.flaticon.com/128/842/842031.png";
   const imageURL5 = "https://cdn-icons-png.flaticon.com/128/2131/2131200.png";
 
-  console.log({ isAttacking, canAttack });
-
   const attack = useCallback(
     (e: any) => {
       setCanAttack(false);
