@@ -1,10 +1,20 @@
 import { Image } from "@chakra-ui/react";
+import { numeric } from "../../utils";
 import * as S from "./styles";
 
 export const Ui = () => {
+  const PLAYER_HP = 7800;
+  const MAX_PLAYER_HP = 10000;
+
+  const PLAYER_EXP = 500;
+  const MAX_PLAYER_EXP = 1000;
+  const EXP_NEEDED = MAX_PLAYER_EXP - PLAYER_EXP;
+
+  const PLAYER_GOLD = 2000000;
+  const PLAYER_DIAMOND = 10000;
   return (
     <S.UiContainer w="100%" justifyContent="space-between" direction="row">
-      <S.UiBar>
+      <S.UiBar height="100%">
         <Image
           boxSize="fit-content"
           margin="0 10px"
@@ -12,33 +22,64 @@ export const Ui = () => {
           src="images/ui/HP_BAR.png"
           alt="HP_BAR"
         />
+        <S.ProgressContainer>
+          <S.HpProgressBar
+            borderEndRadius="5px"
+            max={MAX_PLAYER_HP}
+            value={PLAYER_HP}
+          />
+        </S.ProgressContainer>
+        <S.HpText>{PLAYER_HP + " / " + MAX_PLAYER_HP}</S.HpText>
       </S.UiBar>
+
       <S.UiBar>
         <Image
           boxSize="fit-content"
           margin="0 10px"
           objectFit="cover"
           src="images/ui/EXP_BAR.png"
-          alt="HP_BAR"
+          alt="EXP_BAR"
         />
+        <S.ProgressContainer>
+          <S.ExpProgressBar
+            borderEndRadius="5px"
+            max={MAX_PLAYER_EXP}
+            value={PLAYER_EXP}
+          />
+        </S.ProgressContainer>
+        <S.ExpText>{PLAYER_EXP + " / " + MAX_PLAYER_EXP}</S.ExpText>
       </S.UiBar>
+
       <S.UiBar>
         <Image
           boxSize="fit-content"
           margin="0 10px"
           objectFit="cover"
           src="images/ui/GOLD_BAR.png"
-          alt="HP_BAR"
+          alt="GOLD_BAR"
         />
+        <S.GoldContainer>
+          <S.GoldProgressBar borderEndRadius="5px" value={100} />
+        </S.GoldContainer>
+        <S.GoldText>
+          <div>{numeric(PLAYER_GOLD, 0)}</div>
+        </S.GoldText>
       </S.UiBar>
+
       <S.UiBar>
         <Image
           boxSize="fit-content"
           margin="0 10px"
           objectFit="cover"
           src="images/ui/DIAMOND_BAR.png"
-          alt="HP_BAR"
+          alt="DIAMOND_BAR"
         />
+        <S.DiamondContainer>
+          <S.DiamondProgressBar borderEndRadius="5px" value={100} />
+        </S.DiamondContainer>
+        <S.DiamondText>
+          <div>{numeric(PLAYER_DIAMOND, 0)}</div>
+        </S.DiamondText>
       </S.UiBar>
     </S.UiContainer>
   );

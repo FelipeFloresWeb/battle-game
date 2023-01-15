@@ -9,7 +9,6 @@ export const GameWindowContainer = styled(Flex)`
   max-height: 700px;
   background-color: ${(props) => props.theme.primary};
   border-radius: 10px;
-  border: 1px solid black;
   margin: 0 auto;
   flex-direction: column;
   z-index: 0;
