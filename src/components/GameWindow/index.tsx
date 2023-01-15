@@ -5,7 +5,7 @@ export const GameWindow = () => {
   const stage = "images/stages/1.webp";
   return (
     <S.GameWindowContainer stage={stage}>
-      <Flex>Player</Flex>
+      <Flex>Monster</Flex>
     </S.GameWindowContainer>
   );
 };

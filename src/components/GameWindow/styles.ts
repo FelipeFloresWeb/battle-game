@@ -1,9 +1,12 @@
 import { Flex } from "@chakra-ui/react";
 import styled from "@emotion/styled";
+import { MAX_WIDTH } from "../../utils/constants";
 
 export const GameWindowContainer = styled(Flex)`
-  width: 80vw;
+  width: 80%;
   height: 60vh;
+  max-width: ${MAX_WIDTH}px;
+  max-height: 700px;
   background-color: ${(props) => props.theme.primary};
   border-radius: 10px;
   border: 1px solid black;
