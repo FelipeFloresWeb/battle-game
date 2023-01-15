@@ -1,0 +1,44 @@
+{
+    "common": {
+        "name": "Common",
+        "color": "#0d8f17eb",
+        "percent": 55.9,
+        "statsMultiplier": 1,
+        "lootMultiplier": 1
+    },
+    "uncommon": {
+        "name": "Uncommon",
+        "color": "#5ff90f",
+        "percent": 30,
+        "statsMultiplier": 1.3,
+        "lootMultiplier": 1.3
+    },
+    "rare": {
+        "name": "Rare",
+        "color": "#0d5ff5",
+        "percent": 10,
+        "statsMultiplier": 2,
+        "lootMultiplier": 2
+    },
+    "epic": {
+        "name": "Epic",
+        "color": "#8216e5",
+        "percent": 3,
+        "statsMultiplier": 5,
+        "lootMultiplier": 7
+    },
+    "legendary": {
+        "name": "Legendary",
+        "color": "#d58610",
+        "percent": 1,
+        "statsMultiplier": 10,
+        "lootMultiplier": 20
+    },
+    "mythical": {
+        "name": "Mythical",
+        "color": "#e90dce",
+        "percent": 0.1,
+        "statsMultiplier": 100,
+        "lootMultiplier": 1000
+    }
+}
