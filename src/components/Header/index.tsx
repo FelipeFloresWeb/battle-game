@@ -8,6 +8,7 @@ export const Header = () => {
   return (
     <S.HeaderContainer>
       <Image
+        draggable={false}
         borderRadius={10}
         src={colorMode === "dark" ? "whiteBanner.png" : "banner.png"}
         alt="sword"

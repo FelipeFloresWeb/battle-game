@@ -16,6 +16,7 @@ export const Ui = () => {
     <S.UiContainer w="100%" justifyContent="space-between" direction="row">
       <S.UiBar height="100%">
         <Image
+          draggable={false}
           boxSize="fit-content"
           margin="0 10px"
           objectFit="cover"
@@ -34,6 +35,7 @@ export const Ui = () => {
 
       <S.UiBar>
         <Image
+          draggable={false}
           boxSize="fit-content"
           margin="0 10px"
           objectFit="cover"
@@ -52,6 +54,7 @@ export const Ui = () => {
 
       <S.UiBar>
         <Image
+          draggable={false}
           boxSize="fit-content"
           margin="0 10px"
           objectFit="cover"
@@ -68,6 +71,7 @@ export const Ui = () => {
 
       <S.UiBar>
         <Image
+          draggable={false}
           boxSize="fit-content"
           margin="0 10px"
           objectFit="cover"
