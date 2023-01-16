@@ -1,5 +1,5 @@
-import { Flex, Image, Progress, Text } from '@chakra-ui/react';
-import styled from '@emotion/styled';
+import { Flex, Image, Progress, Text } from '@chakra-ui/react'
+import styled from '@emotion/styled'
 
 export const MonsterContainer = styled(Flex)`
 	flex-direction: column;
@@ -39,21 +39,21 @@ export const MonsterContainer = styled(Flex)`
 			transform: scale(1) translate(-50%, -50%);
 		}
 	}
-`;
+`
 
 export const MonsterImage = styled(Image)`
 	width: 100%;
 	height: 100%;
 	object-fit: contain;
-	opacity: ${props => (props.isattacking === 'true' ? 0.5 : 1)};
+	opacity: ${props => (props.isattacking === 'true' ? 0.7 : 1)};
 	transition: all 0.1s ease;
-`;
+`
 
 export const HealthContainer = styled(Flex)`
 	width: 200px;
 	justify-content: center;
 	flex-direction: column;
-`;
+`
 
 export const HealthProgressBar = styled(Progress)`
 	left: 43px;
@@ -64,7 +64,7 @@ export const HealthProgressBar = styled(Progress)`
 	div {
 		background-color: #0d8f17eb;
 	}
-`;
+`
 
 export const HealthText = styled(Text)`
 	position: relative;
@@ -72,7 +72,7 @@ export const HealthText = styled(Text)`
 	font-weight: 600;
 	color: ${props => props.theme.colors.primary};
 	width: 100%;
-`;
+`
 
 export const NameText = styled(Text)`
 	position: relative;
@@ -81,4 +81,4 @@ export const NameText = styled(Text)`
 	font-weight: 700;
 	color: #8216e5;
 	text-shadow: 2px 2px 0px #ffffff;
-`;
+`

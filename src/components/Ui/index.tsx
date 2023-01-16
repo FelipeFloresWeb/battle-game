@@ -1,11 +1,19 @@
 import { Button, Image } from '@chakra-ui/react'
-import { useState } from 'react'
+import { get } from 'lodash'
+
+import { useCallback, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { getMonsterType } from '../../services/api/monster'
+import { setLoadingMonster, setMonsterType } from '../../store/reducers/monster'
+import { selectLoadingMonsterType } from '../../store/selectors/monster'
 import { numeric } from '../../utils'
 import * as S from './styles'
 
 export const Ui = () => {
-	const [canFetch, setCanFetch] = useState(false)
+	const [loadMonsterType, setLoadMonsterType] = useState(false)
+	const dispatch = useDispatch()
+	const loadingMonsterType = useSelector((state: any) => selectLoadingMonsterType(state))
+
 	const PLAYER_HP = 7800
 	const MAX_PLAYER_HP = 10000
 
@@ -16,7 +24,18 @@ export const Ui = () => {
 	const PLAYER_GOLD = 2000000
 	const PLAYER_DIAMOND = 10000
 
-	// const { monsterType, loading } = useMonsterType(canFetch)
+	const fetchMonsterType = useCallback(async () => {
+		setLoadMonsterType(true)
+		dispatch(setLoadingMonster(true))
+		const fetch = await getMonsterType()
+		const monsterType = get(fetch, 'data', {})
+		dispatch(setMonsterType(monsterType))
+		dispatch(setLoadingMonster(false))
+
+		setTimeout(() => {
+			setLoadMonsterType(false)
+		}, 2000)
+	}, [dispatch])
 
 	return (
 		<S.UiContainer w='100%' justifyContent='space-between' direction='row'>
@@ -84,7 +103,9 @@ export const Ui = () => {
 				</S.DiamondText>
 			</S.UiBar>
 
-			<Button onClick={() => getMonsterType()}>Refetch MonsterType</Button>
+			<Button isDisabled={loadingMonsterType || loadMonsterType} onClick={fetchMonsterType}>
+				Refetch MonsterType
+			</Button>
 		</S.UiContainer>
 	)
 }

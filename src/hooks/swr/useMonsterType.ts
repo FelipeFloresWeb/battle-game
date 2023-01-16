@@ -9,8 +9,8 @@ const defaultOpt: SWRConfiguration = {
 
 const fetcher = (url: string) => axios.post(url).then(res => res.data)
 
-const useMonsterType = (canfetch: boolean) => {
-	const { data, error } = useSWR(canfetch ? '/api/monster/type' : null, fetcher, defaultOpt)
+const useMonsterType = () => {
+	const { data, error } = useSWR('/api/monster/type', fetcher, defaultOpt)
 
 	const monsterType = get(data, 'data', {})
 

@@ -1,13 +1,18 @@
 import { Flex } from '@chakra-ui/react'
 import { useCallback, useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { selectMonsterType } from '../../store/selectors/monster'
+
 import { numeric } from '../../utils'
 import * as S from './styles'
 
 export const Monster = () => {
 	const [isAttacking, setIsAttacking] = useState(false)
 	const [monsterAttacking, setMonsterAttacking] = useState(false)
-	const [monsterType, setMonsterType] = useState(undefined)
 
+	const monsterType = useSelector((state: any) => selectMonsterType(state))
+
+	console.log(monsterType)
 	const monsterName = 'Kamy'
 	const monsterHealth = 750
 	const monsterMaxHealth = 1000

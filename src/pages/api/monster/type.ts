@@ -9,7 +9,7 @@ type Error = {
 	message: string
 }
 
-type MonsterType = {
+export type MonsterType = {
 	name: string
 	color: string
 	percent: number
