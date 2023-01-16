@@ -8,3 +8,12 @@ export const getMonsterType = async () => {
 		return error
 	}
 }
+
+export const getMonsterData = async () => {
+	try {
+		const res = await monsterApi.post('/monster')
+		return res.data
+	} catch (error: any) {
+		return error
+	}
+}

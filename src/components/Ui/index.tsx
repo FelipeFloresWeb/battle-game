@@ -3,8 +3,8 @@ import { get } from 'lodash'
 
 import { useCallback, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getMonsterType } from '../../services/api/monster'
-import { setLoadingMonster, setMonsterType } from '../../store/reducers/monster'
+import { getMonsterData, getMonsterType } from '../../services/api/monster'
+import { setLoadingMonster, setMonsterData, setMonsterType } from '../../store/reducers/monster'
 import { selectLoadingMonsterType } from '../../store/selectors/monster'
 import { numeric } from '../../utils'
 import * as S from './styles'
@@ -37,6 +37,13 @@ export const Ui = () => {
 		setTimeout(() => {
 			setLoadMonsterType(false)
 		}, 2000)
+	}, [dispatch])
+
+	const fetchMonsterData = useCallback(async () => {
+		const fetch = await getMonsterData()
+		const monsterData = get(fetch, 'data', {})
+
+		dispatch(setMonsterData(monsterData))
 	}, [dispatch])
 
 	return (
@@ -108,6 +115,7 @@ export const Ui = () => {
 			<Button isDisabled={loadingMonsterType || loadMonsterType} onClick={fetchMonsterType}>
 				Refetch MonsterType
 			</Button>
+			<Button onClick={fetchMonsterData}>Get Monster</Button>
 		</S.UiContainer>
 	)
 }

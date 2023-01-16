@@ -12,8 +12,9 @@ export const MonsterContainer = styled(Flex)`
 	justify-content: center;
 	align-items: center;
 	transition: all 0.1s ease;
-	animation: ${props => props.monsterattacking === 'true' && 'monsterAttackAnimator .5s forwards;'}idleAnimator 1s
-		infinite;
+	animation: ${props =>
+			props.monsterattacking === 'true' && props.isdead === 'false' && 'monsterAttackAnimator .5s forwards;'}${props =>
+			props.isdead === 'false' && 'idleAnimator 1s infinite;'} ${props => props.isdead === 'true' && 'monsterDyingAnimator 3s forwards'};
 
 	@keyframes idleAnimator {
 		0% {
@@ -39,13 +40,25 @@ export const MonsterContainer = styled(Flex)`
 			transform: scale(1) translate(-50%, -50%);
 		}
 	}
+
+	@keyframes monsterDyingAnimator {
+		0% {
+			top: 50%;
+		}
+		50% {
+			top: 20%;
+		}
+		100% {
+			top: -50%;
+		}
+	}
 `
 
 export const MonsterImage = styled(Image)`
 	width: 100%;
 	height: 100%;
 	object-fit: contain;
-	opacity: ${props => (props.isattacking === 'true' ? 0.7 : 1)};
+	opacity: ${props => (props.isattacking === 'true' || props.isdead === 'true' ? 0.7 : 1)};
 	transition: all 0.1s ease;
 `
 
