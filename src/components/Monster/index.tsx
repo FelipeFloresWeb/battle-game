@@ -2,6 +2,7 @@ import { Flex } from '@chakra-ui/react'
 import { useCallback, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { selectMonsterType } from '../../store/selectors/monster'
+import { selectPlayerCanAttack } from '../../store/selectors/player'
 
 import { numeric } from '../../utils'
 import * as S from './styles'
@@ -11,11 +12,20 @@ export const Monster = () => {
 	const [monsterAttacking, setMonsterAttacking] = useState(false)
 
 	const monsterType = useSelector((state: any) => selectMonsterType(state))
+	const playerCanAttack = useSelector((state: any) => selectPlayerCanAttack(state))
 
-	console.log(monsterType)
 	const monsterName = 'Kamy'
 	const monsterHealth = 750
 	const monsterMaxHealth = 1000
+
+	const playerAttack = useCallback(() => {
+		if (!playerCanAttack) return
+		setIsAttacking(true)
+
+		setTimeout(() => {
+			setIsAttacking(false)
+		}, 200)
+	}, [playerCanAttack])
 
 	const monsterAttack = useCallback(() => {
 		setMonsterAttacking(true)
@@ -47,7 +57,7 @@ export const Monster = () => {
 			</S.HealthContainer>
 			<S.MonsterImage
 				isattacking={isAttacking.toString()}
-				onClick={() => setIsAttacking(!isAttacking)}
+				onClick={playerAttack}
 				draggable={false}
 				src='images/monsters/stage1/9.png'
 				alt='Monster'

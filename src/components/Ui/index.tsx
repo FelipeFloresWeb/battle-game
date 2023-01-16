@@ -26,9 +26,11 @@ export const Ui = () => {
 
 	const fetchMonsterType = useCallback(async () => {
 		setLoadMonsterType(true)
+
 		dispatch(setLoadingMonster(true))
 		const fetch = await getMonsterType()
 		const monsterType = get(fetch, 'data', {})
+
 		dispatch(setMonsterType(monsterType))
 		dispatch(setLoadingMonster(false))
 

@@ -1,17 +1,24 @@
 import { Fragment, useCallback, useEffect, useRef, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { setPlayerCanAttack } from '../../store/reducers/player'
+import { selectPlayerCanAttack } from '../../store/selectors/player'
 import * as S from './styles'
 
 export const Cursor = () => {
+	const dispatch = useDispatch()
+
 	const cursor = `images/swords/1.webp`
 
 	const cursorRef = useRef<any>(null)
 	const attackRef = useRef<any>(null)
-	const [canAttack, setCanAttack] = useState(true)
 	const [isAttacking, setIsAttacking] = useState(false)
+
+	const canAttack = useSelector((state: any) => selectPlayerCanAttack(state))
 
 	const attack = useCallback(
 		(e: any) => {
-			setCanAttack(false)
+			dispatch(setPlayerCanAttack(false))
+
 			if (canAttack && cursor !== 'images/swords/0.webp') {
 				const posX = e.pageX - 50
 				const posY = e.pageY + 35
@@ -30,10 +37,10 @@ export const Cursor = () => {
 			}, 200)
 
 			setTimeout(() => {
-				setCanAttack(true)
+				dispatch(setPlayerCanAttack(true))
 			}, 2000)
 		},
-		[canAttack, cursor]
+		[canAttack, cursor, dispatch]
 	)
 
 	useEffect(() => {
