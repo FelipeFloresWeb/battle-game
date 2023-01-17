@@ -29,3 +29,8 @@ export const selectMonsterImage = createSelector(
 	(state: any) => state.monster,
 	monster => monster.image
 )
+
+export const selectMonsterIsAttacking = createSelector(
+	(state: any) => state.monster,
+	monster => monster.isAttacking
+)

@@ -1,24 +1,30 @@
 import { Button, Image } from '@chakra-ui/react'
 import { get } from 'lodash'
 
-import { useCallback } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { MonsterData } from '../../pages/api/monster/types'
 import { getMonster } from '../../services/api/monster'
 import { setLoadingMonsterData, setMonsterData, setMonsterType } from '../../store/reducers/monster'
 import { IMonsterState } from '../../store/reducers/types'
-import { selectLoadingMonsterData, selectLoadingMonsterType, selectMonsterData } from '../../store/selectors/monster'
+import {
+	selectLoadingMonsterData,
+	selectLoadingMonsterType,
+	selectMonsterData,
+	selectMonsterIsAttacking,
+} from '../../store/selectors/monster'
 import { numeric } from '../../utils'
 import * as S from './styles'
 
 export const Ui = () => {
+	const [playerHp, setPlayerHp] = useState(100)
+	const [playerMaxHp, setPlayerMaxHp] = useState(100)
+
 	const dispatch = useDispatch()
 	const loadingMonsterType = useSelector((state: any) => selectLoadingMonsterType(state))
 	const loadingMonsterData = useSelector((state: any) => selectLoadingMonsterData(state))
 	const monsterData: MonsterData = useSelector((state: IMonsterState) => selectMonsterData(state))
-
-	const PLAYER_HP = 7800
-	const MAX_PLAYER_HP = 10000
+	const monsterIsAttacking = useSelector((state: any) => selectMonsterIsAttacking(state))
 
 	const PLAYER_EXP = 500
 	const MAX_PLAYER_EXP = 1000
@@ -43,6 +49,23 @@ export const Ui = () => {
 		[dispatch]
 	)
 
+	const fixPlayerHp = useCallback(() => {
+		if (playerHp < 0) setPlayerHp(0)
+	}, [playerHp])
+
+	const monsterAttack = useCallback(() => {
+		if (!monsterIsAttacking) return
+		setPlayerHp(old => old - monsterData?.stats?.attack)
+	}, [monsterData?.stats?.attack, monsterIsAttacking])
+
+	useEffect(() => {
+		monsterAttack()
+	}, [monsterAttack])
+
+	useEffect(() => {
+		fixPlayerHp()
+	}, [fixPlayerHp])
+
 	return (
 		<S.UiContainer w='100%' justifyContent='space-between' direction='row'>
 			<S.UiBar height='100%'>
@@ -55,9 +78,9 @@ export const Ui = () => {
 					alt='HP_BAR'
 				/>
 				<S.ProgressContainer>
-					<S.HpProgressBar borderEndRadius='5px' max={MAX_PLAYER_HP} value={PLAYER_HP} />
+					<S.HpProgressBar borderEndRadius='5px' max={playerMaxHp} value={playerHp} />
 				</S.ProgressContainer>
-				<S.HpText>{PLAYER_HP + ' / ' + MAX_PLAYER_HP}</S.HpText>
+				<S.HpText>{playerHp + ' / ' + playerMaxHp}</S.HpText>
 			</S.UiBar>
 
 			<S.UiBar>

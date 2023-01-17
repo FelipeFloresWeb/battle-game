@@ -7,6 +7,7 @@ const MonsterSlice = createSlice({
 		isDead: false,
 		loadingMonsterData: false,
 		loadingMonsterType: false,
+		isAttacking: false,
 		monsterType: {} as MonsterType,
 		monsterData: {} as MonsterData,
 		image: '',
@@ -28,10 +29,19 @@ const MonsterSlice = createSlice({
 		setMonsterIsDead(state, action: PayloadAction<boolean>) {
 			state.isDead = action.payload
 		},
+		setMonsterIsAttacking(state, action: PayloadAction<boolean>) {
+			state.isAttacking = action.payload
+		},
 	},
 })
 
-export const { setMonsterType, setLoadingMonsterType, setMonsterData, setMonsterIsDead, setLoadingMonsterData } =
-	MonsterSlice.actions
+export const {
+	setMonsterType,
+	setLoadingMonsterType,
+	setMonsterData,
+	setMonsterIsDead,
+	setLoadingMonsterData,
+	setMonsterIsAttacking,
+} = MonsterSlice.actions
 
 export default MonsterSlice.reducer

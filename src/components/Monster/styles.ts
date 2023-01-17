@@ -14,15 +14,15 @@ export const MonsterContainer = styled(Flex)`
 	transition: all 0.1s ease;
 
 	animation: ${props =>
-			props.monsterattacking === 'true' && props.isdead === 'false' && 'monsterAttackAnimator .5s forwards;'}${props =>
+			props.monsterattacking === 'true' && props.isdead === 'false' && 'monsterAttackAnimator .3s forwards;'}${props =>
 			props.isdead === 'false' && 'idleAnimator 1s infinite;'} ${props => props.isdead === 'true' && 'monsterDyingAnimator 3s forwards'};
 
 	-webkit-animation: ${props =>
-			props.monsterattacking === 'true' && props.isdead === 'false' && 'monsterAttackAnimator .5s forwards;'}${props =>
+			props.monsterattacking === 'true' && props.isdead === 'false' && 'monsterAttackAnimator .3s forwards;'}${props =>
 			props.isdead === 'false' && 'idleAnimator 1s infinite;'} ${props => props.isdead === 'true' && 'monsterDyingAnimator 3s forwards'};
 
 	-moz-animation: ${props =>
-			props.monsterattacking === 'true' && props.isdead === 'false' && 'monsterAttackAnimator .5s forwards;'}${props =>
+			props.monsterattacking === 'true' && props.isdead === 'false' && 'monsterAttackAnimator .3s forwards;'}${props =>
 			props.isdead === 'false' && 'idleAnimator 1s infinite;'} ${props => props.isdead === 'true' && 'monsterDyingAnimator 3s forwards'};
 
 	@-webkit-keyframes idleAnimator {
@@ -39,11 +39,10 @@ export const MonsterContainer = styled(Flex)`
 
 	@-webkit-keyframes monsterAttackAnimator {
 		0% {
-			top: 50%;
 			transform: scale(1) translate(-50%, -50%);
 		}
 		50% {
-			transform: scale(4) translate(-20%, -20%);
+			transform: scale(4) translat2(-20%, -20%);
 		}
 		100% {
 			transform: scale(1) translate(-50%, -50%);
@@ -76,11 +75,10 @@ export const MonsterContainer = styled(Flex)`
 
 	@-moz-keyframes monsterAttackAnimator {
 		0% {
-			top: 50%;
 			transform: scale(1) translate(-50%, -50%);
 		}
 		50% {
-			transform: scale(4) translate(-20%, -20%);
+			transform: scale(2) translate(-20%, -20%);
 		}
 		100% {
 			transform: scale(1) translate(-50%, -50%);
@@ -113,11 +111,10 @@ export const MonsterContainer = styled(Flex)`
 
 	@keyframes monsterAttackAnimator {
 		0% {
-			top: 50%;
 			transform: scale(1) translate(-50%, -50%);
 		}
 		50% {
-			transform: scale(4) translate(-20%, -20%);
+			transform: scale(2) translate(-20%, -20%);
 		}
 		100% {
 			transform: scale(1) translate(-50%, -50%);

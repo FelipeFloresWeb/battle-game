@@ -1,8 +1,8 @@
-import { MonsterData } from '../../pages/api/monster/monster'
-import { MonsterType } from '../../pages/api/monster/monsterType'
+import { MonsterData, MonsterType } from '../../pages/api/monster/types'
 
 export interface IMonsterState {
 	isDead: boolean
+	isAttacking: boolean
 	loadingMonsterType: boolean
 	monsterType: MonsterType
 	monsterData: MonsterData
