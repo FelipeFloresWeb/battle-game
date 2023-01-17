@@ -12,9 +12,92 @@ export const MonsterContainer = styled(Flex)`
 	justify-content: center;
 	align-items: center;
 	transition: all 0.1s ease;
+
 	animation: ${props =>
 			props.monsterattacking === 'true' && props.isdead === 'false' && 'monsterAttackAnimator .5s forwards;'}${props =>
 			props.isdead === 'false' && 'idleAnimator 1s infinite;'} ${props => props.isdead === 'true' && 'monsterDyingAnimator 3s forwards'};
+
+	-webkit-animation: ${props =>
+			props.monsterattacking === 'true' && props.isdead === 'false' && 'monsterAttackAnimator .5s forwards;'}${props =>
+			props.isdead === 'false' && 'idleAnimator 1s infinite;'} ${props => props.isdead === 'true' && 'monsterDyingAnimator 3s forwards'};
+
+	-moz-animation: ${props =>
+			props.monsterattacking === 'true' && props.isdead === 'false' && 'monsterAttackAnimator .5s forwards;'}${props =>
+			props.isdead === 'false' && 'idleAnimator 1s infinite;'} ${props => props.isdead === 'true' && 'monsterDyingAnimator 3s forwards'};
+
+	@-webkit-keyframes idleAnimator {
+		0% {
+			top: 50%;
+		}
+		50% {
+			top: 56%;
+		}
+		100% {
+			top: 50%;
+		}
+	}
+
+	@-webkit-keyframes monsterAttackAnimator {
+		0% {
+			top: 50%;
+			transform: scale(1) translate(-50%, -50%);
+		}
+		50% {
+			transform: scale(4) translate(-20%, -20%);
+		}
+		100% {
+			transform: scale(1) translate(-50%, -50%);
+		}
+	}
+
+	@-webkit-keyframes monsterDyingAnimator {
+		0% {
+			top: 50%;
+		}
+		50% {
+			top: 20%;
+		}
+		100% {
+			top: -50%;
+		}
+	}
+
+	@-moz-keyframes idleAnimator {
+		0% {
+			top: 50%;
+		}
+		50% {
+			top: 56%;
+		}
+		100% {
+			top: 50%;
+		}
+	}
+
+	@-moz-keyframes monsterAttackAnimator {
+		0% {
+			top: 50%;
+			transform: scale(1) translate(-50%, -50%);
+		}
+		50% {
+			transform: scale(4) translate(-20%, -20%);
+		}
+		100% {
+			transform: scale(1) translate(-50%, -50%);
+		}
+	}
+
+	@-moz-keyframes monsterDyingAnimator {
+		0% {
+			top: 50%;
+		}
+		50% {
+			top: 20%;
+		}
+		100% {
+			top: -50%;
+		}
+	}
 
 	@keyframes idleAnimator {
 		0% {
@@ -75,7 +158,53 @@ export const HealthProgressBar = styled(Progress)`
 	top: 19px;
 
 	div {
-		background-color: #0d8f17eb;
+		background-color: ${props => props.barcolor};
+		background: ${props =>
+			props.montertype === 'Divine' &&
+			'linear-gradient(270deg, #8e008e, #ff0000, #ff8e00, #ffff00, #008e00, #00c0c0, #400098)'};
+
+		background-size: ${props => props.montertype === 'Divine' && '350% 350%'};
+		transition: all 0.1s ease;
+
+		-webkit-animation: ${props => props.montertype === 'Divine' && 'animatedBackgroundDivineColor 2s ease infinite'};
+		-moz-animation: ${props => props.montertype === 'Divine' && 'animatedBackgroundDivineColor 2s ease infinite'};
+		animation: ${props => props.montertype === 'Divine' && 'animatedBackgroundDivineColor 2s ease infinite'};
+
+		@-webkit-keyframes animatedBackgroundDivineColor {
+			0% {
+				background-position: 0% 50%;
+			}
+			50% {
+				background-position: 100% 51%;
+			}
+			100% {
+				background-position: 0% 50%;
+			}
+		}
+
+		@-moz-keyframes animatedBackgroundDivineColor {
+			0% {
+				background-position: 0% 50%;
+			}
+			50% {
+				background-position: 100% 51%;
+			}
+			100% {
+				background-position: 0% 50%;
+			}
+		}
+
+		@keyframes animatedBackgroundDivineColor {
+			0% {
+				background-position: 0% 50%;
+			}
+			50% {
+				background-position: 100% 51%;
+			}
+			100% {
+				background-position: 0% 50%;
+			}
+		}
 	}
 `
 
@@ -83,7 +212,7 @@ export const HealthText = styled(Text)`
 	position: relative;
 	font-size: 14px;
 	font-weight: 600;
-	color: ${props => props.theme.colors.primary};
+	color: #fff;
 	width: 100%;
 `
 
@@ -92,6 +221,114 @@ export const NameText = styled(Text)`
 	top: 20px;
 	font-size: 22px;
 	font-weight: 700;
-	color: #8216e5;
-	text-shadow: 2px 2px 0px #ffffff;
+	color: ${props => props.namecolor};
+
+	background: ${props =>
+		props.montertype === 'Divine' &&
+		'linear-gradient(270deg, #8e008e, #ff0000, #ff8e00, #ffff00, #008e00, #00c0c0, #400098)'};
+	background-size: ${props => props.montertype === 'Divine' && '350% 350%'};
+
+	-webkit-background-clip: ${props => props.montertype === 'Divine' && 'text'};
+	-webkit-text-fill-color: ${props => props.montertype === 'Divine' && 'transparent'};
+
+	transition: all 0.1s ease;
+
+	-webkit-animation: ${props => props.montertype === 'Divine' && 'animatedColorMythicalColor 2s ease infinite'};
+	-moz-animation: ${props => props.montertype === 'Divine' && 'animatedColorMythicalColor 2s ease infinite'};
+	animation: ${props => props.montertype === 'Divine' && 'animatedColorMythicalColor 2s ease infinite'};
+
+	@-webkit-keyframes animatedColorMythicalColor {
+		0% {
+			background-position: 0% 50%;
+		}
+		50% {
+			background-position: 100% 51%;
+		}
+		100% {
+			background-position: 0% 50%;
+		}
+	}
+
+	@-moz-keyframes animatedColorMythicalColor {
+		0% {
+			background-position: 0% 50%;
+		}
+		50% {
+			background-position: 100% 51%;
+		}
+		100% {
+			background-position: 0% 50%;
+		}
+	}
+
+	@keyframes animatedColorMythicalColor {
+		0% {
+			background-position: 0% 50%;
+		}
+		50% {
+			background-position: 100% 51%;
+		}
+		100% {
+			background-position: 0% 50%;
+		}
+	}
+`
+
+export const MonsterTypeText = styled(Text)`
+	position: relative;
+	top: 20px;
+	font-size: 22px;
+	font-weight: 700;
+	color: ${props => props.namecolor};
+	text-transform: uppercase;
+
+	background: ${props =>
+		props.montertype === 'Divine' &&
+		'linear-gradient(270deg, #8e008e, #ff0000, #ff8e00, #ffff00, #008e00, #00c0c0, #400098)'};
+	background-size: ${props => props.montertype === 'Divine' && '350% 350%'};
+
+	-webkit-background-clip: ${props => props.montertype === 'Divine' && 'text'};
+	-webkit-text-fill-color: ${props => props.montertype === 'Divine' && 'transparent'};
+
+	transition: all 0.1s ease;
+
+	-webkit-animation: ${props => props.montertype === 'Divine' && 'animatedColorMythicalColor 2s ease infinite'};
+	-moz-animation: ${props => props.montertype === 'Divine' && 'animatedColorMythicalColor 2s ease infinite'};
+	animation: ${props => props.montertype === 'Divine' && 'animatedColorMythicalColor 2s ease infinite'};
+
+	@-webkit-keyframes animatedColorMythicalColor {
+		0% {
+			background-position: 0% 50%;
+		}
+		50% {
+			background-position: 100% 51%;
+		}
+		100% {
+			background-position: 0% 50%;
+		}
+	}
+
+	@-moz-keyframes animatedColorMythicalColor {
+		0% {
+			background-position: 0% 50%;
+		}
+		50% {
+			background-position: 100% 51%;
+		}
+		100% {
+			background-position: 0% 50%;
+		}
+	}
+
+	@keyframes animatedColorMythicalColor {
+		0% {
+			background-position: 0% 50%;
+		}
+		50% {
+			background-position: 100% 51%;
+		}
+		100% {
+			background-position: 0% 50%;
+		}
+	}
 `

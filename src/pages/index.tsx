@@ -1,6 +1,7 @@
 import { Flex } from '@chakra-ui/react'
 import { Inter } from '@next/font/google'
 import Head from 'next/head'
+import { AnimatedBackground } from '../components/AnimatedBackground'
 
 import { Cursor } from '../components/Cursor'
 import { GameWindow } from '../components/GameWindow'
@@ -23,6 +24,7 @@ export default function Home() {
 				<GameWindow />
 				<Cursor />
 				<Ui />
+				<AnimatedBackground />
 				<LinksReferers />
 			</Flex>
 		</>

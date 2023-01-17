@@ -15,6 +15,11 @@ export const selectMonsterData = createSelector(
 	monster => monster.monsterData
 )
 
+export const selectLoadingMonsterData = createSelector(
+	(state: any) => state.monster,
+	monster => monster.loadingMonsterData
+)
+
 export const selectMonsterIsDead = createSelector(
 	(state: any) => state.monster,
 	monster => monster.isDead

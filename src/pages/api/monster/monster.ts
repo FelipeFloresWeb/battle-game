@@ -1,44 +1,42 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { selectMonsterType } from './methods'
 import monsters from './monsterData.json'
+import { Error, IMonster, IMonsterData, MonsterData } from './types'
 
-type Data = {
-	data: MonsterData
-}
+export default function handler(req: NextApiRequest, res: NextApiResponse<IMonsterData | Error>) {
+	if (req.method !== 'POST') return res.status(400).json({ message: 'Method not allowed' })
 
-type Error = {
-	message: string
-}
+	const montersObj: IMonster = monsters
+	const monstersLength = Object.keys(montersObj).length
 
-export type MonsterData = {
-	index: number
-	name: string
-	stats: MonsterStats
-	loot: MonsterLoot
-}
+	const monsterType = selectMonsterType()
 
-export type MonsterStats = {
-	maxHp: number
-	hp: number
-	attack: number
-	defense: number
-	attackSpeed: number
-}
+	const randomMonsterIndex = Math.floor(Math.random() * monstersLength) + 1
 
-export type MonsterLoot = {
-	minGold: number
-	maxGold: number
-	exp: number
-}
+	let monster: MonsterData
 
-export default function handler(req: NextApiRequest, res: NextApiResponse<Data | Error>) {
-	if (req.method === 'POST') {
-		const monstersLength = Object.keys(monsters).length
-		const randomMonster = Math.floor(Math.random() * monstersLength) + 1
-
-		const monster = monsters[randomMonster]
-
-		return res.status(200).json({ data: monster })
+	if (req?.body?.monsterId) {
+		monster = montersObj[req.body.monsterId]
 	} else {
-		res.status(400).json({ message: 'Method not allowed' })
+		monster = montersObj[randomMonsterIndex]
 	}
+
+	monster = {
+		...monster,
+		stats: {
+			...monster.stats,
+			maxHp: Math.floor(monster.stats.maxHp * monsterType.statsMultiplier),
+			hp: Math.floor(monster.stats.hp * monsterType.statsMultiplier),
+			attack: Math.floor(monster.stats.attack * monsterType.statsMultiplier),
+			defense: Math.floor(monster.stats.defense * monsterType.statsMultiplier),
+		},
+		loot: {
+			...monster.loot,
+			minGold: Math.floor(monster.loot.minGold * monsterType.lootMultiplier),
+			maxGold: Math.floor(monster.loot.maxGold * monsterType.lootMultiplier),
+			exp: Math.floor(monster.loot.exp * monsterType.lootMultiplier),
+		},
+	}
+
+	return res.status(200).json({ data: { monster, monsterType } })
 }

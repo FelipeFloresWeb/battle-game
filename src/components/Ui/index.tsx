@@ -1,18 +1,21 @@
 import { Button, Image } from '@chakra-ui/react'
 import { get } from 'lodash'
 
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getMonsterData, getMonsterType } from '../../services/api/monster'
-import { setLoadingMonster, setMonsterData, setMonsterType } from '../../store/reducers/monster'
-import { selectLoadingMonsterType } from '../../store/selectors/monster'
+import { MonsterData } from '../../pages/api/monster/types'
+import { getMonster } from '../../services/api/monster'
+import { setLoadingMonsterData, setMonsterData, setMonsterType } from '../../store/reducers/monster'
+import { IMonsterState } from '../../store/reducers/types'
+import { selectLoadingMonsterData, selectLoadingMonsterType, selectMonsterData } from '../../store/selectors/monster'
 import { numeric } from '../../utils'
 import * as S from './styles'
 
 export const Ui = () => {
-	const [loadMonsterType, setLoadMonsterType] = useState(false)
 	const dispatch = useDispatch()
 	const loadingMonsterType = useSelector((state: any) => selectLoadingMonsterType(state))
+	const loadingMonsterData = useSelector((state: any) => selectLoadingMonsterData(state))
+	const monsterData: MonsterData = useSelector((state: IMonsterState) => selectMonsterData(state))
 
 	const PLAYER_HP = 7800
 	const MAX_PLAYER_HP = 10000
@@ -24,27 +27,21 @@ export const Ui = () => {
 	const PLAYER_GOLD = 2000000
 	const PLAYER_DIAMOND = 10000
 
-	const fetchMonsterType = useCallback(async () => {
-		setLoadMonsterType(true)
+	const fetchMonsterData = useCallback(
+		async (monsterId?: number) => {
+			dispatch(setLoadingMonsterData(true))
 
-		dispatch(setLoadingMonster(true))
-		const fetch = await getMonsterType()
-		const monsterType = get(fetch, 'data', {})
+			const fetchMonster = await getMonster(monsterId)
+			const monsterType = get(fetchMonster, 'data.monsterType', {})
+			const monsterData = get(fetchMonster, 'data.monster', {})
 
-		dispatch(setMonsterType(monsterType))
-		dispatch(setLoadingMonster(false))
+			dispatch(setMonsterType(monsterType))
+			dispatch(setMonsterData(monsterData))
 
-		setTimeout(() => {
-			setLoadMonsterType(false)
-		}, 2000)
-	}, [dispatch])
-
-	const fetchMonsterData = useCallback(async () => {
-		const fetch = await getMonsterData()
-		const monsterData = get(fetch, 'data', {})
-
-		dispatch(setMonsterData(monsterData))
-	}, [dispatch])
+			dispatch(setLoadingMonsterData(false))
+		},
+		[dispatch]
+	)
 
 	return (
 		<S.UiContainer w='100%' justifyContent='space-between' direction='row'>
@@ -112,10 +109,15 @@ export const Ui = () => {
 				</S.DiamondText>
 			</S.UiBar>
 
-			<Button isDisabled={loadingMonsterType || loadMonsterType} onClick={fetchMonsterType}>
+			<Button
+				isDisabled={loadingMonsterType || loadingMonsterData}
+				onClick={() => fetchMonsterData(monsterData?.index)}
+			>
 				Refetch MonsterType
 			</Button>
-			<Button onClick={fetchMonsterData}>Get Monster</Button>
+			<Button isDisabled={loadingMonsterType || loadingMonsterData} onClick={() => fetchMonsterData()}>
+				Get Monster
+			</Button>
 		</S.UiContainer>
 	)
 }

@@ -1,7 +1,7 @@
 {
     "common": {
         "name": "Common",
-        "color": "#0d8f17eb",
+        "color": "#878787",
         "percent": 55.9,
         "statsMultiplier": 1,
         "lootMultiplier": 1
@@ -29,13 +29,13 @@
     },
     "legendary": {
         "name": "Legendary",
-        "color": "#d58610",
+        "color": "#dfb92d",
         "percent": 1,
         "statsMultiplier": 10,
         "lootMultiplier": 20
     },
-    "mythical": {
-        "name": "Mythical",
+    "divine": {
+        "name": "Divine",
         "color": "#e90dce",
         "percent": 0.1,
         "statsMultiplier": 100,
