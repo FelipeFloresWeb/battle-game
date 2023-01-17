@@ -1,7 +1,7 @@
-import { Fragment, useCallback, useEffect, useRef, useState } from 'react'
+import { Fragment, useCallback, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setPlayerCanAttack } from '../../store/reducers/player'
-import { selectPlayerCanAttack } from '../../store/selectors/player'
+import { setPlayerAttacking, setPlayerCanAttack } from '../../store/reducers/player'
+import { selectPlayerCanAttack, selectPlayerIsAttacking } from '../../store/selectors/player'
 import * as S from './styles'
 
 export const Cursor = () => {
@@ -11,8 +11,8 @@ export const Cursor = () => {
 
 	const cursorRef = useRef<any>(null)
 	const attackRef = useRef<any>(null)
-	const [isAttacking, setIsAttacking] = useState(false)
 
+	const isAttacking = useSelector((state: any) => selectPlayerIsAttacking(state))
 	const canAttack = useSelector((state: any) => selectPlayerCanAttack(state))
 
 	const attack = useCallback(
@@ -23,7 +23,7 @@ export const Cursor = () => {
 				const posX = e.pageX - 50
 				const posY = e.pageY + 35
 				cursorRef?.current?.setAttribute('style', 'top: ' + posY + 'px; left: ' + posX + 'px;')
-				setIsAttacking(true)
+				dispatch(setPlayerAttacking(true))
 			}
 
 			setTimeout(() => {
@@ -33,7 +33,7 @@ export const Cursor = () => {
 				if (cursorRef?.current == null) return
 
 				cursorRef?.current?.setAttribute('style', 'top: ' + posY + 'px; left: ' + posX + 'px;')
-				setIsAttacking(false)
+				dispatch(setPlayerAttacking(false))
 			}, 200)
 
 			setTimeout(() => {

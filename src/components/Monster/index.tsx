@@ -84,7 +84,7 @@ export const Monster = () => {
 
 		setTimeout(() => {
 			dispatch(setMonsterIsAttacking(false))
-		}, 1000)
+		}, 200)
 	}, [dispatch])
 
 	useEffect(() => {
