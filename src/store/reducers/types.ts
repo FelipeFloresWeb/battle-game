@@ -3,9 +3,12 @@ import { MonsterData, MonsterType } from '../../pages/api/monster/types'
 export interface IMonsterState {
 	isDead: boolean
 	isAttacking: boolean
+	loadingMonsterData: boolean
 	loadingMonsterType: boolean
 	monsterType: MonsterType
 	monsterData: MonsterData
+	image: string
+	hideMonster: boolean
 }
 
 export interface IPlayerState {

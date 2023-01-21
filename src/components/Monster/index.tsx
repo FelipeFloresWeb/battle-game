@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import useMonster from '../../hooks/useMonsterStats'
 import usePlayer from '../../hooks/usePlayerStats'
-import { setMonsterData, setMonsterIsAttacking, setMonsterIsDead } from '../../store/reducers/monster'
+import { setHideMonster, setMonsterData, setMonsterIsAttacking, setMonsterIsDead } from '../../store/reducers/monster'
 import { setPlayerAttacking, setPlayerItems, setPlayerStats } from '../../store/reducers/player'
 
 import { numeric } from '../../utils'
@@ -25,6 +25,7 @@ export const Monster = () => {
 		monsterData,
 		monsterIsDead,
 		monsterImage,
+		hideMonster,
 	} = useMonster()
 
 	const { playerAtk, playerStats, playerGold, playerItems, playerCanAttack } = usePlayer()
@@ -64,8 +65,12 @@ export const Monster = () => {
 	const checkMonsterIsDead = useCallback(() => {
 		if (monsterData?.name && monsterHp <= 0) {
 			dispatch(setMonsterIsDead(true))
+			setTimeout(() => {
+				dispatch(setHideMonster(true))
+			}, 2500)
 		} else {
 			dispatch(setMonsterIsDead(false))
+			dispatch(setHideMonster(false))
 		}
 	}, [dispatch, monsterData?.name, monsterHp])
 
@@ -102,7 +107,7 @@ export const Monster = () => {
 
 	return (
 		<>
-			{!isEmpty(monsterData) && (
+			{!isEmpty(monsterData) && !hideMonster && (
 				<S.MonsterContainer isdead={monsterIsDead.toString()} monsterattacking={monsterIsAttacking.toString()}>
 					<S.MonsterTypeText montertype={monsterType?.name} namecolor={monsterType?.color}>
 						{monsterType?.name}

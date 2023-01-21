@@ -34,3 +34,8 @@ export const selectMonsterIsAttacking = createSelector(
 	(state: any) => state.monster,
 	monster => monster.isAttacking
 )
+
+export const selectHideMonster = createSelector(
+	(state: any) => state.monster,
+	monster => monster.hideMonster
+)
