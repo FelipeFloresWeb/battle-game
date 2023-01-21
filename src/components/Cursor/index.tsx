@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setPlayerAttacking, setPlayerCanAttack } from '../../store/reducers/player'
 import { selectPlayerCanAttack, selectPlayerIsAttacking } from '../../store/selectors/player'
 import * as S from './styles'
+const randomNumber = Math.floor(Math.random() * 3) + 1
+const cursor = `images/swords/${randomNumber}.webp`
 
 export const Cursor = () => {
 	const dispatch = useDispatch()
-
-	const cursor = `images/swords/1.webp`
 
 	const cursorRef = useRef<any>(null)
 	const attackRef = useRef<any>(null)
@@ -40,7 +40,7 @@ export const Cursor = () => {
 				dispatch(setPlayerCanAttack(true))
 			}, 2000)
 		},
-		[canAttack, cursor, dispatch]
+		[canAttack, dispatch]
 	)
 
 	useEffect(() => {

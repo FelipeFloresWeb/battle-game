@@ -84,6 +84,7 @@ export const Monster = () => {
 	}, [dispatch, monsterAtk, playerStats])
 
 	useEffect(() => {
+		if (monsterIsDead) return
 		const attack = setInterval(() => {
 			monsterAttack()
 		}, 5000)

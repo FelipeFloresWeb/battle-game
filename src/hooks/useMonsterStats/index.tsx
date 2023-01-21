@@ -16,7 +16,7 @@ const useMonster = () => {
 	const monsterType: MonsterType = useSelector((state: any) => selectMonsterType(state))
 	const monsterData: MonsterData = useSelector((state: IMonsterState) => selectMonsterData(state))
 	const monsterImage: string = useSelector((state: any) => selectMonsterImage(state))
-	const monsterIsDead = useSelector((state: IMonsterState) => selectMonsterIsDead(state))
+	const selectMonsterDead = useSelector((state: IMonsterState) => selectMonsterIsDead(state))
 	const monsterIsAttacking = useSelector((state: any) => selectMonsterIsAttacking(state))
 	const loadingMonsterType = useSelector((state: any) => selectLoadingMonsterType(state))
 	const loadingMonsterData = useSelector((state: any) => selectLoadingMonsterData(state))
@@ -40,6 +40,8 @@ const useMonster = () => {
 		() => monsterData?.loot?.minGold * monsterType?.lootMultiplier,
 		[monsterData?.loot?.minGold, monsterType?.lootMultiplier]
 	)
+
+	const monsterIsDead = useMemo(() => monsterHp <= 0, [monsterHp])
 
 	return {
 		monsterType,
