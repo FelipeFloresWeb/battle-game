@@ -1,37 +1,19 @@
 import { Button, Image } from '@chakra-ui/react'
 import { get } from 'lodash'
 
-import { useCallback, useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { MonsterData } from '../../pages/api/monster/types'
+import { useCallback } from 'react'
+import { useDispatch } from 'react-redux'
+import useMonster from '../../hooks/useMonster'
+import usePlayer from '../../hooks/usePlayer'
 import { getMonster } from '../../services/api/monster'
 import { setLoadingMonsterData, setMonsterData, setMonsterType } from '../../store/reducers/monster'
-import { IMonsterState } from '../../store/reducers/types'
-import {
-	selectLoadingMonsterData,
-	selectLoadingMonsterType,
-	selectMonsterData,
-	selectMonsterIsAttacking,
-} from '../../store/selectors/monster'
 import { numeric } from '../../utils'
 import * as S from './styles'
 
 export const Ui = () => {
-	const [playerHp, setPlayerHp] = useState(100)
-	const [playerMaxHp, setPlayerMaxHp] = useState(100)
-
 	const dispatch = useDispatch()
-	const loadingMonsterType = useSelector((state: any) => selectLoadingMonsterType(state))
-	const loadingMonsterData = useSelector((state: any) => selectLoadingMonsterData(state))
-	const monsterData: MonsterData = useSelector((state: IMonsterState) => selectMonsterData(state))
-	const monsterIsAttacking = useSelector((state: any) => selectMonsterIsAttacking(state))
-
-	const PLAYER_EXP = 500
-	const MAX_PLAYER_EXP = 1000
-	const EXP_NEEDED = MAX_PLAYER_EXP - PLAYER_EXP
-
-	const PLAYER_GOLD = 2000000
-	const PLAYER_DIAMOND = 10000
+	const { monsterData, loadingMonsterType, loadingMonsterData } = useMonster()
+	const { playerHp, playerMaxHp, playerExp, playerMaxExp, playerGold, playerDiamond } = usePlayer()
 
 	const fetchMonsterData = useCallback(
 		async (monsterId?: number) => {
@@ -48,23 +30,6 @@ export const Ui = () => {
 		},
 		[dispatch]
 	)
-
-	const fixPlayerHp = useCallback(() => {
-		if (playerHp < 0) setPlayerHp(0)
-	}, [playerHp])
-
-	const monsterAttack = useCallback(() => {
-		if (!monsterIsAttacking) return
-		setPlayerHp(old => old - monsterData?.stats?.attack)
-	}, [monsterData?.stats?.attack, monsterIsAttacking])
-
-	useEffect(() => {
-		monsterAttack()
-	}, [monsterAttack])
-
-	useEffect(() => {
-		fixPlayerHp()
-	}, [fixPlayerHp])
 
 	return (
 		<S.UiContainer w='100%' justifyContent='space-between' direction='row'>
@@ -93,9 +58,9 @@ export const Ui = () => {
 					alt='EXP_BAR'
 				/>
 				<S.ProgressContainer>
-					<S.ExpProgressBar borderEndRadius='5px' max={MAX_PLAYER_EXP} value={PLAYER_EXP} />
+					<S.ExpProgressBar borderEndRadius='5px' max={playerMaxExp} value={playerExp} />
 				</S.ProgressContainer>
-				<S.ExpText>{PLAYER_EXP + ' / ' + MAX_PLAYER_EXP}</S.ExpText>
+				<S.ExpText>{`${playerExp} / ${playerMaxExp}`}</S.ExpText>
 			</S.UiBar>
 
 			<S.UiBar>
@@ -111,7 +76,7 @@ export const Ui = () => {
 					<S.GoldProgressBar borderEndRadius='5px' value={100} />
 				</S.GoldContainer>
 				<S.GoldText>
-					<div>{numeric(PLAYER_GOLD, 0)}</div>
+					<div>{numeric(playerGold, 0)}</div>
 				</S.GoldText>
 			</S.UiBar>
 
@@ -128,7 +93,7 @@ export const Ui = () => {
 					<S.DiamondProgressBar borderEndRadius='5px' value={100} />
 				</S.DiamondContainer>
 				<S.DiamondText>
-					<div>{numeric(PLAYER_DIAMOND, 0)}</div>
+					<div>{numeric(playerDiamond, 0)}</div>
 				</S.DiamondText>
 			</S.UiBar>
 

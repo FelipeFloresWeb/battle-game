@@ -1,101 +1,99 @@
 import { Flex } from '@chakra-ui/react'
 import { isEmpty } from 'lodash'
-import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { MonsterData, MonsterType } from '../../pages/api/monster/types'
+import { useCallback, useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import useMonster from '../../hooks/useMonster'
+import usePlayer from '../../hooks/usePlayer'
 import { setMonsterData, setMonsterIsAttacking, setMonsterIsDead } from '../../store/reducers/monster'
-import { IMonsterState } from '../../store/reducers/types'
-import {
-	selectMonsterData,
-	selectMonsterImage,
-	selectMonsterIsAttacking,
-	selectMonsterIsDead,
-	selectMonsterType,
-} from '../../store/selectors/monster'
-import { selectPlayerCanAttack } from '../../store/selectors/player'
+import { setPlayerAttacking, setPlayerItems, setPlayerStats } from '../../store/reducers/player'
 
 import { numeric } from '../../utils'
 import * as S from './styles'
 
 export const Monster = () => {
+	const dispatch = useDispatch()
 	const [isAttacking, setIsAttacking] = useState(false)
 
-	const dispatch = useDispatch()
+	const {
+		monsterHp,
+		monsterMaxHp,
+		monsterAtk,
+		monsterExp,
+		monsterGold,
+		monsterIsAttacking,
+		monsterType,
+		monsterData,
+		monsterIsDead,
+		monsterImage,
+	} = useMonster()
 
-	const monsterType: MonsterType = useSelector((state: any) => selectMonsterType(state))
-	const monsterData: MonsterData = useSelector((state: IMonsterState) => selectMonsterData(state))
-	const monsterImage: string = useSelector((state: any) => selectMonsterImage(state))
-	const monsterIsDead = useSelector((state: IMonsterState) => selectMonsterIsDead(state))
-	const playerCanAttack = useSelector((state: any) => selectPlayerCanAttack(state))
-	const monsterIsAttacking = useSelector((state: any) => selectMonsterIsAttacking(state))
+	const { playerAtk, playerStats, playerGold, playerItems, playerCanAttack } = usePlayer()
 
-	const monsterHp = useMemo(() => Math.round(monsterData?.stats?.hp) || 0, [monsterData?.stats?.hp])
-	const monsterMaxHp = useMemo(() => Math.round(monsterData?.stats?.maxHp) || 0, [monsterData?.stats?.maxHp])
-	const monsterDef = useMemo(() => Math.round(monsterData?.stats?.defense) || 0, [monsterData?.stats?.defense])
-	const monsterAtk = useMemo(() => Math.round(monsterData?.stats?.attack) || 0, [monsterData?.stats?.attack])
-
-	const monsterAttackSpeed = useMemo(
-		() => Math.round(monsterData?.stats?.attackSpeed),
-		[monsterData?.stats?.attackSpeed]
-	)
-
-	const monsterExp = useMemo(
-		() => monsterData?.loot?.exp * monsterType?.lootMultiplier,
-		[monsterData?.loot?.exp, monsterType?.lootMultiplier]
-	)
-	const monsterGold = useMemo(
-		() => monsterData?.loot?.minGold * monsterType?.lootMultiplier,
-		[monsterData?.loot?.minGold, monsterType?.lootMultiplier]
-	)
-
-	const checkMonsterIsDead = useCallback(() => {
-		if (monsterHp <= 0) {
-			dispatch(setMonsterIsDead(true))
-		} else {
-			dispatch(setMonsterIsDead(false))
-		}
-	}, [dispatch, monsterHp])
-
-	const hitMonster = useCallback(
+	const hitMonster: (damage: number) => void = useCallback(
 		(damage: number) => {
 			if (monsterHp - damage <= 0) {
 				dispatch(setMonsterData({ ...monsterData, stats: { ...monsterData?.stats, hp: 0 } }))
+				dispatch(setPlayerStats({ ...playerStats, exp: playerStats.exp + monsterExp }))
+				dispatch(
+					setPlayerItems({
+						...playerItems,
+						gold: playerGold + monsterGold,
+					})
+				)
 			} else {
 				dispatch(setMonsterData({ ...monsterData, stats: { ...monsterData?.stats, hp: monsterHp - damage } }))
 			}
 		},
-		[dispatch, monsterData, monsterHp]
+		[dispatch, monsterData, monsterExp, monsterGold, monsterHp, playerGold, playerItems, playerStats]
 	)
 
 	const playerAttack = useCallback(() => {
 		if (!playerCanAttack || monsterHp <= 0) return
 
 		setIsAttacking(true)
-
-		hitMonster(5)
+		dispatch(setPlayerAttacking(true))
+		hitMonster(playerAtk)
 
 		setTimeout(() => {
 			setIsAttacking(false)
+
+			dispatch(setPlayerAttacking(false))
 		}, 200)
-	}, [hitMonster, monsterHp, playerCanAttack])
+	}, [dispatch, hitMonster, monsterHp, playerAtk, playerCanAttack])
+
+	const checkMonsterIsDead = useCallback(() => {
+		if (monsterData?.name && monsterHp <= 0) {
+			dispatch(setMonsterIsDead(true))
+		} else {
+			dispatch(setMonsterIsDead(false))
+		}
+	}, [dispatch, monsterData?.name, monsterHp])
 
 	const monsterAttack = useCallback(() => {
 		dispatch(setMonsterIsAttacking(true))
 
+		if (playerStats?.health - monsterAtk <= 0) {
+			dispatch(setPlayerStats({ ...playerStats, health: 0 }))
+		} else {
+			dispatch(setPlayerStats({ ...playerStats, health: playerStats?.health - monsterAtk }))
+		}
+
 		setTimeout(() => {
 			dispatch(setMonsterIsAttacking(false))
 		}, 200)
-	}, [dispatch])
+	}, [dispatch, monsterAtk, playerStats])
 
 	useEffect(() => {
 		const attack = setInterval(() => {
 			monsterAttack()
 		}, 5000)
 
+		monsterIsDead && clearInterval(attack)
+
 		return () => {
 			clearInterval(attack)
 		}
-	}, [monsterAttack])
+	}, [monsterAttack, monsterIsDead])
 
 	useEffect(() => {
 		checkMonsterIsDead()

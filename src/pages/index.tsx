@@ -4,6 +4,7 @@ import Head from 'next/head'
 import { AnimatedBackground } from '../components/AnimatedBackground'
 
 import { Cursor } from '../components/Cursor'
+import { DamageBackground } from '../components/DamageBackground'
 import { GameWindow } from '../components/GameWindow'
 import { Header } from '../components/Header'
 import { LinksReferers } from '../components/LinksReferers'
@@ -25,6 +26,7 @@ export default function Home() {
 				<Cursor />
 				<Ui />
 				<AnimatedBackground />
+				<DamageBackground />
 				<LinksReferers />
 			</Flex>
 		</>

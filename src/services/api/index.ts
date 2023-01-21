@@ -4,14 +4,11 @@ import axios from 'axios'
 // 	const session = await getSession()
 // 	const SUPER = !!session?.roles?.includes('nft_admin')
 
-// 	const IMPERSONATE = SUPER ? localStorage.getItem('impersonate-id') : null
-
 // 	if (session?.accessToken) {
-// 		config.headers = IMPERSONATE
+
 // 			? {
 // 					...config.headers,
 // 					authorization: `bearer ${session?.accessToken}`,
-// 					'Authorization-ImpersonateUserId': IMPERSONATE,
 // 			  }
 // 			: {
 // 					...config.headers,

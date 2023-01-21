@@ -4,7 +4,7 @@ import { MonsterData, MonsterType } from '../../pages/api/monster/types'
 const MonsterSlice = createSlice({
 	name: 'monster',
 	initialState: {
-		isDead: false,
+		isDead: true,
 		loadingMonsterData: false,
 		loadingMonsterType: false,
 		isAttacking: false,
