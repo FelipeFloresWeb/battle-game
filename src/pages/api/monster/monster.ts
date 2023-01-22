@@ -40,7 +40,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<IMonst
 		...monster,
 		loot: {
 			...monster.loot,
-			gold: dropGold(monster) * monsterType.lootMultiplier,
+			gold: Math.round(dropGold(monster) * monsterType.lootMultiplier),
 		},
 	}
 

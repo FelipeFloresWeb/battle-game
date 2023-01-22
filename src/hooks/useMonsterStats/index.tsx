@@ -34,14 +34,9 @@ const useMonster = () => {
 		() => Math.round(monsterData?.stats?.attackSpeed),
 		[monsterData?.stats?.attackSpeed]
 	)
-	const monsterExp: number = useMemo(
-		() => monsterData?.loot?.exp * monsterType?.lootMultiplier,
-		[monsterData?.loot?.exp, monsterType?.lootMultiplier]
-	)
-	const monsterGold: number = useMemo(
-		() => monsterData?.loot?.minGold * monsterType?.lootMultiplier,
-		[monsterData?.loot?.minGold, monsterType?.lootMultiplier]
-	)
+	const monsterExp: number = useMemo(() => monsterData?.loot?.exp, [monsterData?.loot?.exp])
+	const monsterGold: number = useMemo(() => monsterData?.loot?.gold || 0, [monsterData?.loot?.gold])
+	const monsterDiamond: number = useMemo(() => monsterData?.loot?.diamond || 0, [monsterData?.loot?.diamond])
 
 	const monsterIsDead: boolean = useMemo(() => monsterHp <= 0, [monsterHp])
 
@@ -62,6 +57,7 @@ const useMonster = () => {
 		monsterExp,
 		monsterGold,
 		hideMonster,
+		monsterDiamond,
 	}
 }
 

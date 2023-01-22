@@ -12,4 +12,9 @@ export const Container = styled(Flex)`
 	font-size: 48px;
 	font-weight: 700;
 	text-shadow: 0 0 10px #df8912;
+
+	div:last-of-type {
+		color: #6bb8fd;
+		text-shadow: 0 0 10px #0089ff;
+	}
 `
