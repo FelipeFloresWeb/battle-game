@@ -14,7 +14,7 @@ export const Container = styled(Flex)`
 	text-shadow: 0 0 10px #df8912;
 
 	div:last-of-type {
-		color: #6bb8fd;
-		text-shadow: 0 0 10px #0089ff;
+		color: ${props => (props.dropediamond === 'true' ? '#6bb8fd' : '#ffdf57')};
+		text-shadow: ${props => (props.dropediamond === 'true' ? '0 0 10px #0089ff' : '0 0 10px #df8912')};
 	}
 `
