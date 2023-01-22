@@ -35,3 +35,7 @@ export interface IPlayerItems {
 	gold: number
 	diamond: number
 }
+
+export interface IActionsState {
+	showMonsterLoot: boolean
+}

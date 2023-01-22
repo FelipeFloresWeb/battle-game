@@ -28,6 +28,8 @@ export type MonsterLoot = {
 	minGold: number
 	maxGold: number
 	exp: number
+	diamond?: number
+	gold?: number
 }
 
 export interface IMonster {
@@ -40,4 +42,9 @@ export type MonsterType = {
 	percent: number
 	statsMultiplier: number
 	lootMultiplier: number
+	diamond: {
+		chance: number
+		min: number
+		max: number
+	}
 }

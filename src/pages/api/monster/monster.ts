@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { selectMonsterType } from './methods'
+import { dropDiamond, dropGold, selectMonsterType } from './methods'
 import monsters from './monsterData.json'
 import { Error, IMonster, IMonsterData, MonsterData } from './types'
 
@@ -32,9 +32,15 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<IMonst
 		},
 		loot: {
 			...monster.loot,
-			minGold: Math.floor(monster.loot.minGold * monsterType.lootMultiplier),
-			maxGold: Math.floor(monster.loot.maxGold * monsterType.lootMultiplier),
 			exp: Math.floor(monster.loot.exp * monsterType.lootMultiplier),
+			diamond: dropDiamond(monsterType),
+		},
+	}
+	monster = {
+		...monster,
+		loot: {
+			...monster.loot,
+			gold: dropGold(monster) * monsterType.lootMultiplier,
 		},
 	}
 

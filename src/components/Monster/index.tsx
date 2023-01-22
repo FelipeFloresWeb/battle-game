@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import useMonster from '../../hooks/useMonsterStats'
 import usePlayer from '../../hooks/usePlayerStats'
+import { setShowMonsterLoot } from '../../store/reducers/actions'
 import { setHideMonster, setMonsterData, setMonsterIsAttacking, setMonsterIsDead } from '../../store/reducers/monster'
 import { setPlayerAttacking, setPlayerItems, setPlayerStats } from '../../store/reducers/player'
 
@@ -34,13 +35,17 @@ export const Monster = () => {
 		(damage: number) => {
 			if (monsterHp - damage <= 0) {
 				dispatch(setMonsterData({ ...monsterData, stats: { ...monsterData?.stats, hp: 0 } }))
-				dispatch(setPlayerStats({ ...playerStats, exp: playerStats.exp + monsterExp }))
-				dispatch(
-					setPlayerItems({
-						...playerItems,
-						gold: playerGold + monsterGold,
-					})
-				)
+
+				setTimeout(() => {
+					dispatch(setPlayerStats({ ...playerStats, exp: playerStats.exp + monsterExp }))
+					dispatch(
+						setPlayerItems({
+							...playerItems,
+							gold: playerGold + monsterGold,
+						})
+					)
+					dispatch(setShowMonsterLoot(true))
+				}, 2500)
 			} else {
 				dispatch(setMonsterData({ ...monsterData, stats: { ...monsterData?.stats, hp: monsterHp - damage } }))
 			}

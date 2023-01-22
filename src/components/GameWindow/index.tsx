@@ -1,4 +1,5 @@
 import { Monster } from '../Monster'
+import { MonsterLoot } from '../MonsterLoot'
 import * as S from './styles'
 
 export const GameWindow = () => {
@@ -7,6 +8,7 @@ export const GameWindow = () => {
 	return (
 		<S.GameWindowContainer stage={stage}>
 			<Monster />
+			<MonsterLoot />
 		</S.GameWindowContainer>
 	)
 }

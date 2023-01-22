@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux'
 import useMonster from '../../hooks/useMonsterStats'
 import usePlayer from '../../hooks/usePlayerStats'
 import { getMonster } from '../../services/api/monster'
+import { setShowMonsterLoot } from '../../store/reducers/actions'
 import { setLoadingMonsterData, setMonsterData, setMonsterType } from '../../store/reducers/monster'
 import { numeric } from '../../utils'
 import * as S from './styles'
@@ -17,6 +18,8 @@ export const Ui = () => {
 
 	const fetchMonsterData = useCallback(
 		async (monsterId?: number) => {
+			dispatch(setShowMonsterLoot(false))
+
 			dispatch(setLoadingMonsterData(true))
 
 			const fetchMonster = await getMonster(monsterId)
