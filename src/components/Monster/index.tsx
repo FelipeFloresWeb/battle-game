@@ -6,7 +6,7 @@ import useActions from '../../hooks/useActions'
 import useMonster from '../../hooks/useMonsterStats'
 import usePlayer from '../../hooks/usePlayerStats'
 import { setShowMonsterLoot, setStartMonsterAttack } from '../../store/reducers/actions'
-import { setHideMonster, setMonsterData, setMonsterIsAttacking, setMonsterIsDead } from '../../store/reducers/monster'
+import { setHideMonster, setMonsterData, setMonsterIsDead } from '../../store/reducers/monster'
 import { setPlayerAttacking, setPlayerItems, setPlayerStats } from '../../store/reducers/player'
 
 import { numeric } from '../../utils'
@@ -19,7 +19,6 @@ export const Monster = () => {
 	const {
 		monsterHp,
 		monsterMaxHp,
-		monsterAtk,
 		monsterExp,
 		monsterGold,
 		monsterDiamond,
@@ -97,33 +96,6 @@ export const Monster = () => {
 			dispatch(setHideMonster(false))
 		}
 	}, [dispatch, monsterData?.name, monsterHp])
-
-	const monsterAttack = useCallback(() => {
-		dispatch(setMonsterIsAttacking(true))
-
-		if (playerStats?.health - monsterAtk <= 0) {
-			dispatch(setPlayerStats({ ...playerStats, health: 0 }))
-		} else {
-			dispatch(setPlayerStats({ ...playerStats, health: playerStats?.health - monsterAtk }))
-		}
-
-		setTimeout(() => {
-			dispatch(setMonsterIsAttacking(false))
-		}, 200)
-	}, [dispatch, monsterAtk, playerStats])
-
-	useEffect(() => {
-		if (monsterIsDead || !startMonsterAttack) return
-		const attack = setInterval(() => {
-			monsterAttack()
-		}, 5000)
-
-		monsterIsDead && clearInterval(attack)
-
-		return () => {
-			clearInterval(attack)
-		}
-	}, [monsterAttack, monsterIsDead, startMonsterAttack])
 
 	useEffect(() => {
 		checkMonsterIsDead()

@@ -1,20 +1,28 @@
 import { Button, Image } from '@chakra-ui/react'
 import { get } from 'lodash'
 
-import { useCallback } from 'react'
+import { useCallback, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
+import useActions from '../../hooks/useActions'
 import useMonster from '../../hooks/useMonsterStats'
 import usePlayer from '../../hooks/usePlayerStats'
 import { getMonster } from '../../services/api/monster'
 import { setShowMonsterLoot } from '../../store/reducers/actions'
-import { setLoadingMonsterData, setMonsterData, setMonsterType } from '../../store/reducers/monster'
+import {
+	setLoadingMonsterData,
+	setMonsterData,
+	setMonsterIsAttacking,
+	setMonsterType,
+} from '../../store/reducers/monster'
+import { setPlayerStats } from '../../store/reducers/player'
 import { numeric } from '../../utils'
 import * as S from './styles'
 
 export const Ui = () => {
 	const dispatch = useDispatch()
-	const { monsterData, loadingMonsterType, loadingMonsterData } = useMonster()
-	const { playerHp, playerMaxHp, playerExp, playerMaxExp, playerGold, playerDiamond } = usePlayer()
+	const { monsterData, loadingMonsterType, loadingMonsterData, monsterAtk, monsterIsDead } = useMonster()
+	const { playerHp, playerMaxHp, playerExp, playerMaxExp, playerGold, playerDiamond, playerStats } = usePlayer()
+	const { startMonsterAttack } = useActions()
 
 	const fetchMonsterData = useCallback(
 		async (monsterId?: number) => {
@@ -33,6 +41,33 @@ export const Ui = () => {
 		},
 		[dispatch]
 	)
+
+	const hitPlayer = useCallback(() => {
+		dispatch(setMonsterIsAttacking(true))
+
+		if (playerStats?.health - monsterAtk <= 0) {
+			dispatch(setPlayerStats({ ...playerStats, health: 0 }))
+		} else {
+			dispatch(setPlayerStats({ ...playerStats, health: playerStats?.health - monsterAtk }))
+		}
+
+		setTimeout(() => {
+			dispatch(setMonsterIsAttacking(false))
+		}, 200)
+	}, [dispatch, monsterAtk, playerStats])
+
+	useEffect(() => {
+		if (monsterIsDead || !startMonsterAttack) return
+		const attack = setInterval(() => {
+			hitPlayer()
+		}, 5000)
+
+		monsterIsDead && clearInterval(attack)
+
+		return () => {
+			clearInterval(attack)
+		}
+	}, [hitPlayer, monsterIsDead, startMonsterAttack])
 
 	return (
 		<S.UiContainer w='100%' justifyContent='space-between' direction='row'>
