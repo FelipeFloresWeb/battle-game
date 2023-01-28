@@ -2,13 +2,13 @@ import { Flex } from '@chakra-ui/react'
 import { isEmpty } from 'lodash'
 import { useCallback, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
+
 import useActions from '../../hooks/useActions'
 import useMonster from '../../hooks/useMonsterStats'
 import usePlayer from '../../hooks/usePlayerStats'
 import { setShowMonsterLoot, setStartMonsterAttack } from '../../store/reducers/actions'
-import { setHideMonster, setMonsterData, setMonsterIsDead } from '../../store/reducers/monster'
+import { setHideMonster, setMonsterData, setMonsterIsAttacking, setMonsterIsDead } from '../../store/reducers/monster'
 import { setPlayerAttacking, setPlayerItems, setPlayerStats } from '../../store/reducers/player'
-
 import { numeric } from '../../utils'
 import * as S from './styles'
 
@@ -28,6 +28,7 @@ export const Monster = () => {
 		monsterIsDead,
 		monsterImage,
 		hideMonster,
+		monsterAtk,
 	} = useMonster()
 
 	const { playerAtk, playerStats, playerGold, playerItems, playerCanAttack, playerDiamond } = usePlayer()
@@ -96,6 +97,34 @@ export const Monster = () => {
 			dispatch(setHideMonster(false))
 		}
 	}, [dispatch, monsterData?.name, monsterHp])
+
+	const hitPlayer = useCallback(() => {
+		dispatch(setMonsterIsAttacking(true))
+
+		if (playerStats?.health - monsterAtk <= 0) {
+			dispatch(setPlayerStats({ ...playerStats, health: 0 }))
+		} else {
+			dispatch(setPlayerStats({ ...playerStats, health: playerStats?.health - monsterAtk }))
+		}
+
+		setTimeout(() => {
+			dispatch(setMonsterIsAttacking(false))
+		}, 400)
+	}, [dispatch, monsterAtk, playerStats])
+
+	useEffect(() => {
+		if (monsterIsDead || !startMonsterAttack) return
+
+		const attack = setInterval(() => {
+			hitPlayer()
+		}, 4000)
+
+		monsterIsDead && clearInterval(attack)
+
+		return () => {
+			clearInterval(attack)
+		}
+	}, [hitPlayer, monsterIsDead, startMonsterAttack])
 
 	useEffect(() => {
 		checkMonsterIsDead()

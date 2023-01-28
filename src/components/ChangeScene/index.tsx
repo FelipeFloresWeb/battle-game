@@ -1,16 +1,17 @@
 import { Text } from '@chakra-ui/react'
 import { useDispatch } from 'react-redux'
 import useActions from '../../hooks/useActions'
+import { setCenario, setShowMonsterLoot } from '../../store/reducers/actions'
 import * as S from './styles'
 
 export const ChangeScene = () => {
 	const dispatch = useDispatch()
 
-	const { actions, scene, showMonsterLoot } = useActions()
+	const { scene, showMonsterLoot } = useActions()
 
 	const changeScene = (number: number) => {
-		dispatch(actions?.setShowMonsterLoot(false))
-		dispatch(actions?.setCenario(number))
+		dispatch(setShowMonsterLoot(false))
+		dispatch(setCenario(number))
 	}
 
 	return (
