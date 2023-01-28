@@ -18,8 +18,8 @@ const PlayerSlice = createSlice({
 			level: 1,
 		},
 		items: {
-			gold: 100000,
-			diamond: 160,
+			gold: 0,
+			diamond: 0,
 		},
 	} as IPlayerState,
 	reducers: {

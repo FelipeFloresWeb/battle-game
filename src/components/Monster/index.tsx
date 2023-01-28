@@ -21,6 +21,7 @@ export const Monster = () => {
 		monsterAtk,
 		monsterExp,
 		monsterGold,
+		monsterDiamond,
 		monsterIsAttacking,
 		monsterType,
 		monsterData,
@@ -29,7 +30,7 @@ export const Monster = () => {
 		hideMonster,
 	} = useMonster()
 
-	const { playerAtk, playerStats, playerGold, playerItems, playerCanAttack } = usePlayer()
+	const { playerAtk, playerStats, playerGold, playerItems, playerCanAttack, playerDiamond } = usePlayer()
 
 	const hitMonster: (damage: number) => void = useCallback(
 		(damage: number) => {
@@ -42,6 +43,7 @@ export const Monster = () => {
 						setPlayerItems({
 							...playerItems,
 							gold: playerGold + monsterGold,
+							diamond: playerDiamond + monsterDiamond,
 						})
 					)
 					dispatch(setShowMonsterLoot(true))
@@ -50,7 +52,18 @@ export const Monster = () => {
 				dispatch(setMonsterData({ ...monsterData, stats: { ...monsterData?.stats, hp: monsterHp - damage } }))
 			}
 		},
-		[dispatch, monsterData, monsterExp, monsterGold, monsterHp, playerGold, playerItems, playerStats]
+		[
+			dispatch,
+			monsterData,
+			monsterDiamond,
+			monsterExp,
+			monsterGold,
+			monsterHp,
+			playerDiamond,
+			playerGold,
+			playerItems,
+			playerStats,
+		]
 	)
 
 	const playerAttack = useCallback(() => {
