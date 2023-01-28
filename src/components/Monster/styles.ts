@@ -14,16 +14,22 @@ export const MonsterContainer = styled(Flex)`
 	transition: all 0.1s ease;
 
 	animation: ${props =>
-			props.monsterattacking === 'true' && props.isdead === 'false' && 'monsterAttackAnimator .3s forwards;'}${props =>
-			props.isdead === 'false' && 'idleAnimator 1s infinite;'} ${props => props.isdead === 'true' && 'monsterDyingAnimator 3s forwards'};
+			props.monsterattacking === 'true' &&
+			props.isdead === 'false' &&
+			props.startbattle === 'true' &&
+			'monsterAttackAnimator .3s forwards;'}${props => props.isdead === 'false' && 'idleAnimator 1s infinite;'} ${props => props.isdead === 'true' && 'monsterDyingAnimator 3s forwards'};
 
 	-webkit-animation: ${props =>
-			props.monsterattacking === 'true' && props.isdead === 'false' && 'monsterAttackAnimator .3s forwards;'}${props =>
-			props.isdead === 'false' && 'idleAnimator 1s infinite;'} ${props => props.isdead === 'true' && 'monsterDyingAnimator 3s forwards'};
+			props.monsterattacking === 'true' &&
+			props.isdead === 'false' &&
+			props.startbattle === 'true' &&
+			'monsterAttackAnimator .3s forwards;'}${props => props.isdead === 'false' && 'idleAnimator 1s infinite;'} ${props => props.isdead === 'true' && 'monsterDyingAnimator 3s forwards'};
 
 	-moz-animation: ${props =>
-			props.monsterattacking === 'true' && props.isdead === 'false' && 'monsterAttackAnimator .3s forwards;'}${props =>
-			props.isdead === 'false' && 'idleAnimator 1s infinite;'} ${props => props.isdead === 'true' && 'monsterDyingAnimator 3s forwards'};
+			props.monsterattacking === 'true' &&
+			props.isdead === 'false' &&
+			props.startbattle === 'true' &&
+			'monsterAttackAnimator .3s forwards;'}${props => props.isdead === 'false' && 'idleAnimator 1s infinite;'} ${props => props.isdead === 'true' && 'monsterDyingAnimator 3s forwards'};
 
 	@-webkit-keyframes idleAnimator {
 		0% {
@@ -42,7 +48,7 @@ export const MonsterContainer = styled(Flex)`
 			transform: scale(1) translate(-50%, -50%);
 		}
 		50% {
-			transform: scale(4) translat2(-20%, -20%);
+			transform: scale(3) translate(-18%, -50%);
 		}
 		100% {
 			transform: scale(1) translate(-50%, -50%);
@@ -78,7 +84,7 @@ export const MonsterContainer = styled(Flex)`
 			transform: scale(1) translate(-50%, -50%);
 		}
 		50% {
-			transform: scale(2) translate(-20%, -20%);
+			transform: scale(3) translate(-18%, -50%);
 		}
 		100% {
 			transform: scale(1) translate(-50%, -50%);
@@ -114,7 +120,7 @@ export const MonsterContainer = styled(Flex)`
 			transform: scale(1) translate(-50%, -50%);
 		}
 		50% {
-			transform: scale(2) translate(-20%, -20%);
+			transform: scale(3) translate(-18%, -50%);
 		}
 		100% {
 			transform: scale(1) translate(-50%, -50%);
