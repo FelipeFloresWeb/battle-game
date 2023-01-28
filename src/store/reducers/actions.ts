@@ -6,6 +6,8 @@ const ActionSlice = createSlice({
 	initialState: {
 		startMonsterAttack: false,
 		showMonsterLoot: false,
+		loadingScene: false,
+		cenario: 0,
 	} as IActionsState,
 	reducers: {
 		setShowMonsterLoot(state, action: PayloadAction<boolean>) {
@@ -14,9 +16,15 @@ const ActionSlice = createSlice({
 		setStartMonsterAttack(state, action: PayloadAction<boolean>) {
 			state.startMonsterAttack = action.payload
 		},
+		setLoadingScene(state, action: PayloadAction<boolean>) {
+			state.loadingScene = action.payload
+		},
+		setCenario(state, action: PayloadAction<number>) {
+			state.cenario = action.payload
+		},
 	},
 })
 
-export const { setShowMonsterLoot, setStartMonsterAttack } = ActionSlice.actions
+export const { setShowMonsterLoot, setStartMonsterAttack, setLoadingScene, setCenario } = ActionSlice.actions
 
 export default ActionSlice.reducer

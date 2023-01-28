@@ -39,4 +39,6 @@ export interface IPlayerItems {
 export interface IActionsState {
 	startMonsterAttack: boolean
 	showMonsterLoot: boolean
+	loadingScene: boolean
+	cenario: number
 }

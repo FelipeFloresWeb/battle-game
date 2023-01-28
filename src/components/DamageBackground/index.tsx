@@ -5,5 +5,5 @@ import * as S from './styles'
 export const DamageBackground = () => {
 	const monsterIsAttacking = useSelector((state: any) => selectMonsterIsAttacking(state))
 
-	return monsterIsAttacking && <S.Container />
+	return monsterIsAttacking ? <S.Container /> : <></>
 }
