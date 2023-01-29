@@ -16,7 +16,8 @@ export const DeadScreen = () => {
 					A <span>{monsterType?.name}</span> <span>{monsterData?.name}</span> has killed you
 				</S.MonsterDataText>
 				<S.PlayerLooseText>
-					You lose <span>{experienceLost}</span> experience points and <span>{playerGoldLost}</span> gold coins
+					You lose <span>{experienceLost}</span> experience points and <span>{playerGoldLost}</span> gold coin
+					{playerGoldLost > 1 && 's'}
 				</S.PlayerLooseText>
 			</S.TextContainer>
 		</>

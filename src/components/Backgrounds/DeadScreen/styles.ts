@@ -38,7 +38,11 @@ export const PlayerLooseText = styled(Text)`
 	font-size: 25px;
 	font-weight: 500;
 
-	span {
+	span:first-of-type {
 		color: #ab3434;
+	}
+
+	span:last-of-type {
+		color: #fff70b;
 	}
 `

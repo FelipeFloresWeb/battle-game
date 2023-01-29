@@ -30,8 +30,13 @@ const usePlayer = () => {
 		[playerStats?.exp, playerStats?.maxExp]
 	)
 	const experienceLost = useMemo(
-		() => (playerExp < 1 ? 0 : Math.round(playerExpNextLevel * expLostRate) || 0),
-		[expLostRate, playerExp, playerExpNextLevel]
+		() =>
+			playerExp < 1
+				? 0
+				: Math.round(playerStats?.maxExp * expLostRate) > playerExp
+				? playerExp
+				: Math.round(playerStats?.maxExp * expLostRate) || 0,
+		[expLostRate, playerExp, playerStats?.maxExp]
 	)
 	const playerAttackSpeed = useMemo(() => playerStats?.attackSpeed || 0, [playerStats?.attackSpeed])
 	const playerDiamond = useMemo(() => Math.round(playerItems?.diamond) || 0, [playerItems?.diamond])
