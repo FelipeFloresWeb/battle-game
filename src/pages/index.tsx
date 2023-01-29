@@ -1,10 +1,11 @@
 import { Flex } from '@chakra-ui/react'
 import { Inter } from '@next/font/google'
 import Head from 'next/head'
-import { AnimatedBackground } from '../components/AnimatedBackground'
+import { AnimatedBackground } from '../components/Backgrounds/AnimatedBackground'
 
+import { DamageBackground } from '../components/Backgrounds/DamageBackground'
+import { DeadScreen } from '../components/Backgrounds/DeadScreen'
 import { Cursor } from '../components/Cursor'
-import { DamageBackground } from '../components/DamageBackground'
 import { GameWindow } from '../components/GameWindow'
 import { Header } from '../components/Header'
 import { LinksReferers } from '../components/LinksReferers'
@@ -25,6 +26,7 @@ export default function Home() {
 				<GameWindow />
 				<Cursor />
 				<Ui />
+				<DeadScreen />
 				<AnimatedBackground />
 				<DamageBackground />
 				<LinksReferers />

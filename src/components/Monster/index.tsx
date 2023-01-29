@@ -8,7 +8,7 @@ import useMonster from '../../hooks/useMonsterStats'
 import usePlayer from '../../hooks/usePlayerStats'
 import { setShowMonsterLoot, setStartMonsterAttack } from '../../store/reducers/actions'
 import { setHideMonster, setMonsterData, setMonsterIsAttacking, setMonsterIsDead } from '../../store/reducers/monster'
-import { setPlayerAttacking, setPlayerItems, setPlayerStats } from '../../store/reducers/player'
+import { setPlayerAttacking, setPlayerIsDead, setPlayerItems, setPlayerStats } from '../../store/reducers/player'
 import { numeric } from '../../utils'
 import * as S from './styles'
 
@@ -31,7 +31,7 @@ export const Monster = () => {
 		monsterAtk,
 	} = useMonster()
 
-	const { playerAtk, playerStats, playerGold, playerItems, playerCanAttack, playerDiamond } = usePlayer()
+	const { playerAtk, playerStats, playerGold, playerItems, playerCanAttack, playerDiamond, playerIsDead } = usePlayer()
 
 	const { startMonsterAttack } = useActions()
 
@@ -70,7 +70,7 @@ export const Monster = () => {
 	)
 
 	const playerAttack = useCallback(() => {
-		if (!playerCanAttack || monsterHp <= 0) return
+		if (!playerCanAttack || monsterHp <= 0 || playerIsDead) return
 
 		setIsAttacking(true)
 		dispatch(setStartMonsterAttack(true))
@@ -82,7 +82,7 @@ export const Monster = () => {
 
 			dispatch(setPlayerAttacking(false))
 		}, 200)
-	}, [dispatch, hitMonster, monsterHp, playerAtk, playerCanAttack])
+	}, [dispatch, hitMonster, monsterHp, playerAtk, playerCanAttack, playerIsDead])
 
 	const checkMonsterIsDead = useCallback(() => {
 		if (monsterData?.name && monsterHp <= 0) {
@@ -103,6 +103,7 @@ export const Monster = () => {
 
 		if (playerStats?.health - monsterAtk <= 0) {
 			dispatch(setPlayerStats({ ...playerStats, health: 0 }))
+			dispatch(setPlayerIsDead(true))
 		} else {
 			dispatch(setPlayerStats({ ...playerStats, health: playerStats?.health - monsterAtk }))
 		}
@@ -119,12 +120,12 @@ export const Monster = () => {
 			hitPlayer()
 		}, 4000)
 
-		monsterIsDead && clearInterval(attack)
+		monsterIsDead || (playerIsDead && clearInterval(attack))
 
 		return () => {
 			clearInterval(attack)
 		}
-	}, [hitPlayer, monsterIsDead, startMonsterAttack])
+	}, [hitPlayer, monsterIsDead, playerIsDead, startMonsterAttack])
 
 	useEffect(() => {
 		checkMonsterIsDead()

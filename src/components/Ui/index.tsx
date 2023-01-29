@@ -3,7 +3,6 @@ import { get } from 'lodash'
 
 import { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
-import useActions from '../../hooks/useActions'
 import useMonster from '../../hooks/useMonsterStats'
 import usePlayer from '../../hooks/usePlayerStats'
 import { getMonster } from '../../services/api/monster'
@@ -14,9 +13,8 @@ import * as S from './styles'
 
 export const Ui = () => {
 	const dispatch = useDispatch()
-	const { monsterData, loadingMonsterType, loadingMonsterData, monsterAtk, monsterIsDead } = useMonster()
-	const { playerHp, playerMaxHp, playerExp, playerMaxExp, playerGold, playerDiamond, playerStats } = usePlayer()
-	const { startMonsterAttack } = useActions()
+	const { monsterData, loadingMonsterType, loadingMonsterData } = useMonster()
+	const { playerHp, playerMaxHp, playerExp, playerMaxExp, playerGold, playerDiamond } = usePlayer()
 
 	const fetchMonsterData = useCallback(
 		async (monsterId?: number) => {

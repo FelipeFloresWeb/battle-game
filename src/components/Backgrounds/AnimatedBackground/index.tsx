@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux'
-import { MonsterType } from '../../pages/api/monster/types'
-import { selectMonsterType } from '../../store/selectors/monster'
+import { MonsterType } from '../../../pages/api/monster/types'
+import { selectMonsterType } from '../../../store/selectors/monster'
 import * as S from './styles'
 
 export const AnimatedBackground = () => {

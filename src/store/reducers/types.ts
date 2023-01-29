@@ -42,3 +42,10 @@ export interface IActionsState {
 	loadingScene: boolean
 	cenario: number
 }
+
+export interface IRatesState {
+	expMultilplier: number
+	dropMultiplier: number
+	expLostRate: number
+	goldLostRate: number
+}
