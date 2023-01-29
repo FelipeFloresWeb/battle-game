@@ -8,7 +8,7 @@ export const AnimatedBackground = () => {
 
 	return (
 		<>
-			{monsterType?.name === 'Legendary' || monsterType?.name === 'Divine' ? (
+			{monsterType?.name === 'Legendary' || monsterType?.name === 'Divine' || monsterType.name === 'Mythical' ? (
 				<S.AnimatedBackgroundContainer montertype={monsterType?.name} namecolor={monsterType?.color} />
 			) : (
 				<></>

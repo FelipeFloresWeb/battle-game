@@ -1,8 +1,8 @@
-import types from './monsterPercentTable.json'
+import types from './monsterTypes.json'
 import { MonsterData, MonsterType } from './types'
 
 export const selectMonsterType = () => {
-	const randomNum = Math.random() * 101
+	const randomNum = 1
 
 	const percent = Number(randomNum.toFixed(2))
 
@@ -16,8 +16,11 @@ export const selectMonsterType = () => {
 		if (percent <= types.epic.percent && percent > types.legendary.percent) {
 			return types.epic
 		}
-		if (percent <= types.legendary.percent && percent > types.divine.percent) {
+		if (percent <= types.legendary.percent && percent > types.mythical.percent) {
 			return types.legendary
+		}
+		if (percent <= types.mythical.percent && percent > types.divine.percent) {
+			return types.mythical
 		}
 		if (percent <= types.divine.percent && percent >= 0) {
 			return types.divine

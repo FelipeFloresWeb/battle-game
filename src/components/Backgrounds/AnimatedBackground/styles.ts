@@ -8,9 +8,10 @@ export const AnimatedBackgroundContainer = styled(Flex)`
 	z-index: -1;
 
 	background: ${props =>
-		props.montertype === 'Divine'
-			? 'linear-gradient(270deg, #8e008e, #ff0000, #ff8e00, #ffff00, #008e00, #00c0c0, #400098)'
-			: 'linear-gradient(45deg, #d58610, #e4e017)'};
+		props.montertype === 'Divine' &&
+		'linear-gradient(270deg, #8e008e, #ff0000, #ff8e00, #ffff00, #008e00, #00c0c0, #400098)'};
+	background: ${props => props.montertype === 'Legendary' && 'linear-gradient(90deg, #d58610, #e4e017)'};
+	background: ${props => props.montertype === 'Mythical' && 'linear-gradient(90deg, #db7c1a, #e9272b)'};
 
 	background-size: ${props => props.montertype === 'Divine' && '600% 600%'};
 	transition: all 0.1s ease;
