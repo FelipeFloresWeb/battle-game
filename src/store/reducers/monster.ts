@@ -26,7 +26,6 @@ const MonsterSlice = createSlice({
 		},
 		setMonsterData(state, action: PayloadAction<MonsterData>) {
 			state.monsterData = action.payload
-			state.image = ` images/monsters/stage1/${action.payload.index}.png`
 		},
 		setMonsterIsDead(state, action: PayloadAction<boolean>) {
 			state.isDead = action.payload
@@ -36,6 +35,16 @@ const MonsterSlice = createSlice({
 		},
 		setHideMonster(state, action: PayloadAction<boolean>) {
 			state.hideMonster = action.payload
+		},
+		resetMonsterState(state) {
+			state.isDead = true
+			state.loadingMonsterData = false
+			state.loadingMonsterType = false
+			state.isAttacking = false
+			state.monsterType = {} as MonsterType
+			state.monsterData = {} as MonsterData
+			state.image = ''
+			state.hideMonster = false
 		},
 	},
 })
@@ -48,6 +57,7 @@ export const {
 	setLoadingMonsterData,
 	setMonsterIsAttacking,
 	setHideMonster,
+	resetMonsterState,
 } = MonsterSlice.actions
 
 export default MonsterSlice.reducer

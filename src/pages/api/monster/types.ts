@@ -14,6 +14,7 @@ export type MonsterData = {
 	name: string
 	stats: MonsterStats
 	loot: MonsterLoot
+	image: string
 }
 
 export type MonsterStats = {

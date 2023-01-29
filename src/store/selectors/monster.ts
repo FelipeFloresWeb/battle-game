@@ -28,7 +28,7 @@ export const selectMonsterIsDead = createSelector(
 
 export const selectMonsterImage = createSelector(
 	(state: RootState) => state.monster,
-	monster => monster.image
+	monster => monster.monsterData.image
 )
 
 export const selectMonsterIsAttacking = createSelector(

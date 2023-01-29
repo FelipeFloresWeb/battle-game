@@ -133,7 +133,7 @@ export const Monster = () => {
 
 	return (
 		<>
-			{!isEmpty(monsterData) && !hideMonster && (
+			{!isEmpty(monsterData) && !isEmpty(monsterType) && !hideMonster && (
 				<S.MonsterContainer
 					isdead={monsterIsDead.toString()}
 					startbattle={startMonsterAttack.toString()}

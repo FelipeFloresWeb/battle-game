@@ -1,7 +1,8 @@
 {
     "1": {
         "index": 1,
-        "name": "Floppy",        
+        "name": "Floppy",
+        "image": "images/monsters/stage1/1.png",
         "stats": {
             "maxHp": 10,
             "hp": 10,
@@ -17,7 +18,8 @@
     },
     "2": {
         "index": 2,
-        "name": "Vryctor",        
+        "name": "Vryctor", 
+        "image": "images/monsters/stage1/2.png",
         "stats": {
             "maxHp": 12,
             "hp": 12,
@@ -33,7 +35,8 @@
     },
     "3": {
         "index": 3,
-        "name": "Monphis",        
+        "name": "Monphis",
+        "image": "images/monsters/stage1/3.png",
         "stats": {
             "maxHp": 13,
             "hp": 13,
@@ -49,7 +52,8 @@
     },
     "4": {
         "index": 4,
-        "name": "Zamblesk",        
+        "name": "Zamblesk",
+        "image": "images/monsters/stage1/4.png",
         "stats": {
             "maxHp": 15,
             "hp": 15,
@@ -65,7 +69,8 @@
     },
     "5": {
         "index": 5,
-        "name": "Horcb",        
+        "name": "Horcb",
+        "image": "images/monsters/stage1/5.png",          
         "stats": {
             "maxHp": 16,
             "hp": 16,
@@ -81,7 +86,8 @@
     },
     "6": {
         "index": 6,
-        "name": "Ohmns",        
+        "name": "Ohmns",
+        "image": "images/monsters/stage1/6.png",
         "stats": {
             "maxHp": 18,
             "hp": 18,
@@ -97,7 +103,8 @@
     },
     "7": {
         "index": 7,
-        "name": "Bork",        
+        "name": "Bork",
+        "image": "images/monsters/stage1/7.png",
         "stats": {
             "maxHp": 20,
             "hp": 20,
@@ -113,7 +120,8 @@
     },
     "8": {
         "index": 8,
-        "name": "Felks",        
+        "name": "Felks",
+        "image": "images/monsters/stage1/8.png",
         "stats": {
             "maxHp": 22,
             "hp": 22,
@@ -129,7 +137,8 @@
     },
     "9": {
         "index": 9,
-        "name": "Zoomborb",        
+        "name": "Zoomborb",
+        "image": "images/monsters/stage1/9.png",
         "stats": {
             "maxHp": 30,
             "hp": 30,
@@ -145,7 +154,8 @@
     },
     "10": {
         "index": 10,
-        "name": "Kamy",        
+        "name": "Kamy",
+        "image": "images/monsters/stage1/10.png",
         "stats": {
             "maxHp": 50,
             "hp": 50,
@@ -161,7 +171,8 @@
     },
     "11": {
         "index": 11,
-        "name": "EvlanKark",        
+        "name": "EvlanKark",
+        "image": "images/monsters/stage1/11.png",
         "stats": {
             "maxHp": 100,
             "hp": 100,
@@ -177,7 +188,8 @@
     },
     "12": {
         "index": 12,
-        "name": "Rex Lex Zex",        
+        "name": "Rex Lex Zex",
+        "image": "images/monsters/stage1/12.png",
         "stats": {
             "maxHp": 1000,
             "hp": 1000,
