@@ -1,4 +1,4 @@
-import { Text } from '@chakra-ui/react'
+import { Tooltip } from '@chakra-ui/react'
 import { useDispatch } from 'react-redux'
 import useActions from '../../hooks/useActions'
 import { setCenario, setShowMonsterLoot } from '../../store/reducers/actions'
@@ -15,20 +15,42 @@ export const ChangeScene = () => {
 	}
 
 	return (
-		<S.Container>
+		<S.Container justifyContent={scene === 0 ? 'flex-end' : 'space-between'}>
 			{scene === 0 && (
 				<S.ToBattle
 					onClick={() => changeScene(1)}
 					draggable={false}
-					boxSize='64px'
+					boxSize='128px'
 					margin='0 10px'
 					objectFit='cover'
-					src='images/ui/toBattle.png'
+					src='images/ui/toBattle.webp'
 					alt='HP_BAR'
 				/>
 			)}
-			{scene > 0 && showMonsterLoot && <Text onClick={() => changeScene(scene + 1)}>Next</Text>}
-			{scene > 0 && showMonsterLoot && <Text onClick={() => changeScene(0)}>Back to City</Text>}
+			{scene > 0 && showMonsterLoot && (
+				<>
+					<Tooltip label='Back to the city...' borderRadius='8px' fontSize='md' hasArrow placement='top'>
+						<S.BackToCity
+							onClick={() => changeScene(0)}
+							draggable={false}
+							boxSize='128px'
+							margin='0 10px'
+							objectFit='cover'
+							src='images/ui/backSign.webp'
+							alt='HP_BAR'
+						/>
+					</Tooltip>
+					<S.ToBattle
+						onClick={() => changeScene(scene + 1)}
+						draggable={false}
+						boxSize='128px'
+						margin='0 10px'
+						objectFit='cover'
+						src='images/ui/nextScene.webp'
+						alt='HP_BAR'
+					/>
+				</>
+			)}
 		</S.Container>
 	)
 }

@@ -4,7 +4,7 @@ import styled from '@emotion/styled'
 export const Container = styled(Flex)`
 	flex-direction: column;
 	position: relative;
-	top: 35%;
+	top: 15%;
 	left: 44%;
 	width: fit-content;
 	color: #ffdf57;
