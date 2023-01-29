@@ -12,6 +12,7 @@ import {
 	selectMonsterIsDead,
 	selectMonsterType,
 } from '../../store/selectors/monster'
+import useRates from '../useRates'
 
 const useMonster = () => {
 	const monsterType = useSelector((state: RootState) => selectMonsterType(state))
@@ -35,9 +36,18 @@ const useMonster = () => {
 		() => Math.round(monsterData?.stats?.attackSpeed),
 		[monsterData?.stats?.attackSpeed]
 	)
-	const monsterExp = useMemo(() => monsterData?.loot?.exp, [monsterData?.loot?.exp])
-	const monsterGold = useMemo(() => monsterData?.loot?.gold || 0, [monsterData?.loot?.gold])
-	const monsterDiamond = useMemo(() => monsterData?.loot?.diamond || 0, [monsterData?.loot?.diamond])
+
+	const { expMultiplier, dropMultiplier } = useRates()
+
+	const monsterExp = useMemo(() => monsterData?.loot?.exp * expMultiplier, [expMultiplier, monsterData?.loot?.exp])
+	const monsterGold = useMemo(
+		() => monsterData?.loot?.gold || 0 * dropMultiplier || 0,
+		[dropMultiplier, monsterData?.loot?.gold]
+	)
+	const monsterDiamond = useMemo(
+		() => monsterData?.loot?.diamond || 0 * dropMultiplier || 0,
+		[dropMultiplier, monsterData?.loot?.diamond]
+	)
 
 	const monsterIsDead = useMemo(() => monsterHp <= 0, [monsterHp])
 
