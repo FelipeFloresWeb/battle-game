@@ -158,15 +158,15 @@ export const HealthProgressBar = styled(Progress)`
 	div {
 		background-color: ${props => props.barcolor};
 		background: ${props =>
-			props.montertype === 'Divine' &&
+			props.monstertype === 'Divine' &&
 			'linear-gradient(270deg, #8e008e, #ff0000, #ff8e00, #ffff00, #008e00, #00c0c0, #400098)'};
 
-		background-size: ${props => props.montertype === 'Divine' && '350% 350%'};
+		background-size: ${props => props.monstertype === 'Divine' && '350% 350%'};
 		transition: all 0.1s ease;
 
-		-webkit-animation: ${props => props.montertype === 'Divine' && 'animatedBackgroundDivineColor 2s ease infinite'};
-		-moz-animation: ${props => props.montertype === 'Divine' && 'animatedBackgroundDivineColor 2s ease infinite'};
-		animation: ${props => props.montertype === 'Divine' && 'animatedBackgroundDivineColor 2s ease infinite'};
+		-webkit-animation: ${props => props.monstertype === 'Divine' && 'animatedBackgroundDivineColor 2s ease infinite'};
+		-moz-animation: ${props => props.monstertype === 'Divine' && 'animatedBackgroundDivineColor 2s ease infinite'};
+		animation: ${props => props.monstertype === 'Divine' && 'animatedBackgroundDivineColor 2s ease infinite'};
 
 		@-webkit-keyframes animatedBackgroundDivineColor {
 			0% {
@@ -223,18 +223,18 @@ export const NameText = styled(Text)`
 	color: ${props => props.namecolor};
 
 	background: ${props =>
-		props.montertype === 'Divine' &&
+		props.monstertype === 'Divine' &&
 		'linear-gradient(270deg, #8e008e, #ff0000, #ff8e00, #ffff00, #008e00, #00c0c0, #400098)'};
-	background-size: ${props => props.montertype === 'Divine' && '350% 350%'};
+	background-size: ${props => props.monstertype === 'Divine' && '350% 350%'};
 
-	-webkit-background-clip: ${props => props.montertype === 'Divine' && 'text'};
-	-webkit-text-fill-color: ${props => props.montertype === 'Divine' && 'transparent'};
+	-webkit-background-clip: ${props => props.monstertype === 'Divine' && 'text'};
+	-webkit-text-fill-color: ${props => props.monstertype === 'Divine' && 'transparent'};
 
 	transition: all 0.1s ease;
 
-	-webkit-animation: ${props => props.montertype === 'Divine' && 'animatedColorMythicalColor 2s ease infinite'};
-	-moz-animation: ${props => props.montertype === 'Divine' && 'animatedColorMythicalColor 2s ease infinite'};
-	animation: ${props => props.montertype === 'Divine' && 'animatedColorMythicalColor 2s ease infinite'};
+	-webkit-animation: ${props => props.monstertype === 'Divine' && 'animatedColorMythicalColor 2s ease infinite'};
+	-moz-animation: ${props => props.monstertype === 'Divine' && 'animatedColorMythicalColor 2s ease infinite'};
+	animation: ${props => props.monstertype === 'Divine' && 'animatedColorMythicalColor 2s ease infinite'};
 
 	@-webkit-keyframes animatedColorMythicalColor {
 		0% {
@@ -280,21 +280,23 @@ export const MonsterTypeText = styled(Text)`
 	font-weight: 700;
 	color: ${props => props.namecolor};
 	text-transform: uppercase;
-	text-shadow: ${props => props.montertype !== 'Divine' && `0 0 5px ${props.namecolor}`};
+	text-shadow: ${props => props.monstertype !== 'Divine' && `0 0 5px ${props.namecolor}`};
+	-webkit-text-shadow: ${props => props.monstertype !== 'Divine' && `0 0 5px ${props.namecolor}`};
+	-moz-text-shadow: ${props => props.monstertype !== 'Divine' && `0 0 5px ${props.namecolor}`};
 
 	background: ${props =>
-		props.montertype === 'Divine' &&
+		props.monstertype === 'Divine' &&
 		'linear-gradient(270deg, #8e008e, #ff0000, #ff8e00, #ffff00, #008e00, #00c0c0, #400098)'};
-	background-size: ${props => props.montertype === 'Divine' && '350% 350%'};
+	background-size: ${props => props.monstertype === 'Divine' && '350% 350%'};
 
-	-webkit-background-clip: ${props => props.montertype === 'Divine' && 'text'};
-	-webkit-text-fill-color: ${props => props.montertype === 'Divine' && 'transparent'};
+	-webkit-background-clip: ${props => props.monstertype === 'Divine' && 'text'};
+	-webkit-text-fill-color: ${props => props.monstertype === 'Divine' && 'transparent'};
 
 	transition: all 0.1s ease;
 
-	-webkit-animation: ${props => props.montertype === 'Divine' && 'animatedColorMythicalColor 2s ease infinite'};
-	-moz-animation: ${props => props.montertype === 'Divine' && 'animatedColorMythicalColor 2s ease infinite'};
-	animation: ${props => props.montertype === 'Divine' && 'animatedColorMythicalColor 2s ease infinite'};
+	-webkit-animation: ${props => props.monstertype === 'Divine' && 'animatedColorMythicalColor 2s ease infinite'};
+	-moz-animation: ${props => props.monstertype === 'Divine' && 'animatedColorMythicalColor 2s ease infinite'};
+	animation: ${props => props.monstertype === 'Divine' && 'animatedColorMythicalColor 2s ease infinite'};
 
 	@-webkit-keyframes animatedColorMythicalColor {
 		0% {
@@ -346,7 +348,9 @@ export const MonterAttackCharger = styled(Flex)`
 		height: 100%;
 		width: 115px;
 		border-radius: 10px;
-		box-shadow: 0 0 5px 0 rgba(255, 0, 0, 0.5);
+		box-shadow: ${props => `0 0 5px 0 ${props.barcolor}`};
+		-webkit-box-shadow: ${props => `0 0 5px 0 ${props.barcolor}`};
+		-moz-box-shadow: ${props => `0 0 5px 0 ${props.barcolor}`};
 
 		div {
 			background: #e11c44;

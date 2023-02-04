@@ -27,7 +27,7 @@ export const selectMonsterType = () => {
 		}
 		return types.common
 	}
-	console.log(percent)
+
 	const monsterType = getType()
 
 	return monsterType

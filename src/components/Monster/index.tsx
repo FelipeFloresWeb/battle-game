@@ -157,16 +157,16 @@ export const Monster = () => {
 					isdead={monsterIsDead.toString()}
 					doattack={(!!monsterIsAttacking && !!startMonsterAttack && !monsterIsDead).toString()}
 				>
-					<S.MonsterTypeText montertype={monsterType?.name} namecolor={monsterType?.color}>
+					<S.MonsterTypeText monstertype={monsterType?.name} namecolor={monsterType?.color}>
 						{monsterType?.name}
 					</S.MonsterTypeText>
-					<S.NameText montertype={monsterType?.name} namecolor={monsterType?.color}>
+					<S.NameText monstertype={monsterType?.name} namecolor={monsterType?.color}>
 						{monsterData?.name}
 					</S.NameText>
 
 					<S.HealthContainer>
 						<S.HealthProgressBar
-							montertype={monsterType?.name}
+							monstertype={monsterType?.name}
 							barcolor={monsterType?.color}
 							borderRadius='5px'
 							max={monsterMaxHp}
@@ -177,7 +177,7 @@ export const Monster = () => {
 						</Flex>
 					</S.HealthContainer>
 
-					<S.MonterAttackCharger startmonsterattack={startMonsterAttack.toString()}>
+					<S.MonterAttackCharger barcolor={monsterType?.color} startmonsterattack={startMonsterAttack.toString()}>
 						<Progress max={maxAttackInterval} value={attackInterval} />
 					</S.MonterAttackCharger>
 
