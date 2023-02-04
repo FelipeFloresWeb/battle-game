@@ -48,7 +48,7 @@ export const Ui = () => {
 				<S.ProgressContainer>
 					<S.HpProgressBar borderEndRadius='5px' max={playerMaxHp} value={playerHp} />
 				</S.ProgressContainer>
-				<S.HpText>{playerHp + ' / ' + playerMaxHp}</S.HpText>
+				<S.HpText>{numeric(playerHp, 0) + ' / ' + numeric(playerMaxHp, 0)}</S.HpText>
 			</S.UiBar>
 
 			<S.UiBar>
@@ -63,7 +63,7 @@ export const Ui = () => {
 				<S.ProgressContainer>
 					<S.ExpProgressBar borderEndRadius='5px' max={playerMaxExp} value={playerExp} />
 				</S.ProgressContainer>
-				<S.ExpText>{`${playerExp} / ${playerMaxExp}`}</S.ExpText>
+				<S.ExpText>{`${numeric(playerExp, 0)} / ${numeric(playerMaxExp, 0)}`}</S.ExpText>
 			</S.UiBar>
 
 			<S.UiBar>

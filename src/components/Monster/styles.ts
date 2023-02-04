@@ -1,5 +1,6 @@
 import { Flex, Image, Progress, Text } from '@chakra-ui/react'
 import styled from '@emotion/styled'
+import { MONSTER_ATTACK_DURATION } from '../../utils/constants'
 
 export const MonsterContainer = styled(Flex)`
 	flex-direction: column;
@@ -14,22 +15,16 @@ export const MonsterContainer = styled(Flex)`
 	transition: all 0.1s ease;
 
 	animation: ${props =>
-			props.monsterattacking === 'true' &&
-			props.isdead === 'false' &&
-			props.startbattle === 'true' &&
-			'monsterAttackAnimator .3s forwards;'}${props => props.isdead === 'false' && 'idleAnimator 1s infinite;'} ${props => props.isdead === 'true' && 'monsterDyingAnimator 3s forwards'};
+			props.doattack === 'true' && `monsterAttackAnimator ${MONSTER_ATTACK_DURATION / 1000}s forwards;`}${props =>
+			props.isdead === 'false' && 'idleAnimator 1s infinite;'} ${props => props.isdead === 'true' && 'monsterDyingAnimator 3s forwards'};
 
 	-webkit-animation: ${props =>
-			props.monsterattacking === 'true' &&
-			props.isdead === 'false' &&
-			props.startbattle === 'true' &&
-			'monsterAttackAnimator .3s forwards;'}${props => props.isdead === 'false' && 'idleAnimator 1s infinite;'} ${props => props.isdead === 'true' && 'monsterDyingAnimator 3s forwards'};
+			props.doattack === 'true' && `monsterAttackAnimator ${MONSTER_ATTACK_DURATION / 1000}s forwards;`}${props =>
+			props.isdead === 'false' && 'idleAnimator 1s infinite;'} ${props => props.isdead === 'true' && 'monsterDyingAnimator 3s forwards'};
 
 	-moz-animation: ${props =>
-			props.monsterattacking === 'true' &&
-			props.isdead === 'false' &&
-			props.startbattle === 'true' &&
-			'monsterAttackAnimator .3s forwards;'}${props => props.isdead === 'false' && 'idleAnimator 1s infinite;'} ${props => props.isdead === 'true' && 'monsterDyingAnimator 3s forwards'};
+			props.doattack === 'true' && `monsterAttackAnimator ${MONSTER_ATTACK_DURATION / 1000}s forwards;`}${props =>
+			props.isdead === 'false' && 'idleAnimator 1s infinite;'} ${props => props.isdead === 'true' && 'monsterDyingAnimator 3s forwards'};
 
 	@-webkit-keyframes idleAnimator {
 		0% {
@@ -158,7 +153,7 @@ export const HealthProgressBar = styled(Progress)`
 	left: 43px;
 	height: 15px;
 	width: 115px;
-	top: 19px;
+	top: 0;
 
 	div {
 		background-color: ${props => props.barcolor};
@@ -217,11 +212,12 @@ export const HealthText = styled(Text)`
 	font-weight: 600;
 	color: #fff;
 	width: 100%;
+	top: -19px;
 `
 
 export const NameText = styled(Text)`
 	position: relative;
-	top: 20px;
+	top: 0;
 	font-size: 22px;
 	font-weight: 700;
 	color: ${props => props.namecolor};
@@ -279,11 +275,12 @@ export const NameText = styled(Text)`
 
 export const MonsterTypeText = styled(Text)`
 	position: relative;
-	top: 20px;
+	top: 0;
 	font-size: 22px;
 	font-weight: 700;
 	color: ${props => props.namecolor};
 	text-transform: uppercase;
+	text-shadow: ${props => props.montertype !== 'Divine' && `0 0 5px ${props.namecolor}`};
 
 	background: ${props =>
 		props.montertype === 'Divine' &&
@@ -332,6 +329,27 @@ export const MonsterTypeText = styled(Text)`
 		}
 		100% {
 			background-position: 0% 50%;
+		}
+	}
+`
+
+export const MonterAttackCharger = styled(Flex)`
+	position: absolute;
+	justify-content: center;
+	height: 15px;
+	width: 100%;
+	margin: 0 auto;
+	top: 33px;
+	left: 0;
+
+	div {
+		height: 100%;
+		width: 115px;
+		border-radius: 10px;
+		box-shadow: 0 0 5px 0 rgba(255, 0, 0, 0.5);
+
+		div {
+			background: #e11c44;
 		}
 	}
 `

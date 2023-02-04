@@ -1,4 +1,4 @@
-import { Flex } from '@chakra-ui/react'
+import { Flex, Progress } from '@chakra-ui/react'
 import { isEmpty } from 'lodash'
 import { useCallback, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
@@ -10,12 +10,14 @@ import { setShowMonsterLoot, setStartMonsterAttack } from '../../store/reducers/
 import { setHideMonster, setMonsterData, setMonsterIsAttacking, setMonsterIsDead } from '../../store/reducers/monster'
 import { setPlayerAttacking, setPlayerIsDead, setPlayerItems, setPlayerStats } from '../../store/reducers/player'
 import { numeric } from '../../utils'
+import { MONSTER_ATTACK_DURATION, MONSTER_ATTACK_INTERVAL } from '../../utils/constants'
 import * as S from './styles'
 
 export const Monster = () => {
 	const dispatch = useDispatch()
 	const [isAttacking, setIsAttacking] = useState(false)
-
+	const [maxAttackInterval, setMaxAttackInterval] = useState(0)
+	const [attackInterval, setAttackInterval] = useState(0)
 	const {
 		monsterHp,
 		monsterMaxHp,
@@ -104,40 +106,56 @@ export const Monster = () => {
 		if (playerStats?.health - monsterAtk <= 0) {
 			dispatch(setPlayerStats({ ...playerStats, health: 0 }))
 			dispatch(setPlayerIsDead(true))
+
+			setTimeout(() => {
+				dispatch(setStartMonsterAttack(false))
+			}, MONSTER_ATTACK_DURATION)
 		} else {
 			dispatch(setPlayerStats({ ...playerStats, health: playerStats?.health - monsterAtk }))
 		}
 
 		setTimeout(() => {
 			dispatch(setMonsterIsAttacking(false))
-		}, 400)
+		}, MONSTER_ATTACK_DURATION)
 	}, [dispatch, monsterAtk, playerStats])
-
-	useEffect(() => {
-		if (monsterIsDead || !startMonsterAttack) return
-
-		const attack = setInterval(() => {
-			hitPlayer()
-		}, 4000)
-
-		monsterIsDead || (playerIsDead && clearInterval(attack))
-
-		return () => {
-			clearInterval(attack)
-		}
-	}, [hitPlayer, monsterIsDead, playerIsDead, startMonsterAttack])
 
 	useEffect(() => {
 		checkMonsterIsDead()
 	}, [checkMonsterIsDead])
+
+	useEffect(() => {
+		if (!startMonsterAttack) return
+
+		const interval = setInterval(() => {
+			if (attackInterval === maxAttackInterval) hitPlayer()
+			setAttackInterval(prev => prev + 0.25)
+			if (attackInterval >= maxAttackInterval) setAttackInterval(0)
+		}, 250)
+
+		if (monsterIsDead || playerIsDead) clearInterval(interval)
+
+		return () => {
+			clearInterval(interval)
+		}
+	}, [attackInterval, hitPlayer, maxAttackInterval, monsterIsDead, playerIsDead, startMonsterAttack])
+
+	useEffect(() => {
+		if (!hideMonster && maxAttackInterval === 0) setMaxAttackInterval(MONSTER_ATTACK_INTERVAL / 1000)
+	}, [hideMonster, maxAttackInterval])
+
+	useEffect(() => {
+		if (hideMonster) {
+			setMaxAttackInterval(0)
+			setAttackInterval(0)
+		}
+	}, [hideMonster])
 
 	return (
 		<>
 			{!isEmpty(monsterData) && !isEmpty(monsterType) && !hideMonster && (
 				<S.MonsterContainer
 					isdead={monsterIsDead.toString()}
-					startbattle={startMonsterAttack.toString()}
-					monsterattacking={monsterIsAttacking.toString()}
+					doattack={(!!monsterIsAttacking && !!startMonsterAttack && !monsterIsDead).toString()}
 				>
 					<S.MonsterTypeText montertype={monsterType?.name} namecolor={monsterType?.color}>
 						{monsterType?.name}
@@ -158,6 +176,11 @@ export const Monster = () => {
 							<S.HealthText>{numeric(monsterHp, 0)}</S.HealthText>
 						</Flex>
 					</S.HealthContainer>
+
+					<S.MonterAttackCharger startmonsterattack={startMonsterAttack.toString()}>
+						<Progress max={maxAttackInterval} value={attackInterval} />
+					</S.MonterAttackCharger>
+
 					<S.MonsterImage
 						isattacking={isAttacking.toString()}
 						isdead={monsterIsDead.toString()}

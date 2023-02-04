@@ -2,7 +2,7 @@ import types from './monsterTypes.json'
 import { MonsterData, MonsterType } from './types'
 
 export const selectMonsterType = () => {
-	const randomNum = 1
+	const randomNum = Math.random() * 100
 
 	const percent = Number(randomNum.toFixed(2))
 
@@ -27,7 +27,7 @@ export const selectMonsterType = () => {
 		}
 		return types.common
 	}
-
+	console.log(percent)
 	const monsterType = getType()
 
 	return monsterType
