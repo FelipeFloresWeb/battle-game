@@ -8,11 +8,10 @@ export const StageProgressContainer = styled(Flex)`
 	max-width: ${MAX_WIDTH}px;
 	max-height: 300px;
 	margin: 15px auto 0;
-	padding: 15px;
+	padding: 15px 10px;
 	overflow-x: scroll;
 
 	img {
-		border: 1px solid #fff;
 		margin: 0 2px;
 	}
 

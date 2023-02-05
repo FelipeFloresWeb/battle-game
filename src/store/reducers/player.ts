@@ -10,7 +10,7 @@ const PlayerSlice = createSlice({
 		stats: {
 			health: 100,
 			maxHealth: 100,
-			attack: 5,
+			attack: 50,
 			defense: 10,
 			attackSpeed: 2000,
 			exp: 0,

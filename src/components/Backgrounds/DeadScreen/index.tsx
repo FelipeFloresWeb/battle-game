@@ -5,7 +5,7 @@ import { VscDebugRestart } from 'react-icons/vsc'
 import { useDispatch } from 'react-redux'
 import useMonster from '../../../hooks/useMonsterStats'
 import usePlayer from '../../../hooks/usePlayerStats'
-import { setCenario } from '../../../store/reducers/actions'
+import { setCenario, setStage } from '../../../store/reducers/actions'
 import { resetMonsterState } from '../../../store/reducers/monster'
 import { setPlayerIsDead, setPlayerItems, setPlayerStats } from '../../../store/reducers/player'
 import { numeric } from '../../../utils'
@@ -45,6 +45,7 @@ export const DeadScreen = () => {
 		)
 
 		dispatch(setCenario(0))
+		dispatch(setStage(0))
 		dispatch(setPlayerIsDead(false))
 		dispatch(resetMonsterState())
 	}, [dispatch, experienceLost, playerGoldLost, playerItems, playerStats])

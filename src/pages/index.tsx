@@ -10,6 +10,7 @@ import { GameWindow } from '../components/GameWindow'
 import { Header } from '../components/Header'
 import { LinksReferers } from '../components/LinksReferers'
 import { StageProgress } from '../components/StageProgress'
+import { Ui } from '../components/Ui'
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
@@ -25,7 +26,7 @@ export default function Home() {
 				<Header />
 				<GameWindow />
 				<Cursor />
-				{/* <Ui /> */}
+				<Ui />
 				<StageProgress />
 				<DeadScreen />
 				<AnimatedBackground />

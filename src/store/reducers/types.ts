@@ -41,6 +41,7 @@ export interface IActionsState {
 	showMonsterLoot: boolean
 	loadingScene: boolean
 	cenario: number
+	stage: number
 }
 
 export interface IRatesState {

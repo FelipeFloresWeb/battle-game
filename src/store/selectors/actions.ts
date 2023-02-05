@@ -1,23 +1,27 @@
 import { createSelector } from '@reduxjs/toolkit'
 import { RootState } from '..'
-import { IActionsState } from '../reducers/types'
 
 export const selectShowMonsterLoot = createSelector(
 	(state: RootState) => state.actions,
-	(actions: IActionsState) => actions.showMonsterLoot
+	actions => actions.showMonsterLoot
 )
 
 export const selectStartMonsterAttack = createSelector(
 	(state: RootState) => state.actions,
-	(actions: IActionsState) => actions.startMonsterAttack
+	actions => actions.startMonsterAttack
 )
 
 export const selectLoadingScene = createSelector(
 	(state: RootState) => state.actions,
-	(actions: IActionsState) => actions.loadingScene
+	actions => actions.loadingScene
 )
 
 export const selectCenario = createSelector(
 	(state: RootState) => state.actions,
-	(actions: IActionsState) => actions.cenario
+	actions => actions.cenario
+)
+
+export const selectStage = createSelector(
+	(state: RootState) => state.actions,
+	actions => actions.stage
 )

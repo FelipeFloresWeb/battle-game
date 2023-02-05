@@ -1,4 +1,4 @@
-import { Button, Image } from '@chakra-ui/react'
+import { Button, Flex, Image } from '@chakra-ui/react'
 import { get } from 'lodash'
 
 import { useCallback } from 'react'
@@ -35,8 +35,8 @@ export const Ui = () => {
 	)
 
 	return (
-		<>
-			<S.UiContainer w='100%' justifyContent='space-between' direction='row'>
+		<Flex>
+			<S.UiContainer p='0 50px' justifyContent='space-between' direction='row'>
 				<S.UiBar height='100%'>
 					<Image
 						draggable={false}
@@ -110,6 +110,6 @@ export const Ui = () => {
 			<Button isDisabled={loadingMonsterType || loadingMonsterData} onClick={() => fetchMonsterData()}>
 				Get Monster
 			</Button>
-		</>
+		</Flex>
 	)
 }
