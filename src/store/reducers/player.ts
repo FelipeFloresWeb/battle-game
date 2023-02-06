@@ -8,9 +8,9 @@ const PlayerSlice = createSlice({
 		playerIsDead: false,
 		canAttack: true,
 		stats: {
-			health: 100,
-			maxHealth: 100,
-			attack: 50,
+			health: 10000000000,
+			maxHealth: 10000000000,
+			attack: 5,
 			defense: 10,
 			attackSpeed: 2000,
 			exp: 0,

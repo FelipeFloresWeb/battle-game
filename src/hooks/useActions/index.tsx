@@ -3,6 +3,7 @@ import { RootState } from '../../store'
 import {
 	selectCenario,
 	selectLoadingScene,
+	selectMonsterInterval,
 	selectShowMonsterLoot,
 	selectStage,
 	selectStartMonsterAttack,
@@ -14,6 +15,7 @@ const useActions = () => {
 	const loadingScene = useSelector((state: RootState) => selectLoadingScene(state))
 	const scene = useSelector((state: RootState) => selectCenario(state))
 	const stage = useSelector((state: RootState) => selectStage(state))
+	const fetchMonsterInterval = useSelector((state: RootState) => selectMonsterInterval(state))
 
 	return {
 		startMonsterAttack,
@@ -21,6 +23,7 @@ const useActions = () => {
 		loadingScene,
 		scene,
 		stage,
+		fetchMonsterInterval,
 	}
 }
 

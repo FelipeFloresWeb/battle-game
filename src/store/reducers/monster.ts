@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { MonsterData, MonsterType } from '../../pages/api/monster/types'
+import { MonsterData, MonsterLoot, MonsterType } from '../../pages/api/monster/types'
 import { IMonsterState } from './types'
 
 const MonsterSlice = createSlice({
@@ -11,6 +11,7 @@ const MonsterSlice = createSlice({
 		isAttacking: false,
 		monsterType: {} as MonsterType,
 		monsterData: {} as MonsterData,
+		loot: {} as MonsterLoot,
 		image: '',
 		hideMonster: false,
 	} as IMonsterState,
@@ -26,6 +27,9 @@ const MonsterSlice = createSlice({
 		},
 		setMonsterData(state, action: PayloadAction<MonsterData>) {
 			state.monsterData = action.payload
+		},
+		setMonsterLoot(state, action: PayloadAction<MonsterLoot>) {
+			state.loot = action.payload
 		},
 		setMonsterIsDead(state, action: PayloadAction<boolean>) {
 			state.isDead = action.payload
@@ -58,6 +62,7 @@ export const {
 	setMonsterIsAttacking,
 	setHideMonster,
 	resetMonsterState,
+	setMonsterLoot,
 } = MonsterSlice.actions
 
 export default MonsterSlice.reducer

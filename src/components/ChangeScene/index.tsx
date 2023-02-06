@@ -2,13 +2,14 @@ import { Tooltip } from '@chakra-ui/react'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import useActions from '../../hooks/useActions'
-import { setCenario, setShowMonsterLoot, setStage } from '../../store/reducers/actions'
+import { setCenario, setFetchMonsterInterval, setShowMonsterLoot, setStage } from '../../store/reducers/actions'
+import { FETCH_MONSTER_INTERVAL } from '../../utils/constants'
 import * as S from './styles'
 
 export const ChangeScene = () => {
 	const dispatch = useDispatch()
 
-	const { showMonsterLoot, stage } = useActions()
+	const { showMonsterLoot, stage, fetchMonsterInterval } = useActions()
 
 	const changeStage = (number: number) => {
 		dispatch(setShowMonsterLoot(false))
@@ -43,7 +44,10 @@ export const ChangeScene = () => {
 		<S.Container justifyContent={stage === 0 ? 'flex-end' : 'space-between'}>
 			{stage === 0 && (
 				<S.ToBattle
-					onClick={() => changeStage(1)}
+					onClick={() => {
+						changeStage(1)
+						dispatch(setFetchMonsterInterval(FETCH_MONSTER_INTERVAL))
+					}}
 					draggable={false}
 					boxSize='128px'
 					margin='0 10px'
@@ -66,7 +70,10 @@ export const ChangeScene = () => {
 						/>
 					</Tooltip>
 					<S.ToBattle
-						onClick={() => changeStage(stage + 1)}
+						onClick={() => {
+							changeStage(stage + 1)
+							dispatch(setFetchMonsterInterval(FETCH_MONSTER_INTERVAL))
+						}}
 						draggable={false}
 						boxSize='128px'
 						margin='0 10px'

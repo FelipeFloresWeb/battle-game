@@ -25,3 +25,13 @@ export const selectStage = createSelector(
 	(state: RootState) => state.actions,
 	actions => actions.stage
 )
+
+export const selectMonsterInterval = createSelector(
+	(state: RootState) => state.actions,
+	actions => actions.fetchMonsterInterval
+)
+
+export const selectMonsterLoot = createSelector(
+	(state: RootState) => state.monster,
+	monster => monster.loot
+)

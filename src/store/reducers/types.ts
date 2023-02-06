@@ -1,4 +1,4 @@
-import { MonsterData, MonsterType } from '../../pages/api/monster/types'
+import { MonsterData, MonsterLoot, MonsterType } from '../../pages/api/monster/types'
 
 export interface IMonsterState {
 	isDead: boolean
@@ -9,6 +9,7 @@ export interface IMonsterState {
 	monsterData: MonsterData
 	image: string
 	hideMonster: boolean
+	loot: MonsterLoot
 }
 
 export interface IPlayerState {
@@ -42,6 +43,7 @@ export interface IActionsState {
 	loadingScene: boolean
 	cenario: number
 	stage: number
+	fetchMonsterInterval: number
 }
 
 export interface IRatesState {

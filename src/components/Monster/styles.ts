@@ -358,3 +358,28 @@ export const MonterAttackCharger = styled(Flex)`
 		}
 	}
 `
+
+export const FetchMonsterCountDownContainer = styled(Flex)`
+	position: relative;
+	top: 50%;
+	left: calc(50% - 232px);
+	width: fit-content;
+	p {
+		font-size: 30px;
+		font-weight: 700;
+		color: #fff;
+		text-transform: uppercase;
+		text-shadow: 0 0 7px #000;
+		-webkit-text-shadow: 0 0 7px #000;
+		-moz-text-shadow: 0 0 7px #000;
+	}
+
+	div {
+		position: relative;
+		bottom: 115px;
+		width: 200px;
+		height: 200px;
+
+		box-shadow: 0 0 7px 0 #000;
+	}
+`

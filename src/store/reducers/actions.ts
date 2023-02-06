@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { FETCH_MONSTER_INTERVAL } from '../../utils/constants'
 import { IActionsState } from './types'
 
 const ActionSlice = createSlice({
@@ -9,6 +10,7 @@ const ActionSlice = createSlice({
 		loadingScene: false,
 		cenario: 0,
 		stage: 0,
+		fetchMonsterInterval: FETCH_MONSTER_INTERVAL,
 	} as IActionsState,
 	reducers: {
 		setShowMonsterLoot(state, action: PayloadAction<boolean>) {
@@ -26,9 +28,19 @@ const ActionSlice = createSlice({
 		setStage(state, action: PayloadAction<number>) {
 			state.stage = action.payload
 		},
+		setFetchMonsterInterval(state, action: PayloadAction<number>) {
+			state.fetchMonsterInterval = action.payload
+		},
 	},
 })
 
-export const { setShowMonsterLoot, setStartMonsterAttack, setLoadingScene, setCenario, setStage } = ActionSlice.actions
+export const {
+	setShowMonsterLoot,
+	setStartMonsterAttack,
+	setLoadingScene,
+	setCenario,
+	setStage,
+	setFetchMonsterInterval,
+} = ActionSlice.actions
 
 export default ActionSlice.reducer

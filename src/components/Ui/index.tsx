@@ -1,13 +1,8 @@
-import { Button, Flex, Image } from '@chakra-ui/react'
-import { get } from 'lodash'
+import { Flex, Image } from '@chakra-ui/react'
 
-import { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import useMonster from '../../hooks/useMonsterStats'
 import usePlayer from '../../hooks/usePlayerStats'
-import { getMonster } from '../../services/api/monster'
-import { setShowMonsterLoot } from '../../store/reducers/actions'
-import { setLoadingMonsterData, setMonsterData, setMonsterType } from '../../store/reducers/monster'
 import { numeric } from '../../utils'
 import * as S from './styles'
 
@@ -15,24 +10,6 @@ export const Ui = () => {
 	const dispatch = useDispatch()
 	const { monsterData, loadingMonsterType, loadingMonsterData } = useMonster()
 	const { playerHp, playerMaxHp, playerExp, playerMaxExp, playerGold, playerDiamond } = usePlayer()
-
-	const fetchMonsterData = useCallback(
-		async (monsterId?: number) => {
-			dispatch(setShowMonsterLoot(false))
-
-			dispatch(setLoadingMonsterData(true))
-
-			const fetchMonster = await getMonster(monsterId)
-			const monsterType = get(fetchMonster, 'data.monsterType', {})
-			const monsterData = get(fetchMonster, 'data.monster', {})
-
-			dispatch(setMonsterType(monsterType))
-			dispatch(setMonsterData(monsterData))
-
-			dispatch(setLoadingMonsterData(false))
-		},
-		[dispatch]
-	)
 
 	return (
 		<Flex>
@@ -101,7 +78,7 @@ export const Ui = () => {
 					</S.DiamondText>
 				</S.UiBar>
 			</S.UiContainer>
-			<Button
+			{/* <Button
 				isDisabled={loadingMonsterType || loadingMonsterData}
 				onClick={() => fetchMonsterData(monsterData?.index)}
 			>
@@ -109,7 +86,7 @@ export const Ui = () => {
 			</Button>
 			<Button isDisabled={loadingMonsterType || loadingMonsterData} onClick={() => fetchMonsterData()}>
 				Get Monster
-			</Button>
+			</Button> */}
 		</Flex>
 	)
 }
