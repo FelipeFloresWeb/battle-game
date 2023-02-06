@@ -1,4 +1,4 @@
-import { Flex } from '@chakra-ui/react'
+import { Accordion, Flex } from '@chakra-ui/react'
 import styled from '@emotion/styled'
 import { MAX_WIDTH } from '../../utils/constants'
 
@@ -8,7 +8,7 @@ export const StageProgressContainer = styled(Flex)`
 	max-width: ${MAX_WIDTH}px;
 	max-height: 300px;
 	margin: 15px auto 0;
-	padding: 15px 10px;
+	padding: 15px 0;
 	overflow-x: scroll;
 
 	img {
@@ -40,5 +40,16 @@ export const StageProgressContainer = styled(Flex)`
 		height: 3px;
 		width: 3px;
 		margin: 3px;
+	}
+`
+
+export const ToggleStage = styled(Accordion)`
+	border-radius: 15px;
+
+	div:first-of-type {
+		border-top-width: 0;
+	}
+	div:last-of-type {
+		border-bottom-width: 0;
 	}
 `

@@ -1,20 +1,10 @@
-import { Flex, Image, Text } from '@chakra-ui/react'
-import { get } from 'lodash'
+import { AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Flex, Image, Text } from '@chakra-ui/react'
 
 import { useCallback, useMemo } from 'react'
-import { useDispatch } from 'react-redux'
 import useActions from '../../hooks/useActions'
-import useMonster from '../../hooks/useMonsterStats'
-import usePlayer from '../../hooks/usePlayerStats'
-import { getMonster } from '../../services/api/monster'
-import { setShowMonsterLoot } from '../../store/reducers/actions'
-import { setLoadingMonsterData, setMonsterData, setMonsterType } from '../../store/reducers/monster'
 import * as S from './styles'
 
 export const StageProgress = () => {
-	const dispatch = useDispatch()
-	const { monsterData, loadingMonsterType, loadingMonsterData } = useMonster()
-	const { playerHp, playerMaxHp, playerExp, playerMaxExp, playerGold, playerDiamond } = usePlayer()
 	const { stage: currentStage } = useActions()
 
 	const TOTAL_STAGES_WOLRD_1 = 51
@@ -60,29 +50,8 @@ export const StageProgress = () => {
 		[]
 	)
 
-	const fetchMonsterData = useCallback(
-		async (monsterId?: number) => {
-			dispatch(setShowMonsterLoot(false))
-
-			dispatch(setLoadingMonsterData(true))
-
-			const fetchMonster = await getMonster(monsterId)
-			const monsterType = get(fetchMonster, 'data.monsterType', {})
-			const monsterData = get(fetchMonster, 'data.monster', {})
-
-			dispatch(setMonsterType(monsterType))
-			dispatch(setMonsterData(monsterData))
-
-			dispatch(setLoadingMonsterData(false))
-		},
-		[dispatch]
-	)
-
 	const GenerateStages = useCallback(() => {
 		const stagesArray = new Array(TOTAL_STAGES_WOLRD_1).fill(1)
-		const stagesWithMonster = [1, 20, 30, 40, 50]
-		const stagesWithBoss = [10, 20, 30, 40, 50]
-		const stagesWithChest = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50]
 
 		return stagesArray.map((_, index) => {
 			const stageNumber = index
@@ -201,5 +170,25 @@ export const StageProgress = () => {
 		})
 	}, [currentStage, stages])
 
-	return <S.StageProgressContainer alignItems='center'>{GenerateStages()}</S.StageProgressContainer>
+	return (
+		<S.StageProgressContainer>
+			<S.ToggleStage allowToggle w='100%'>
+				<AccordionItem>
+					<h2>
+						<AccordionButton>
+							<Flex w='100%' textAlign='center' justifyContent='center' alignItems='center'>
+								Stage Progress
+							</Flex>
+							<AccordionIcon />
+						</AccordionButton>
+					</h2>
+					<AccordionPanel pb={4}>
+						<Flex alignItems='center' justifyContent='center'>
+							{GenerateStages()}
+						</Flex>
+					</AccordionPanel>
+				</AccordionItem>
+			</S.ToggleStage>
+		</S.StageProgressContainer>
+	)
 }

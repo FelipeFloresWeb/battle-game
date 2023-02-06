@@ -24,10 +24,10 @@ export default function Home() {
 			</Head>
 			<Flex direction='column'>
 				<Header />
+				<StageProgress />
 				<GameWindow />
 				<Cursor />
 				<Ui />
-				<StageProgress />
 				<DeadScreen />
 				<AnimatedBackground />
 				<DamageBackground />
