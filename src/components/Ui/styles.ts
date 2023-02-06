@@ -44,7 +44,7 @@ export const HpText = styled(Text)`
 export const ExpText = styled(Text)`
 	position: relative;
 	font-size: 16px;
-	bottom: 80px;
+	bottom: 82px;
 	font-weight: 600;
 	color: ${props => props.theme.colors.primary};
 	left: 130px;
@@ -98,9 +98,9 @@ export const DiamondContainer = styled(Flex)`
 `
 
 export const ExpProgressBar = styled(Progress)`
-	bottom: 55px;
+	height: 26px;
 	left: 87px;
-	height: 25px;
+	bottom: 57px;
 	max-height: 150px;
 	width: 161px;
 

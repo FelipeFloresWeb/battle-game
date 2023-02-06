@@ -347,6 +347,7 @@ export const MonterAttackCharger = styled(Flex)`
 	div {
 		height: 100%;
 		width: 115px;
+		background: none;
 		border-radius: 10px;
 		box-shadow: ${props => `0 0 5px 0 ${props.barcolor}`};
 		-webkit-box-shadow: ${props => `0 0 5px 0 ${props.barcolor}`};
