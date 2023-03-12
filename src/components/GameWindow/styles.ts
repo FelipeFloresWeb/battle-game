@@ -31,3 +31,22 @@ export const TrainerContainer = styled(Flex)`
 		cursor: url(${props => props.imageString}), auto !important;
 	}
 `
+
+export const CurrStageContainer = styled(Flex)`
+	flex-direction: column;
+	position: relative;
+	align-items: center;
+	top: 10px;
+	text-shadow: 0 0 10px #000;
+	z-index: 1;
+	p {
+		font-size: 3rem;
+		font-weight: 900;
+		line-height: 1;
+	}
+
+	span {
+		font-size: 4rem;
+		font-weight: 600;
+	}
+`

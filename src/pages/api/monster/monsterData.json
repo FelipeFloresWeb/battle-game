@@ -188,7 +188,7 @@
 	},
 	"12": {
 		"index": 12,
-		"name": "Rex Lex Zex",
+		"name": "Smaug",
 		"image": "images/monsters/stage1/12.png",
 		"stats": {
 			"maxHp": 1000,

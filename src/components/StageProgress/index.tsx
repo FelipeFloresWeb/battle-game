@@ -14,37 +14,37 @@ export const StageProgress = () => {
 			{
 				id: 0,
 				name: 'City',
-				image: 'images/stages/0.webp',
+				image: 'images/stages/icons/0.webp',
 			},
 			{
 				id: 1,
 				name: 'Stage 1',
-				image: 'images/stages/1.webp',
+				image: 'images/stages/icons/1.webp',
 			},
 			{
 				id: 2,
 				name: 'Stage 2',
-				image: 'images/stages/2.webp',
+				image: 'images/stages/icons/2.webp',
 			},
 			{
 				id: 3,
 				name: 'Stage 3',
-				image: 'images/stages/3.webp',
+				image: 'images/stages/icons/3.webp',
 			},
 			{
 				id: 4,
 				name: 'Stage 4',
-				image: 'images/stages/4.webp',
+				image: 'images/stages/icons/4.webp',
 			},
 			{
 				id: 5,
 				name: 'Stage 5',
-				image: 'images/stages/5.webp',
+				image: 'images/stages/icons/5.webp',
 			},
 			{
 				id: 6,
 				name: 'Stage 6',
-				image: 'images/stages/6.webp',
+				image: 'images/stages/icons/6.webp',
 			},
 		],
 		[]

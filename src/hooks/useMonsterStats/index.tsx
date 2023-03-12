@@ -17,6 +17,7 @@ import {
 	selectMonsterLoot,
 	selectMonsterType,
 } from '../../store/selectors/monster'
+import useActions from '../useActions'
 import useRates from '../useRates'
 
 const useMonster = () => {
@@ -31,10 +32,12 @@ const useMonster = () => {
 	const hideMonster = useSelector((state: RootState) => selectHideMonster(state))
 	const monsterLoot = useSelector((state: RootState) => selectMonsterLoot(state))
 
+	const { stageMultyplierLoot, stageMultyplierStats } = useActions()
+
 	const monsterHp = Math.round(monsterData?.stats?.hp) || 0
 	const monsterMaxHp = Math.round(monsterData?.stats?.maxHp) || 0
 	const monsterDef = Math.round(monsterData?.stats?.defense) || 0
-	const monsterAtk = Math.round(monsterData?.stats?.attack * monsterType?.statsMultiplier) || 0
+	const monsterAtk = Math.round(monsterData?.stats?.attack) || 0
 	const monsterAttackSpeed = Math.round(monsterData?.stats?.attackSpeed)
 
 	const { expMultiplier, dropMultiplier } = useRates()
@@ -57,13 +60,31 @@ const useMonster = () => {
 			const monsterData = get(fetchMonster, 'data.monster', {})
 			const monsterLoot = get(fetchMonster, 'data.monster.loot', {})
 
+			const multiplyMonsterDataStats = {
+				...monsterData,
+				stats: {
+					...monsterData.stats,
+					hp: monsterData.stats.hp * stageMultyplierStats,
+					maxHp: monsterData.stats.maxHp * stageMultyplierStats,
+					defense: monsterData.stats.defense * stageMultyplierStats,
+					attack: monsterData.stats.attack * stageMultyplierStats,
+				},
+			}
+
+			const multiplyMonsterLootStats = {
+				...monsterLoot,
+				exp: Math.round(monsterLoot.exp * stageMultyplierLoot),
+				gold: Math.round(monsterLoot?.gold * stageMultyplierLoot),
+				diamond: Math.round(monsterLoot?.diamond * stageMultyplierLoot),
+			}
+
 			dispatch(setMonsterType(monsterType))
-			dispatch(setMonsterLoot(monsterLoot))
-			dispatch(setMonsterData(monsterData))
+			dispatch(setMonsterLoot(multiplyMonsterLootStats))
+			dispatch(setMonsterData(multiplyMonsterDataStats))
 
 			dispatch(setLoadingMonsterData(false))
 		},
-		[dispatch]
+		[dispatch, stageMultyplierLoot, stageMultyplierStats]
 	)
 
 	return {
@@ -86,6 +107,7 @@ const useMonster = () => {
 		hideMonster,
 		monsterDiamond,
 		fetchMonsterData,
+		stageMultyplierLoot,
 	}
 }
 

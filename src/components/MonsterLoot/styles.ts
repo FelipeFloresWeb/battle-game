@@ -3,8 +3,8 @@ import styled from '@emotion/styled'
 
 export const Container = styled(Flex)`
 	flex-direction: column;
-	position: relative;
-	top: 15%;
+	position: absolute;
+	top: 28%;
 	left: 44%;
 	width: fit-content;
 	color: #ffdf57;
