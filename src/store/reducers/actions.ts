@@ -6,6 +6,7 @@ const ActionSlice = createSlice({
 	name: 'actions',
 	initialState: {
 		startMonsterAttack: false,
+		battleStarted: false,
 		showMonsterLoot: false,
 		loadingScene: false,
 		cenario: 0,
@@ -15,6 +16,9 @@ const ActionSlice = createSlice({
 	reducers: {
 		setShowMonsterLoot(state, action: PayloadAction<boolean>) {
 			state.showMonsterLoot = action.payload
+		},
+		setBattleStarted(state, action: PayloadAction<boolean>) {
+			state.battleStarted = action.payload
 		},
 		setStartMonsterAttack(state, action: PayloadAction<boolean>) {
 			state.startMonsterAttack = action.payload
@@ -41,6 +45,7 @@ export const {
 	setCenario,
 	setStage,
 	setFetchMonsterInterval,
+	setBattleStarted,
 } = ActionSlice.actions
 
 export default ActionSlice.reducer

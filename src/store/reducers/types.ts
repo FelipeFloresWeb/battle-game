@@ -40,6 +40,7 @@ export interface IPlayerItems {
 export interface IActionsState {
 	startMonsterAttack: boolean
 	showMonsterLoot: boolean
+	battleStarted: boolean
 	loadingScene: boolean
 	cenario: number
 	stage: number

@@ -6,7 +6,12 @@ import { useDispatch } from 'react-redux'
 import useActions from '../../hooks/useActions'
 import useMonster from '../../hooks/useMonsterStats'
 import usePlayer from '../../hooks/usePlayerStats'
-import { setFetchMonsterInterval, setShowMonsterLoot, setStartMonsterAttack } from '../../store/reducers/actions'
+import {
+	setBattleStarted,
+	setFetchMonsterInterval,
+	setShowMonsterLoot,
+	setStartMonsterAttack,
+} from '../../store/reducers/actions'
 import {
 	resetMonsterState,
 	setHideMonster,
@@ -85,6 +90,7 @@ export const Monster = () => {
 
 	const playerAttack = useCallback(() => {
 		setIsAttacking(true)
+		dispatch(setBattleStarted(true))
 		dispatch(setStartMonsterAttack(true))
 		dispatch(setPlayerAttacking(true))
 		hitMonster(playerAtk)
@@ -98,6 +104,7 @@ export const Monster = () => {
 
 	const checkMonsterIsDead = useCallback(() => {
 		if (monsterData?.name && monsterHp <= 0) {
+			dispatch(setBattleStarted(false))
 			dispatch(setMonsterIsDead(true))
 			dispatch(setStartMonsterAttack(false))
 
@@ -172,7 +179,7 @@ export const Monster = () => {
 			setAttackInterval(0)
 		}
 	}, [hideMonster])
-	console.count('render monster')
+
 	return (
 		<>
 			{fetchMonsterInterval > 0 && !cannotFetchMonster && (

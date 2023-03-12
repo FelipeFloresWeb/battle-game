@@ -40,3 +40,8 @@ export const selectHideMonster = createSelector(
 	(state: RootState) => state.monster,
 	monster => monster.hideMonster
 )
+
+export const selectMonsterLoot = createSelector(
+	(state: RootState) => state.monster,
+	monster => monster.loot
+)

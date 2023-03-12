@@ -31,7 +31,7 @@ export const selectMonsterInterval = createSelector(
 	actions => actions.fetchMonsterInterval
 )
 
-export const selectMonsterLoot = createSelector(
-	(state: RootState) => state.monster,
-	monster => monster.loot
+export const battleStarted = createSelector(
+	(state: RootState) => state.actions,
+	actions => actions.battleStarted
 )

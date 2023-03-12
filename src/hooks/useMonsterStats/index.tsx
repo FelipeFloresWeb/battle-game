@@ -1,12 +1,11 @@
 import { get } from 'lodash'
-import { useCallback, useMemo } from 'react'
+import { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getMonster } from '../../services/api/monster'
 
 import { RootState } from '../../store'
 import { setShowMonsterLoot } from '../../store/reducers/actions'
 import { setLoadingMonsterData, setMonsterData, setMonsterLoot, setMonsterType } from '../../store/reducers/monster'
-import { selectMonsterLoot } from '../../store/selectors/actions'
 import {
 	selectHideMonster,
 	selectLoadingMonsterData,
@@ -15,6 +14,7 @@ import {
 	selectMonsterImage,
 	selectMonsterIsAttacking,
 	selectMonsterIsDead,
+	selectMonsterLoot,
 	selectMonsterType,
 } from '../../store/selectors/monster'
 import useRates from '../useRates'
@@ -31,29 +31,19 @@ const useMonster = () => {
 	const hideMonster = useSelector((state: RootState) => selectHideMonster(state))
 	const monsterLoot = useSelector((state: RootState) => selectMonsterLoot(state))
 
-	const monsterHp = useMemo(() => Math.round(monsterData?.stats?.hp) || 0, [monsterData?.stats?.hp])
-	const monsterMaxHp = useMemo(() => Math.round(monsterData?.stats?.maxHp) || 0, [monsterData?.stats?.maxHp])
-	const monsterDef = useMemo(() => Math.round(monsterData?.stats?.defense) || 0, [monsterData?.stats?.defense])
-	const monsterAtk = useMemo(
-		() => Math.round(monsterData?.stats?.attack * monsterType?.statsMultiplier) || 0,
-		[monsterData?.stats?.attack, monsterType?.statsMultiplier]
-	)
-
-	const monsterAttackSpeed = useMemo(
-		() => Math.round(monsterData?.stats?.attackSpeed),
-		[monsterData?.stats?.attackSpeed]
-	)
+	const monsterHp = Math.round(monsterData?.stats?.hp) || 0
+	const monsterMaxHp = Math.round(monsterData?.stats?.maxHp) || 0
+	const monsterDef = Math.round(monsterData?.stats?.defense) || 0
+	const monsterAtk = Math.round(monsterData?.stats?.attack * monsterType?.statsMultiplier) || 0
+	const monsterAttackSpeed = Math.round(monsterData?.stats?.attackSpeed)
 
 	const { expMultiplier, dropMultiplier } = useRates()
 
-	const monsterExp = useMemo(() => monsterLoot?.exp * expMultiplier, [expMultiplier, monsterLoot?.exp])
-	const monsterGold = useMemo(() => monsterLoot?.gold || 0 * dropMultiplier || 0, [dropMultiplier, monsterLoot?.gold])
-	const monsterDiamond = useMemo(
-		() => monsterLoot?.diamond || 0 * dropMultiplier || 0,
-		[dropMultiplier, monsterLoot?.diamond]
-	)
+	const monsterExp = monsterLoot?.exp * expMultiplier
+	const monsterGold = monsterLoot?.gold || 0 * dropMultiplier || 0
+	const monsterDiamond = monsterLoot?.diamond || 0 * dropMultiplier || 0
 
-	const monsterIsDead = useMemo(() => monsterHp <= 0, [monsterHp])
+	const monsterIsDead = monsterHp <= 0
 
 	const fetchMonsterData = useCallback(
 		async (monsterId?: number) => {

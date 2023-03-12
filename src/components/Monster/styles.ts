@@ -4,7 +4,7 @@ import { MONSTER_ATTACK_DURATION } from '../../utils/constants'
 
 export const MonsterContainer = styled(Flex)`
 	flex-direction: column;
-	position: relative;
+	position: absolute;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
@@ -360,7 +360,7 @@ export const MonterAttackCharger = styled(Flex)`
 `
 
 export const FetchMonsterCountDownContainer = styled(Flex)`
-	position: relative;
+	position: absolute;
 	top: 50%;
 	left: calc(50% - 232px);
 	width: fit-content;

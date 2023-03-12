@@ -5,6 +5,7 @@ import { MAX_WIDTH } from '../../utils/constants'
 export const GameWindowContainer = styled(Flex)`
 	width: 80%;
 	height: 70vh;
+	position: relative;
 	max-width: ${MAX_WIDTH}px;
 	max-height: 700px;
 	background-color: ${props => props.theme.primary};

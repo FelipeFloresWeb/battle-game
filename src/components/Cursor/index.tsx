@@ -1,5 +1,6 @@
 import { Fragment, useCallback, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '../../store'
 import { setPlayerAttacking, setPlayerCanAttack } from '../../store/reducers/player'
 import { selectPlayerCanAttack, selectPlayerIsAttacking } from '../../store/selectors/player'
 import * as S from './styles'
@@ -12,8 +13,8 @@ export const Cursor = () => {
 	const cursorRef = useRef<any>(null)
 	const attackRef = useRef<any>(null)
 
-	const isAttacking = useSelector((state: any) => selectPlayerIsAttacking(state))
-	const canAttack = useSelector((state: any) => selectPlayerCanAttack(state))
+	const isAttacking = useSelector((state: RootState) => selectPlayerIsAttacking(state))
+	const canAttack = useSelector((state: RootState) => selectPlayerCanAttack(state))
 
 	const attack = useCallback(
 		(e: any) => {

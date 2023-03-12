@@ -1,8 +1,11 @@
 import { Tooltip } from '@chakra-ui/react'
 import { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import useActions from '../../hooks/useActions'
+import { RootState } from '../../store'
 import { setCenario, setFetchMonsterInterval, setShowMonsterLoot, setStage } from '../../store/reducers/actions'
+import { resetMonsterState } from '../../store/reducers/monster'
+import { battleStarted } from '../../store/selectors/actions'
 import { FETCH_MONSTER_INTERVAL } from '../../utils/constants'
 import * as S from './styles'
 
@@ -10,6 +13,8 @@ export const ChangeScene = () => {
 	const dispatch = useDispatch()
 
 	const { showMonsterLoot, stage, fetchMonsterInterval } = useActions()
+
+	const selectBattleStarted = useSelector((state: RootState) => battleStarted(state))
 
 	const changeStage = (number: number) => {
 		dispatch(setShowMonsterLoot(false))
@@ -56,32 +61,35 @@ export const ChangeScene = () => {
 					alt='HP_BAR'
 				/>
 			)}
-			{stage > 0 && showMonsterLoot && (
-				<>
-					<Tooltip label='Back to the city...' borderRadius='8px' fontSize='md' hasArrow placement='top'>
-						<S.BackToCity
-							onClick={() => changeStage(0)}
-							draggable={false}
-							boxSize='128px'
-							margin='0 10px'
-							objectFit='cover'
-							src='images/ui/backSign.webp'
-							alt='HP_BAR'
-						/>
-					</Tooltip>
-					<S.ToBattle
+			{stage > 0 && !selectBattleStarted && (
+				<Tooltip label='Back to the city...' borderRadius='8px' fontSize='md' hasArrow placement='top'>
+					<S.BackToCity
 						onClick={() => {
-							changeStage(stage + 1)
-							dispatch(setFetchMonsterInterval(FETCH_MONSTER_INTERVAL))
+							dispatch(resetMonsterState())
+							changeStage(0)
 						}}
 						draggable={false}
 						boxSize='128px'
 						margin='0 10px'
 						objectFit='cover'
-						src='images/ui/nextScene.webp'
+						src='images/ui/backSign.webp'
 						alt='HP_BAR'
 					/>
-				</>
+				</Tooltip>
+			)}
+			{stage > 0 && showMonsterLoot && (
+				<S.ToBattle
+					onClick={() => {
+						changeStage(stage + 1)
+						dispatch(setFetchMonsterInterval(FETCH_MONSTER_INTERVAL))
+					}}
+					draggable={false}
+					boxSize='128px'
+					margin='0 10px'
+					objectFit='cover'
+					src='images/ui/nextScene.webp'
+					alt='HP_BAR'
+				/>
 			)}
 		</S.Container>
 	)
