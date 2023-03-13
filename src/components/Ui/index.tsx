@@ -1,15 +1,51 @@
 import { Flex, Image } from '@chakra-ui/react'
-
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { AiOutlineFieldNumber, AiOutlineFieldString } from 'react-icons/ai'
+import { BsPercent } from 'react-icons/bs'
 import { useDispatch } from 'react-redux'
 import useMonster from '../../hooks/useMonsterStats'
 import usePlayer from '../../hooks/usePlayerStats'
-import { numeric } from '../../utils'
+import { numeric, shortNumer } from '../../utils'
+import { SHOW_HP_METHOD } from '../../utils/constants'
+import { CustomTooltip } from '../Tooltip'
 import * as S from './styles'
 
 export const Ui = () => {
+	const { playerHp, playerMaxHp, playerExp, playerMaxExp, playerGold, playerDiamond, playerHpPercent } = usePlayer()
+	const [showHpMethod, setShowHpMethod] = useState<'default' | 'percent' | 'short'>('default')
+
 	const dispatch = useDispatch()
 	const { monsterData, loadingMonsterType, loadingMonsterData } = useMonster()
-	const { playerHp, playerMaxHp, playerExp, playerMaxExp, playerGold, playerDiamond } = usePlayer()
+
+	const toggleShowHpMethod = useCallback(() => {
+		if (showHpMethod === 'default') {
+			setShowHpMethod('short')
+			window.localStorage.setItem(SHOW_HP_METHOD, 'short')
+		} else if (showHpMethod === 'short') {
+			setShowHpMethod('percent')
+			window.localStorage.setItem(SHOW_HP_METHOD, 'percent')
+		} else {
+			setShowHpMethod('default')
+			window.localStorage.setItem(SHOW_HP_METHOD, 'default')
+		}
+	}, [showHpMethod])
+
+	const hpText = useMemo(() => {
+		if (showHpMethod === 'default') {
+			return numeric(playerHp)
+		} else if (showHpMethod === 'short') {
+			return shortNumer(playerHp)
+		} else {
+			return playerHpPercent + '%'
+		}
+	}, [playerHp, playerHpPercent, showHpMethod])
+
+	useEffect(() => {
+		const getShowHpMethod = window.localStorage.getItem(SHOW_HP_METHOD) || 'default'
+
+		window.localStorage.setItem(SHOW_HP_METHOD, getShowHpMethod)
+		setShowHpMethod(getShowHpMethod as 'default' | 'percent' | 'short')
+	}, [])
 
 	return (
 		<Flex>
@@ -25,8 +61,15 @@ export const Ui = () => {
 					/>
 					<S.ProgressContainer>
 						<S.HpProgressBar borderEndRadius='5px' max={playerMaxHp} value={playerHp} />
+						<S.ToggleShowHpText onClick={toggleShowHpMethod}>
+							{showHpMethod === 'default' && <AiOutlineFieldString />}
+							{showHpMethod === 'short' && <BsPercent />}
+							{showHpMethod === 'percent' && <AiOutlineFieldNumber />}
+						</S.ToggleShowHpText>
 					</S.ProgressContainer>
-					<S.HpText>{numeric(playerHp, 0) + ' / ' + numeric(playerMaxHp, 0)}</S.HpText>
+					<Flex>
+						<CustomTooltip label={`${playerHp}/${playerMaxHp}`} Children={<S.HpText>{hpText}</S.HpText>} />
+					</Flex>
 				</S.UiBar>
 
 				<S.UiBar>
@@ -41,7 +84,7 @@ export const Ui = () => {
 					<S.ProgressContainer>
 						<S.ExpProgressBar borderEndRadius='5px' max={playerMaxExp} value={playerExp} />
 					</S.ProgressContainer>
-					<S.ExpText>{`${numeric(playerExp, 0)} / ${numeric(playerMaxExp, 0)}`}</S.ExpText>
+					<S.ExpText>{`${numeric(playerExp)} / ${numeric(playerMaxExp)}`}</S.ExpText>
 				</S.UiBar>
 
 				<S.UiBar>
@@ -57,7 +100,7 @@ export const Ui = () => {
 						<S.GoldProgressBar borderEndRadius='5px' value={100} />
 					</S.GoldContainer>
 					<S.GoldText>
-						<div>{numeric(playerGold, 0)}</div>
+						<div>{numeric(playerGold)}</div>
 					</S.GoldText>
 				</S.UiBar>
 
@@ -74,7 +117,7 @@ export const Ui = () => {
 						<S.DiamondProgressBar borderEndRadius='5px' value={100} />
 					</S.DiamondContainer>
 					<S.DiamondText>
-						<div>{numeric(playerDiamond, 0)}</div>
+						<div>{numeric(playerDiamond)}</div>
 					</S.DiamondText>
 				</S.UiBar>
 			</S.UiContainer>

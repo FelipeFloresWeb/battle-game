@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 import actions from './reducers/actions'
+import cursor from './reducers/cursor'
 import monster from './reducers/monster'
 import player from './reducers/player'
 import rates from './reducers/rates'
@@ -12,5 +13,6 @@ export const store = configureStore({
 		player,
 		actions,
 		rates,
+		cursor,
 	},
 })

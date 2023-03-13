@@ -53,3 +53,9 @@ export interface IRatesState {
 	expLostRate: number
 	goldLostRate: number
 }
+
+export interface ICursorState {
+	defaultCursor: string
+	myCursor: string
+	currentCursor: string
+}

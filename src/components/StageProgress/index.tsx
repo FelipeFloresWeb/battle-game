@@ -70,6 +70,7 @@ export const StageProgress = () => {
 						const stage0 = stages?.[0]
 						return (
 							<Image
+								draggable={false}
 								key={index}
 								border={currentStage === stageNumber ? '3px solid #7504f7' : ''}
 								src={stage0.image}
@@ -82,6 +83,7 @@ export const StageProgress = () => {
 						const stage = stages?.[1]
 						return (
 							<Image
+								draggable={false}
 								key={index}
 								border={currentStage === stageNumber ? '3px solid #7504f7' : ''}
 								src={stage.image}
@@ -94,6 +96,7 @@ export const StageProgress = () => {
 						const stage1 = stages?.[2]
 						return (
 							<Image
+								draggable={false}
 								key={index}
 								border={currentStage === stageNumber ? '3px solid #7504f7' : ''}
 								src={stage1.image}
@@ -106,6 +109,7 @@ export const StageProgress = () => {
 						const stage2 = stages?.[3]
 						return (
 							<Image
+								draggable={false}
 								key={index}
 								border={currentStage === stageNumber ? '3px solid #7504f7' : ''}
 								src={stage2.image}
@@ -118,6 +122,7 @@ export const StageProgress = () => {
 						const stage3 = stages?.[4]
 						return (
 							<Image
+								draggable={false}
 								key={index}
 								border={currentStage === stageNumber ? '3px solid #7504f7' : ''}
 								src={stage3.image}
@@ -130,6 +135,7 @@ export const StageProgress = () => {
 						const stage4 = stages?.[5]
 						return (
 							<Image
+								draggable={false}
 								key={index}
 								border={currentStage === stageNumber ? '3px solid #7504f7' : ''}
 								src={stage4.image}
@@ -142,6 +148,7 @@ export const StageProgress = () => {
 						const stage5 = stages?.[6]
 						return (
 							<Image
+								draggable={false}
 								key={index}
 								border={currentStage === stageNumber ? '3px solid #7504f7' : ''}
 								src={stage5.image}

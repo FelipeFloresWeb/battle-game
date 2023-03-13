@@ -39,6 +39,7 @@ export const CurrStageContainer = styled(Flex)`
 	top: 10px;
 	text-shadow: 0 0 10px #000;
 	z-index: 1;
+	color: #fff;
 	p {
 		font-size: 3rem;
 		font-weight: 900;

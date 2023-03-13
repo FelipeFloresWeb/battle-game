@@ -2,13 +2,14 @@ import { Fragment, useCallback, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../../store'
 import { setPlayerAttacking, setPlayerCanAttack } from '../../store/reducers/player'
+import { selectCurrentCursor } from '../../store/selectors/cursor'
 import { selectPlayerCanAttack, selectPlayerIsAttacking } from '../../store/selectors/player'
 import * as S from './styles'
-const randomNumber = Math.floor(Math.random() * 3) + 1
-const cursor = `images/swords/${randomNumber}.webp`
 
 export const Cursor = () => {
 	const dispatch = useDispatch()
+
+	const cursor = useSelector((state: RootState) => selectCurrentCursor(state))
 
 	const cursorRef = useRef<any>(null)
 	const attackRef = useRef<any>(null)
@@ -41,7 +42,7 @@ export const Cursor = () => {
 				dispatch(setPlayerCanAttack(true))
 			}, 2000)
 		},
-		[canAttack, dispatch]
+		[canAttack, cursor, dispatch]
 	)
 
 	useEffect(() => {

@@ -132,3 +132,20 @@ export const DiamondProgressBar = styled(Progress)`
 		background-color: #4d98db;
 	}
 `
+export const ToggleShowHpText = styled(Flex)`
+	align-items: center;
+	position: relative;
+	bottom: 65px;
+	left: 74px;
+	background-color: #919191;
+	padding: 3px;
+	border-radius: 100%;
+	margin: 0;
+	border: 1px solid #fff;
+
+	:hover {
+		background-color: #fff;
+		border: 1px solid #919191;
+		color: #919191;
+	}
+`

@@ -21,6 +21,7 @@ const usePlayer = () => {
 
 	const playerHp = useMemo(() => Math.round(playerStats?.health) || 0, [playerStats?.health])
 	const playerMaxHp = useMemo(() => Math.round(playerStats?.maxHealth) || 0, [playerStats?.maxHealth])
+	const playerHpPercent = useMemo(() => Math.round((playerHp * 100) / playerMaxHp) || 0, [playerHp, playerMaxHp])
 	const playerAtk = useMemo(() => Math.round(playerStats?.attack) || 0, [playerStats?.attack])
 	const playerDef = useMemo(() => Math.round(playerStats?.defense) || 0, [playerStats?.defense])
 	const playerExp = useMemo(() => Math.round(playerStats?.exp) || 0, [playerStats?.exp])
@@ -61,6 +62,7 @@ const usePlayer = () => {
 		playerIsDead,
 		experienceLost,
 		playerGoldLost,
+		playerHpPercent,
 	}
 }
 
