@@ -1,13 +1,27 @@
-import { AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Flex, Image, Text } from '@chakra-ui/react'
+import { AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Flex, Image } from '@chakra-ui/react'
 
 import { useCallback, useMemo } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import useActions from '../../hooks/useActions'
+import { RootState } from '../../store'
+import { setStage } from '../../store/reducers/actions'
+import { selectEnabledStagesWorld1 } from '../../store/selectors/actions'
+import { TOTAL_STAGES_WOLRD_1 } from '../../utils/constants'
 import * as S from './styles'
 
 export const StageProgress = () => {
 	const { stage: currentStage } = useActions()
+	const enabledstagesWorld1 = useSelector((state: RootState) => selectEnabledStagesWorld1(state))
+	const dispatch = useDispatch()
 
-	const TOTAL_STAGES_WOLRD_1 = 51
+	const handleWrapStages = useCallback(
+		(stageNumber: number) => {
+			if (stageNumber > enabledstagesWorld1) return
+
+			dispatch(setStage(stageNumber))
+		},
+		[dispatch, enabledstagesWorld1]
+	)
 
 	const stages = useMemo(
 		() => [
@@ -53,8 +67,59 @@ export const StageProgress = () => {
 	const GenerateStages = useCallback(() => {
 		const stagesArray = new Array(TOTAL_STAGES_WOLRD_1).fill(1)
 
+		const getCurrentStage = (stageNumber: number) => {
+			switch (stageNumber) {
+				case 0:
+					const stage0 = stages?.[0]
+					return {
+						src: stage0.image,
+						alt: stage0?.name,
+					}
+				case 1:
+					const stage = stages?.[1]
+					return {
+						src: stage.image,
+						alt: stage?.name,
+					}
+				case 10:
+					const stage1 = stages?.[2]
+					return {
+						src: stage1.image,
+						alt: stage1?.name,
+					}
+				case 20:
+					const stage2 = stages?.[3]
+					return {
+						src: stage2.image,
+						alt: stage2?.name,
+					}
+				case 30:
+					const stage3 = stages?.[4]
+					return {
+						src: stage3.image,
+						alt: stage3?.name,
+					}
+				case 40:
+					const stage4 = stages?.[5]
+					return {
+						src: stage4.image,
+						alt: stage4?.name,
+					}
+				case 50:
+					const stage5 = stages?.[6]
+					return {
+						src: stage5.image,
+						alt: stage5?.name,
+					}
+				default:
+					break
+			}
+		}
+
 		return stagesArray.map((_, index) => {
 			const stageNumber = index
+
+			const currStage = getCurrentStage(stageNumber)
 
 			if (
 				stageNumber === 0 ||
@@ -65,117 +130,35 @@ export const StageProgress = () => {
 				stageNumber === 40 ||
 				stageNumber === 50
 			) {
-				switch (stageNumber) {
-					case 0:
-						const stage0 = stages?.[0]
-						return (
-							<Image
-								draggable={false}
-								key={index}
-								border={currentStage === stageNumber ? '3px solid #7504f7' : ''}
-								src={stage0.image}
-								alt={stage0?.name}
-								borderRadius='full'
-								boxSize='50px'
-							/>
-						)
-					case 1:
-						const stage = stages?.[1]
-						return (
-							<Image
-								draggable={false}
-								key={index}
-								border={currentStage === stageNumber ? '3px solid #7504f7' : ''}
-								src={stage.image}
-								alt={stage?.name}
-								borderRadius='full'
-								boxSize='50px'
-							/>
-						)
-					case 10:
-						const stage1 = stages?.[2]
-						return (
-							<Image
-								draggable={false}
-								key={index}
-								border={currentStage === stageNumber ? '3px solid #7504f7' : ''}
-								src={stage1.image}
-								alt={stage1?.name}
-								borderRadius='full'
-								boxSize='50px'
-							/>
-						)
-					case 20:
-						const stage2 = stages?.[3]
-						return (
-							<Image
-								draggable={false}
-								key={index}
-								border={currentStage === stageNumber ? '3px solid #7504f7' : ''}
-								src={stage2.image}
-								alt={stage2?.name}
-								borderRadius='full'
-								boxSize='50px'
-							/>
-						)
-					case 30:
-						const stage3 = stages?.[4]
-						return (
-							<Image
-								draggable={false}
-								key={index}
-								border={currentStage === stageNumber ? '3px solid #7504f7' : ''}
-								src={stage3.image}
-								alt={stage3?.name}
-								borderRadius='full'
-								boxSize='50px'
-							/>
-						)
-					case 40:
-						const stage4 = stages?.[5]
-						return (
-							<Image
-								draggable={false}
-								key={index}
-								border={currentStage === stageNumber ? '3px solid #7504f7' : ''}
-								src={stage4.image}
-								alt={stage4?.name}
-								borderRadius='full'
-								boxSize='50px'
-							/>
-						)
-					case 50:
-						const stage5 = stages?.[6]
-						return (
-							<Image
-								draggable={false}
-								key={index}
-								border={currentStage === stageNumber ? '3px solid #7504f7' : ''}
-								src={stage5.image}
-								alt={stage5?.name}
-								borderRadius='full'
-								boxSize='50px'
-							/>
-						)
-					default:
-						break
-				}
+				return (
+					<Image
+						filter={index > enabledstagesWorld1 ? 'grayscale(90%)' : ''}
+						draggable={false}
+						onClick={() => handleWrapStages(index)}
+						key={index}
+						border={currentStage === stageNumber ? '3px solid #7504f7' : ''}
+						src={currStage?.src}
+						alt={currStage?.alt}
+						borderRadius='full'
+						boxSize='50px'
+					/>
+				)
 			}
 
 			return (
-				<Flex key={index} direction='column'>
-					<Text
+				<Flex key={index} onClick={() => handleWrapStages(index)} direction='column'>
+					<S.StageNumber
 						borderRadius='5px'
 						px='3px'
-						color={currentStage === stageNumber ? '#7504f7' : ''}
+						color={index < enabledstagesWorld1 ? '#7504f7' : ''}
 						border={currentStage === stageNumber ? '1px solid #7504f7' : ''}
 					>
 						{stageNumber}
-					</Text>
+					</S.StageNumber>
 				</Flex>
 			)
 		})
-	}, [currentStage, stages])
+	}, [enabledstagesWorld1, currentStage, handleWrapStages, stages])
 
 	return (
 		<S.StageProgressContainer>

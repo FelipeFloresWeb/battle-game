@@ -35,3 +35,8 @@ export const battleStarted = createSelector(
 	(state: RootState) => state.actions,
 	actions => actions.battleStarted
 )
+
+export const selectEnabledStagesWorld1 = createSelector(
+	(state: RootState) => state.actions,
+	actions => actions.enabledStagesWorld1
+)

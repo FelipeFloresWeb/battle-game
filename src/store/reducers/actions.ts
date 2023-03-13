@@ -12,6 +12,7 @@ const ActionSlice = createSlice({
 		cenario: 0,
 		stage: 0,
 		fetchMonsterInterval: FETCH_MONSTER_INTERVAL,
+		enabledStagesWorld1: 1,
 	} as IActionsState,
 	reducers: {
 		setShowMonsterLoot(state, action: PayloadAction<boolean>) {
@@ -35,6 +36,9 @@ const ActionSlice = createSlice({
 		setFetchMonsterInterval(state, action: PayloadAction<number>) {
 			state.fetchMonsterInterval = action.payload
 		},
+		setIncrementeEnabledStagesWorld1(state) {
+			state.enabledStagesWorld1 += 1
+		},
 	},
 })
 
@@ -46,6 +50,7 @@ export const {
 	setStage,
 	setFetchMonsterInterval,
 	setBattleStarted,
+	setIncrementeEnabledStagesWorld1,
 } = ActionSlice.actions
 
 export default ActionSlice.reducer

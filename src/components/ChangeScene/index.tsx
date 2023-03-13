@@ -3,7 +3,13 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import useActions from '../../hooks/useActions'
 import { RootState } from '../../store'
-import { setCenario, setFetchMonsterInterval, setShowMonsterLoot, setStage } from '../../store/reducers/actions'
+import {
+	setCenario,
+	setFetchMonsterInterval,
+	setIncrementeEnabledStagesWorld1,
+	setShowMonsterLoot,
+	setStage,
+} from '../../store/reducers/actions'
 import { resetMonsterState } from '../../store/reducers/monster'
 import { battleStarted } from '../../store/selectors/actions'
 import { FETCH_MONSTER_INTERVAL } from '../../utils/constants'
@@ -81,6 +87,7 @@ export const ChangeScene = () => {
 				<S.ToBattle
 					onClick={() => {
 						changeStage(stage + 1)
+						dispatch(setIncrementeEnabledStagesWorld1())
 						dispatch(setFetchMonsterInterval(FETCH_MONSTER_INTERVAL))
 					}}
 					draggable={false}

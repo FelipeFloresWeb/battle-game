@@ -45,6 +45,7 @@ export interface IActionsState {
 	cenario: number
 	stage: number
 	fetchMonsterInterval: number
+	enabledStagesWorld1: number
 }
 
 export interface IRatesState {

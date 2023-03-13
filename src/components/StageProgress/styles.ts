@@ -1,4 +1,4 @@
-import { Accordion, Flex } from '@chakra-ui/react'
+import { Accordion, Flex, Text } from '@chakra-ui/react'
 import styled from '@emotion/styled'
 import { MAX_WIDTH } from '../../utils/constants'
 
@@ -52,4 +52,8 @@ export const ToggleStage = styled(Accordion)`
 	div:last-of-type {
 		border-bottom-width: 0;
 	}
+`
+
+export const StageNumber = styled(Text)`
+	font-weight: 600;
 `
