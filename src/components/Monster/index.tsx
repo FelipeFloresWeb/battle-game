@@ -48,7 +48,7 @@ export const Monster = () => {
 
 	const { playerAtk, playerStats, playerGold, playerItems, playerCanAttack, playerDiamond, playerIsDead } = usePlayer()
 
-	const { startMonsterAttack, fetchMonsterInterval, stage } = useActions()
+	const { startMonsterAttack, fetchMonsterInterval, stage, isfetchingMonster } = useActions()
 
 	const cannotFetchMonster = stage === 0
 
@@ -182,7 +182,7 @@ export const Monster = () => {
 
 	return (
 		<>
-			{fetchMonsterInterval > 0 && !cannotFetchMonster && (
+			{isfetchingMonster && !cannotFetchMonster && (
 				<S.FetchMonsterCountDownContainer alignItems='center' direction='column'>
 					<Text>{fetchMonsterInterval} seconds until next monster...</Text>
 					<Spinner thickness='6px' speed='0.6s' color='#fff' />

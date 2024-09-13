@@ -14,22 +14,17 @@ const useActions = () => {
 	const showMonsterLoot = useSelector((state: RootState) => selectShowMonsterLoot(state))
 	const loadingScene = useSelector((state: RootState) => selectLoadingScene(state))
 	const scene = useSelector((state: RootState) => selectCenario(state))
+	// const stage = 1000
 	const stage = useSelector((state: RootState) => selectStage(state))
 	const fetchMonsterInterval = useSelector((state: RootState) => selectMonsterInterval(state))
+	const isfetchingMonster = fetchMonsterInterval > 0
 
 	const stageMultyplierLoot = Number((stage / 100 + 1)?.toFixed(2))
 
-	let stageMultyplierStats = 1
+	const stageDigits = `${stage}`.length
 
-	if (stage >= 10 && stage < 20) {
-		stageMultyplierStats = 2
-	} else if (stage >= 20 && stage < 30) {
-		stageMultyplierStats = 3
-	} else if (stage >= 30 && stage < 40) {
-		stageMultyplierStats = 4
-	} else if (stage >= 40 && stage < 50) {
-		stageMultyplierStats = 5
-	}
+	const stageMultyplierStats =
+		stageDigits < 3 ? Number(`${stage}`?.[0]) + 1 : Number(`${stage}`?.slice(0, stageDigits - 1))
 
 	return {
 		startMonsterAttack,
@@ -40,6 +35,7 @@ const useActions = () => {
 		fetchMonsterInterval,
 		stageMultyplierLoot,
 		stageMultyplierStats,
+		isfetchingMonster,
 	}
 }
 

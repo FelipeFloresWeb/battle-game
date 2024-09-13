@@ -3,24 +3,40 @@ import { AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Flex, Im
 import { useCallback, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import useActions from '../../hooks/useActions'
+import useMonster from '../../hooks/useMonsterStats'
+import usePlayer from '../../hooks/usePlayerStats'
 import { RootState } from '../../store'
 import { setStage } from '../../store/reducers/actions'
+import { resetMonsterState } from '../../store/reducers/monster'
 import { selectEnabledStagesWorld1 } from '../../store/selectors/actions'
 import { TOTAL_STAGES_WOLRD_1 } from '../../utils/constants'
 import * as S from './styles'
 
 export const StageProgress = () => {
-	const { stage: currentStage } = useActions()
+	const { stage: currentStage, startMonsterAttack } = useActions()
+	const { monsterIsDead } = useMonster()
+	const { playerIsDead } = usePlayer()
+	const { isfetchingMonster } = useActions()
 	const enabledstagesWorld1 = useSelector((state: RootState) => selectEnabledStagesWorld1(state))
 	const dispatch = useDispatch()
 
+	const cannotChangeStage = useMemo(
+		() => (startMonsterAttack && !monsterIsDead) || playerIsDead || isfetchingMonster,
+		[startMonsterAttack, monsterIsDead, playerIsDead, isfetchingMonster]
+	)
+
 	const handleWrapStages = useCallback(
 		(stageNumber: number) => {
+			if (cannotChangeStage) return
 			if (stageNumber > enabledstagesWorld1) return
+			if (stageNumber === currentStage) return
+			if (stageNumber === 0) {
+				dispatch(resetMonsterState())
+			}
 
 			dispatch(setStage(stageNumber))
 		},
-		[dispatch, enabledstagesWorld1]
+		[cannotChangeStage, currentStage, dispatch, enabledstagesWorld1]
 	)
 
 	const stages = useMemo(
@@ -138,6 +154,7 @@ export const StageProgress = () => {
 						key={index}
 						border={currentStage === stageNumber ? '3px solid #7504f7' : ''}
 						src={currStage?.src}
+						style={cannotChangeStage ? { cursor: 'not-allowed' } : {}}
 						alt={currStage?.alt}
 						borderRadius='full'
 						boxSize='50px'
@@ -150,6 +167,7 @@ export const StageProgress = () => {
 					<S.StageNumber
 						borderRadius='5px'
 						px='3px'
+						style={cannotChangeStage ? { cursor: 'not-allowed' } : {}}
 						color={index < enabledstagesWorld1 ? '#7504f7' : ''}
 						border={currentStage === stageNumber ? '1px solid #7504f7' : ''}
 					>
@@ -158,7 +176,7 @@ export const StageProgress = () => {
 				</Flex>
 			)
 		})
-	}, [enabledstagesWorld1, currentStage, handleWrapStages, stages])
+	}, [stages, cannotChangeStage, enabledstagesWorld1, currentStage, handleWrapStages])
 
 	return (
 		<S.StageProgressContainer>

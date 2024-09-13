@@ -30,11 +30,15 @@ export const GameWindow = () => {
 					<p>Village</p>
 				) : (
 					<>
-						<p>
-							STAGE<span> {currStage}</span>
-						</p>
-						<small>current drop bonus {stageMultyplierLoot}x</small>
-						<small>monster stats multiplier {stageMultyplierStats}x</small>
+						{!playerIsDead && (
+							<>
+								<p>
+									STAGE<span> {currStage}</span>
+								</p>
+								<small>current drop bonus {stageMultyplierLoot}x</small>
+								<small>monster stats multiplier {stageMultyplierStats}x</small>
+							</>
+						)}
 					</>
 				)}
 			</S.CurrStageContainer>

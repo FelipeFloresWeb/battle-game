@@ -1,5 +1,5 @@
 import { Tooltip } from '@chakra-ui/react'
-import { useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import useActions from '../../hooks/useActions'
 import { RootState } from '../../store'
@@ -22,12 +22,31 @@ export const ChangeScene = () => {
 
 	const selectBattleStarted = useSelector((state: RootState) => battleStarted(state))
 
-	const changeStage = (number: number) => {
-		dispatch(setShowMonsterLoot(false))
-		dispatch(setStage(number))
-	}
+	const changeStage = useCallback(
+		(number: number) => {
+			dispatch(setShowMonsterLoot(false))
+			dispatch(setStage(number))
+		},
+		[dispatch]
+	)
 
-	useEffect(() => {
+	const handleChangeScene = useCallback(() => {
+		changeStage(1)
+		dispatch(setFetchMonsterInterval(FETCH_MONSTER_INTERVAL))
+	}, [changeStage, dispatch])
+
+	const handleBackCity = useCallback(() => {
+		dispatch(resetMonsterState())
+		changeStage(0)
+	}, [changeStage, dispatch])
+
+	const nextScene = useCallback(() => {
+		changeStage(stage + 1)
+		dispatch(setIncrementeEnabledStagesWorld1())
+		dispatch(setFetchMonsterInterval(FETCH_MONSTER_INTERVAL))
+	}, [changeStage, dispatch, stage])
+
+	const handleCenario = useCallback(() => {
 		if (stage === 0) {
 			dispatch(setCenario(0))
 		}
@@ -51,14 +70,15 @@ export const ChangeScene = () => {
 		}
 	}, [dispatch, stage])
 
+	useEffect(() => {
+		handleCenario()
+	}, [handleCenario])
+
 	return (
 		<S.Container justifyContent={stage === 0 ? 'flex-end' : 'space-between'}>
 			{stage === 0 && (
 				<S.ToBattle
-					onClick={() => {
-						changeStage(1)
-						dispatch(setFetchMonsterInterval(FETCH_MONSTER_INTERVAL))
-					}}
+					onClick={handleChangeScene}
 					draggable={false}
 					boxSize='128px'
 					margin='0 10px'
@@ -70,10 +90,7 @@ export const ChangeScene = () => {
 			{stage > 0 && !selectBattleStarted && (
 				<Tooltip label='Back to the city...' borderRadius='8px' fontSize='md' hasArrow placement='top'>
 					<S.BackToCity
-						onClick={() => {
-							dispatch(resetMonsterState())
-							changeStage(0)
-						}}
+						onClick={handleBackCity}
 						draggable={false}
 						boxSize='128px'
 						margin='0 10px'
@@ -85,11 +102,7 @@ export const ChangeScene = () => {
 			)}
 			{stage > 0 && showMonsterLoot && (
 				<S.ToBattle
-					onClick={() => {
-						changeStage(stage + 1)
-						dispatch(setIncrementeEnabledStagesWorld1())
-						dispatch(setFetchMonsterInterval(FETCH_MONSTER_INTERVAL))
-					}}
+					onClick={nextScene}
 					draggable={false}
 					boxSize='128px'
 					margin='0 10px'
