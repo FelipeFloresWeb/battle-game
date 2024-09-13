@@ -1,17 +1,21 @@
-import { ChakraProvider } from "@chakra-ui/react";
-import { createStandaloneToast } from "@chakra-ui/toast";
-import type { AppProps } from "next/app";
-import "../styles/global.css";
+import { ChakraProvider } from '@chakra-ui/react'
+import { createStandaloneToast } from '@chakra-ui/toast'
+import type { AppProps } from 'next/app'
+import { Provider } from 'react-redux'
 
-import { theme } from "../styles/theme";
+import { store } from '../store'
+import '../styles/global.css'
+import { theme } from '../styles/theme'
 
 export default function App({ Component, pageProps }: AppProps) {
-  const { ToastContainer } = createStandaloneToast();
+	const { ToastContainer } = createStandaloneToast()
 
-  return (
-    <ChakraProvider theme={theme}>
-      <Component {...pageProps} />
-      <ToastContainer />
-    </ChakraProvider>
-  );
+	return (
+		<Provider store={store}>
+			<ChakraProvider theme={theme}>
+				<Component {...pageProps} />
+				<ToastContainer />
+			</ChakraProvider>
+		</Provider>
+	)
 }

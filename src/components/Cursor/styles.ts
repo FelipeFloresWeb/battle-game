@@ -9,18 +9,13 @@ interface CursorContainer {
 export const CursorContainer = styled.div`
   width: 60px;
   height: 60px;
-  /* border: 1px solid white; */
-  /* border-radius: 50%; */
   position: absolute;
   pointer-events: none;
   z-index: 2;
-
-  /* background-image: url("https://ani.cursors-4u.net/cursors/cur-13/cur1165.png"); */
   background-image: url(${(props: CursorContainer) => props.cursorIcon});
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  /* border: chartreuse solid 1px; */
   animation: ${(props) =>
     props.isAttacking === "true" ? "cursorAnimator .2s forwards" : "none"};
 

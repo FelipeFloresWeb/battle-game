@@ -1,11 +1,20 @@
-import { ToggleTheme } from "../ToggleTheme";
-import * as S from "./styles";
+import { Image, useColorMode } from '@chakra-ui/react';
+import { ToggleTheme } from '../ToggleTheme';
+import * as S from './styles';
 
 export const Header = () => {
-  return (
-    <S.HeaderContainer>
-      <h1>My Logo</h1>
-      <ToggleTheme />
-    </S.HeaderContainer>
-  );
+	const { colorMode } = useColorMode();
+
+	return (
+		<S.HeaderContainer>
+			<Image
+				draggable={false}
+				borderRadius={10}
+				src={colorMode === 'dark' ? 'whiteBanner.png' : 'banner.png'}
+				alt='sword'
+				w='250px'
+			/>
+			<ToggleTheme />
+		</S.HeaderContainer>
+	);
 };

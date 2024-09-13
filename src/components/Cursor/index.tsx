@@ -1,97 +1,90 @@
-import { Fragment, useCallback, useEffect, useRef, useState } from "react";
-import * as S from "./styles";
+import { Fragment, useCallback, useEffect, useRef } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '../../store'
+import { setPlayerAttacking, setPlayerCanAttack } from '../../store/reducers/player'
+import { selectCurrentCursor } from '../../store/selectors/cursor'
+import { selectPlayerCanAttack, selectPlayerIsAttacking } from '../../store/selectors/player'
+import * as S from './styles'
 
 export const Cursor = () => {
-  const cursorRef = useRef<any>(null);
-  const attackRef = useRef<any>(null);
-  const [canAttack, setCanAttack] = useState(true);
-  const [isAttacking, setIsAttacking] = useState(false);
+	const dispatch = useDispatch()
 
-  const imageDefault =
-    "https://cdn-icons-png.flaticon.com/128/9380/9380429.png";
-  const imageURL2 = "https://cdn-icons-png.flaticon.com/128/2466/2466937.png";
-  const imageURL3 = "https://cdn-icons-png.flaticon.com/128/9276/9276150.png";
-  const imageURL4 = "https://cdn-icons-png.flaticon.com/128/842/842031.png";
-  const imageURL5 = "https://cdn-icons-png.flaticon.com/128/2131/2131200.png";
+	const cursor = useSelector((state: RootState) => selectCurrentCursor(state))
 
-  const attack = useCallback(
-    (e: any) => {
-      setCanAttack(false);
-      if (canAttack) {
-        const posX = e.pageX - 50;
-        const posY = e.pageY + 35;
-        cursorRef?.current?.setAttribute(
-          "style",
-          "top: " + posY + "px; left: " + posX + "px;"
-        );
-        setIsAttacking(true);
-      }
+	const cursorRef = useRef<any>(null)
+	const attackRef = useRef<any>(null)
 
-      setTimeout(() => {
-        const posY = e.pageY - 6;
-        const posX = e.pageX - 50;
+	const isAttacking = useSelector((state: RootState) => selectPlayerIsAttacking(state))
+	const canAttack = useSelector((state: RootState) => selectPlayerCanAttack(state))
 
-        if (cursorRef?.current == null) return;
-        cursorRef?.current?.setAttribute(
-          "style",
-          "top: " + posY + "px; left: " + posX + "px;"
-        );
-        setIsAttacking(false);
-      }, 200);
+	const attack = useCallback(
+		(e: any) => {
+			dispatch(setPlayerCanAttack(false))
 
-      setTimeout(() => {
-        setCanAttack(true);
-      }, 2000);
-    },
-    [canAttack]
-  );
+			if (canAttack && cursor !== 'images/swords/0.webp') {
+				const posX = e.pageX - 50
+				const posY = e.pageY + 35
+				cursorRef?.current?.setAttribute('style', 'top: ' + posY + 'px; left: ' + posX + 'px;')
+				dispatch(setPlayerAttacking(true))
+			}
 
-  useEffect(() => {
-    if (!canAttack) {
-      document.removeEventListener("click", attack);
-      return;
-    }
-    document.addEventListener("click", (e) => attack(e), { once: true });
-  }, [attack, canAttack]);
+			setTimeout(() => {
+				const posY = e.pageY - 6
+				const posX = e.pageX - 50
 
-  useEffect(() => {
-    document.addEventListener("mousemove", (e) => {
-      const posY = e.pageY - 6;
-      const posX = e.pageX - 50;
+				if (cursorRef?.current == null) return
 
-      const posXattack = posX + 50;
+				cursorRef?.current?.setAttribute('style', 'top: ' + posY + 'px; left: ' + posX + 'px;')
+				dispatch(setPlayerAttacking(false))
+			}, 200)
 
-      if (cursorRef?.current == null) return;
+			setTimeout(() => {
+				dispatch(setPlayerCanAttack(true))
+			}, 2000)
+		},
+		[canAttack, cursor, dispatch]
+	)
 
-      cursorRef?.current?.setAttribute(
-        "style",
-        "top: " + posY + "px; left: " + posX + "px;"
-      );
-      if (isAttacking) {
-        attackRef?.current?.setAttribute(
-          "style",
-          "top: " + posY + "px; left: " + posXattack + "px;"
-        );
-      }
-    }),
-      { once: true };
-  }, [isAttacking]);
+	useEffect(() => {
+		if (!canAttack) {
+			document.removeEventListener('click', attack)
+			return
+		}
+		document.addEventListener('click', e => attack(e), { once: true })
+	}, [attack, canAttack])
 
-  const cursorContainerProps = {
-    cursorIcon: imageURL5,
-    ref: cursorRef,
-    isAttacking: isAttacking.toString(),
-  };
+	useEffect(() => {
+		document.addEventListener('mousemove', e => {
+			const posY = e.pageY - 6
+			const posX = e.pageX - 50
 
-  const attackAreaProps = {
-    isAttacking: isAttacking.toString(),
-    ref: attackRef,
-  };
+			const posXattack = posX + 50
 
-  return (
-    <Fragment>
-      <S.CursorContainer {...cursorContainerProps} />
-      <S.AttackArea {...attackAreaProps} />
-    </Fragment>
-  );
-};
+			if (cursorRef?.current == null) return
+
+			cursorRef?.current?.setAttribute('style', 'top: ' + posY + 'px; left: ' + posX + 'px;')
+			if (isAttacking) {
+				attackRef?.current?.setAttribute('style', 'top: ' + posY + 'px; left: ' + posXattack + 'px;')
+			}
+		}),
+			{ once: true }
+	}, [isAttacking])
+
+	const cursorContainerProps = {
+		cursorIcon: cursor,
+		ref: cursorRef,
+		isAttacking: cursor !== 'images/swords/0.webp' ? isAttacking.toString() : 'false',
+	}
+
+	const attackAreaProps = {
+		isAttacking: cursor !== 'images/swords/0.webp' ? isAttacking.toString() : 'false',
+		ref: attackRef,
+	}
+
+	return (
+		<Fragment>
+			<S.CursorContainer {...cursorContainerProps} />
+			<S.AttackArea {...attackAreaProps} />
+		</Fragment>
+	)
+}

@@ -1,0 +1,206 @@
+{
+	"1": {
+		"index": 1,
+		"name": "Floppy",
+		"image": "images/monsters/stage1/1.png",
+		"stats": {
+			"maxHp": 10,
+			"hp": 10,
+			"attack": 2,
+			"defense": 2,
+			"attackSpeed": 5000
+		},
+		"loot": {
+			"minGold": 1,
+			"maxGold": 10,
+			"exp": 10
+		}
+	},
+	"2": {
+		"index": 2,
+		"name": "Vryctor",
+		"image": "images/monsters/stage1/2.png",
+		"stats": {
+			"maxHp": 12,
+			"hp": 12,
+			"attack": 3,
+			"defense": 1,
+			"attackSpeed": 5000
+		},
+		"loot": {
+			"minGold": 2,
+			"maxGold": 12,
+			"exp": 12
+		}
+	},
+	"3": {
+		"index": 3,
+		"name": "Monphis",
+		"image": "images/monsters/stage1/3.png",
+		"stats": {
+			"maxHp": 13,
+			"hp": 13,
+			"attack": 1,
+			"defense": 3,
+			"attackSpeed": 5000
+		},
+		"loot": {
+			"minGold": 4,
+			"maxGold": 10,
+			"exp": 13
+		}
+	},
+	"4": {
+		"index": 4,
+		"name": "Zamblesk",
+		"image": "images/monsters/stage1/4.png",
+		"stats": {
+			"maxHp": 15,
+			"hp": 15,
+			"attack": 3,
+			"defense": 2,
+			"attackSpeed": 4000
+		},
+		"loot": {
+			"minGold": 3,
+			"maxGold": 13,
+			"exp": 15
+		}
+	},
+	"5": {
+		"index": 5,
+		"name": "Horcb",
+		"image": "images/monsters/stage1/5.png",
+		"stats": {
+			"maxHp": 16,
+			"hp": 16,
+			"attack": 4,
+			"defense": 4,
+			"attackSpeed": 4000
+		},
+		"loot": {
+			"minGold": 5,
+			"maxGold": 15,
+			"exp": 15
+		}
+	},
+	"6": {
+		"index": 6,
+		"name": "Ohmns",
+		"image": "images/monsters/stage1/6.png",
+		"stats": {
+			"maxHp": 18,
+			"hp": 18,
+			"attack": 6,
+			"defense": 4,
+			"attackSpeed": 4000
+		},
+		"loot": {
+			"minGold": 5,
+			"maxGold": 17,
+			"exp": 18
+		}
+	},
+	"7": {
+		"index": 7,
+		"name": "Bork",
+		"image": "images/monsters/stage1/7.png",
+		"stats": {
+			"maxHp": 20,
+			"hp": 20,
+			"attack": 10,
+			"defense": 10,
+			"attackSpeed": 3500
+		},
+		"loot": {
+			"minGold": 6,
+			"maxGold": 20,
+			"exp": 22
+		}
+	},
+	"8": {
+		"index": 8,
+		"name": "Felks",
+		"image": "images/monsters/stage1/8.png",
+		"stats": {
+			"maxHp": 22,
+			"hp": 22,
+			"attack": 12,
+			"defense": 10,
+			"attackSpeed": 3500
+		},
+		"loot": {
+			"minGold": 10,
+			"maxGold": 25,
+			"exp": 26
+		}
+	},
+	"9": {
+		"index": 9,
+		"name": "Zoomborb",
+		"image": "images/monsters/stage1/9.png",
+		"stats": {
+			"maxHp": 30,
+			"hp": 30,
+			"attack": 15,
+			"defense": 10,
+			"attackSpeed": 3000
+		},
+		"loot": {
+			"minGold": 20,
+			"maxGold": 30,
+			"exp": 32
+		}
+	},
+	"10": {
+		"index": 10,
+		"name": "Kamy",
+		"image": "images/monsters/stage1/10.png",
+		"stats": {
+			"maxHp": 50,
+			"hp": 50,
+			"attack": 20,
+			"defense": 15,
+			"attackSpeed": 2800
+		},
+		"loot": {
+			"minGold": 20,
+			"maxGold": 40,
+			"exp": 50
+		}
+	},
+	"11": {
+		"index": 11,
+		"name": "EvlanKark",
+		"image": "images/monsters/stage1/11.png",
+		"stats": {
+			"maxHp": 100,
+			"hp": 100,
+			"attack": 50,
+			"defense": 20,
+			"attackSpeed": 2500
+		},
+		"loot": {
+			"minGold": 40,
+			"maxGold": 70,
+			"exp": 75
+		}
+	},
+	"12": {
+		"index": 12,
+		"name": "Smaug",
+		"image": "images/monsters/stage1/12.png",
+		"stats": {
+			"maxHp": 1000,
+			"hp": 1000,
+			"attack": 500,
+			"defense": 185,
+			"attackSpeed": 2000
+		},
+		"loot": {
+			"minGold": 1000,
+			"maxGold": 1900,
+			"exp": 500
+		}
+	}
+}
