@@ -23,6 +23,7 @@ import { setPlayerAttacking, setPlayerIsDead, setPlayerItems, setPlayerStats } f
 import { numeric } from '../../utils'
 import { MONSTER_ATTACK_DURATION } from '../../utils/constants'
 import * as S from './styles'
+import { setPlayerData } from '../../storage/player/set/stats'
 
 export const Monster = () => {
 	const dispatch = useDispatch()
@@ -68,6 +69,12 @@ export const Monster = () => {
 							diamond: playerDiamond + monsterDiamond,
 						})
 					)
+
+					setPlayerData({
+						keys: ['exp', 'gold', 'diamond'],
+						values: [playerStats.exp + monsterExp, playerGold + monsterGold, playerDiamond + monsterDiamond],
+					})
+
 					dispatch(setShowMonsterLoot(true))
 				}, 2500)
 			} else {

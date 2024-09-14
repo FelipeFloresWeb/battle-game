@@ -11,6 +11,8 @@ import * as S from './styles'
 import { Flex, Text } from '@chakra-ui/react'
 import { setPlayerItems, setPlayerStats } from '../../store/reducers/player'
 import { toast } from 'react-toastify'
+import { useLoadPlayerData } from '../../hooks/useLoadPlayer'
+import { setPlayerData } from '../../storage/player/set/stats'
 
 export const GameWindow = () => {
 	const { scene } = useActions()
@@ -27,6 +29,8 @@ export const GameWindow = () => {
 		playerStats,
 		playerAtk,
 	} = usePlayer()
+
+	useLoadPlayerData()
 
 	const dispatch = useDispatch()
 
@@ -95,6 +99,11 @@ export const GameWindow = () => {
 						)
 
 						dispatch(setPlayerStats({ ...playerStats, attack: playerAtk + 5 }))
+
+						setPlayerData({
+							keys: ['attack', 'gold'],
+							values: [playerAtk + 5, playerItems.gold - ATTACK_PRICE],
+						})
 
 						toast.success('Attack +5')
 					}}

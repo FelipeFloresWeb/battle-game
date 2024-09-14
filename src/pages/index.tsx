@@ -13,6 +13,29 @@ import { StageProgress } from '../components/StageProgress'
 import { Ui } from '../components/Ui'
 const inter = Inter({ subsets: ['latin'] })
 
+const AdditionalComponents = () => {
+	return (
+		<>
+			<Header />
+			<StageProgress />
+			<GameWindow />
+			<Cursor />
+		</>
+	)
+}
+
+const Backgrounds = () => {
+	return (
+		<>
+			<Ui />
+			<DeadScreen />
+			<AnimatedBackground />
+			<DamageBackground />
+			<LinksReferers />
+		</>
+	)
+}
+
 export default function Home() {
 	return (
 		<>
@@ -22,17 +45,10 @@ export default function Home() {
 				<meta name='viewport' content='width=device-width, initial-scale=1' />
 				<link rel='icon' href='/favicon.ico' />
 			</Head>
-			<Flex direction='column'>
-				<Header />
-				<StageProgress />
-				<GameWindow />
-				<Cursor />
-				<Ui />
-				<DeadScreen />
-				<AnimatedBackground />
-				<DamageBackground />
-				<LinksReferers />
-			</Flex>
+
+			<AdditionalComponents />
+
+			<Backgrounds />
 		</>
 	)
 }
