@@ -9,8 +9,9 @@ import { RootState } from '../../store'
 import { setStage } from '../../store/reducers/actions'
 import { resetMonsterState } from '../../store/reducers/monster'
 import { selectEnabledStagesWorld1 } from '../../store/selectors/actions'
-import { TOTAL_STAGES_WOLRD_1 } from '../../utils/constants'
+
 import * as S from './styles'
+import { TOTAL_STAGES_WOLRD_1 } from '../../lib/constants'
 
 export const StageProgress = () => {
 	const { stage: currentStage, startMonsterAttack } = useActions()
@@ -20,10 +21,11 @@ export const StageProgress = () => {
 	const enabledstagesWorld1 = useSelector((state: RootState) => selectEnabledStagesWorld1(state))
 	const dispatch = useDispatch()
 
-	const cannotChangeStage = useMemo(
-		() => (startMonsterAttack && !monsterIsDead) || playerIsDead || isfetchingMonster,
-		[startMonsterAttack, monsterIsDead, playerIsDead, isfetchingMonster]
-	)
+	const cannotChangeStage = useMemo(() => {
+		if (currentStage === 0) return false
+
+		return (startMonsterAttack && !monsterIsDead) || playerIsDead || isfetchingMonster
+	}, [startMonsterAttack, monsterIsDead, playerIsDead, isfetchingMonster, currentStage])
 
 	const handleWrapStages = useCallback(
 		(stageNumber: number) => {
@@ -178,6 +180,79 @@ export const StageProgress = () => {
 		})
 	}, [stages, cannotChangeStage, enabledstagesWorld1, currentStage, handleWrapStages])
 
+	const GenerateStagesAbove50 = useCallback(() => {
+		const stagesArray = new Array(TOTAL_STAGES_WOLRD_1).fill(1)
+
+		// const getCurrentStage = (stageNumber: number) => {
+		// 	switch (stageNumber) {
+		// 		case 0:
+		// 			const stage0 = stages?.[0]
+		// 			return {
+		// 				src: stage0.image,
+		// 				alt: stage0?.name,
+		// 			}
+		// 		case 1:
+		// 			const stage = stages?.[1]
+		// 			return {
+		// 				src: stage.image,
+		// 				alt: stage?.name,
+		// 			}
+		// 		case 10:
+		// 			const stage1 = stages?.[2]
+		// 			return {
+		// 				src: stage1.image,
+		// 				alt: stage1?.name,
+		// 			}
+		// 		case 20:
+		// 			const stage2 = stages?.[3]
+		// 			return {
+		// 				src: stage2.image,
+		// 				alt: stage2?.name,
+		// 			}
+		// 		case 30:
+		// 			const stage3 = stages?.[4]
+		// 			return {
+		// 				src: stage3.image,
+		// 				alt: stage3?.name,
+		// 			}
+		// 		case 40:
+		// 			const stage4 = stages?.[5]
+		// 			return {
+		// 				src: stage4.image,
+		// 				alt: stage4?.name,
+		// 			}
+		// 		case 50:
+		// 			const stage5 = stages?.[6]
+		// 			return {
+		// 				src: stage5.image,
+		// 				alt: stage5?.name,
+		// 			}
+		// 		default:
+		// 			break
+		// 	}
+		// }
+
+		return stagesArray.map((_, index) => {
+			const stageNumber = 50 + index
+
+			// const currStage = getCurrentStage(stageNumber)
+
+			return (
+				<Flex key={index} onClick={() => handleWrapStages(index)} direction='column'>
+					<S.StageNumber
+						borderRadius='5px'
+						px='3px'
+						style={cannotChangeStage ? { cursor: 'not-allowed' } : {}}
+						color={index < enabledstagesWorld1 ? '#7504f7' : ''}
+						border={currentStage === stageNumber ? '1px solid #7504f7' : ''}
+					>
+						{stageNumber}
+					</S.StageNumber>
+				</Flex>
+			)
+		})
+	}, [cannotChangeStage, enabledstagesWorld1, currentStage, handleWrapStages])
+
 	return (
 		<S.StageProgressContainer>
 			<S.ToggleStage allowToggle w='100%'>
@@ -192,7 +267,7 @@ export const StageProgress = () => {
 					</h2>
 					<AccordionPanel pb={4}>
 						<Flex alignItems='center' justifyContent='center'>
-							{GenerateStages()}
+							{currentStage < 51 ? GenerateStages() : GenerateStagesAbove50()}
 						</Flex>
 					</AccordionPanel>
 				</AccordionItem>

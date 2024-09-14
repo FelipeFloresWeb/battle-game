@@ -1,6 +1,6 @@
 import { Flex, Image, Progress, Text } from '@chakra-ui/react'
 import styled from '@emotion/styled'
-import { MONSTER_ATTACK_DURATION } from '../../utils/constants'
+import { MONSTER_ATTACK_DURATION } from '../../lib/constants'
 
 export const MonsterContainer = styled(Flex)`
 	flex-direction: column;

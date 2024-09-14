@@ -1,17 +1,23 @@
 import { useEffect } from 'react'
-import { getPlayerData } from '../../storage/player/get/stats'
 import { useDispatch } from 'react-redux'
+
+import { getPlayerData } from '../../storage/player/get/stats'
 import { setPlayerStats, setPlayerItems } from '../../store/reducers/player'
 import { IPlayerItems, IPlayerStats } from '../../store/reducers/types'
 import usePlayer from '../usePlayerStats'
 import { setPlayerData } from '../../storage/player/set/stats'
+import { getPlayerEnabledStages } from '../../storage/stages/get/stage'
+import { setPlayerStage } from '../../storage/stages/set/stage'
+import { setEnabledStagesWorld1 } from '../../store/reducers/actions'
 
 export const useLoadPlayerData = () => {
 	const dispatch = useDispatch()
 
 	const { playerStats: playerStatsFromStorage, playerItems: playerItemsFromStorage } = usePlayer()
+
 	useEffect(() => {
 		const playerData = getPlayerData()
+		const playerEnabledStages = getPlayerEnabledStages()
 
 		if (!playerData) {
 			setPlayerData({
@@ -30,11 +36,15 @@ export const useLoadPlayerData = () => {
 				],
 			})
 
+			if (!playerEnabledStages) {
+				setPlayerStage(1)
+			}
+
 			return
 		}
 
 		const playerStats: IPlayerStats = {
-			health: playerData.health,
+			health: playerData.maxHealth,
 			maxHealth: playerData.maxHealth,
 			attack: playerData.attack,
 			defense: playerData.defense,
@@ -51,5 +61,9 @@ export const useLoadPlayerData = () => {
 
 		dispatch(setPlayerStats(playerStats))
 		dispatch(setPlayerItems(playerItems))
+
+		if (!!playerEnabledStages) {
+			dispatch(setEnabledStagesWorld1(playerEnabledStages))
+		}
 	}, [])
 }

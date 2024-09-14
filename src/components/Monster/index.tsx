@@ -21,9 +21,11 @@ import {
 } from '../../store/reducers/monster'
 import { setPlayerAttacking, setPlayerIsDead, setPlayerItems, setPlayerStats } from '../../store/reducers/player'
 import { numeric } from '../../utils'
-import { MONSTER_ATTACK_DURATION } from '../../utils/constants'
 import * as S from './styles'
 import { setPlayerData } from '../../storage/player/set/stats'
+import { setPlayerStage } from '../../storage/stages/set/stage'
+import { getPlayerEnabledStages } from '../../storage/stages/get/stage'
+import { MONSTER_ATTACK_DURATION } from '../../lib/constants'
 
 export const Monster = () => {
 	const dispatch = useDispatch()
@@ -76,6 +78,12 @@ export const Monster = () => {
 					})
 
 					dispatch(setShowMonsterLoot(true))
+
+					const savedStage = getPlayerEnabledStages()
+
+					if (savedStage && stage > savedStage) {
+						setPlayerStage(stage + 1)
+					}
 				}, 2500)
 			} else {
 				dispatch(setMonsterData({ ...monsterData, stats: { ...monsterData?.stats, hp: monsterHp - damage } }))
@@ -92,6 +100,7 @@ export const Monster = () => {
 			playerGold,
 			playerItems,
 			playerStats,
+			stage,
 		]
 	)
 
