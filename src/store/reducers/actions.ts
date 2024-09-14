@@ -39,6 +39,9 @@ const ActionSlice = createSlice({
 		setIncrementeEnabledStagesWorld1(state) {
 			state.enabledStagesWorld1 += 1
 		},
+		setEnabledStagesWorld1(state, action: PayloadAction<number>) {
+			state.enabledStagesWorld1 = action.payload
+		},
 	},
 })
 
@@ -51,6 +54,7 @@ export const {
 	setFetchMonsterInterval,
 	setBattleStarted,
 	setIncrementeEnabledStagesWorld1,
+	setEnabledStagesWorld1,
 } = ActionSlice.actions
 
 export default ActionSlice.reducer
