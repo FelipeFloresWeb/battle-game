@@ -1,6 +1,6 @@
 import { Flex } from '@chakra-ui/react'
 import styled from '@emotion/styled'
-import { MAX_WIDTH } from '../../utils/constants'
+import { MAX_WIDTH } from '../../lib/constants'
 
 export const GameWindowContainer = styled(Flex)`
 	width: 80%;

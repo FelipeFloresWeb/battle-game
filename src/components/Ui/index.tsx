@@ -1,21 +1,17 @@
 import { Flex, Image } from '@chakra-ui/react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { AiOutlineFieldNumber, AiOutlineFieldString } from 'react-icons/ai'
 import { BsPercent } from 'react-icons/bs'
-import { useDispatch } from 'react-redux'
-import useMonster from '../../hooks/useMonsterStats'
+import { AiOutlineFieldNumber, AiOutlineFieldString } from 'react-icons/ai'
+
 import usePlayer from '../../hooks/usePlayerStats'
 import { numeric, shortNumer } from '../../utils'
-import { SHOW_HP_METHOD } from '../../utils/constants'
 import { CustomTooltip } from '../Tooltip'
 import * as S from './styles'
+import { SHOW_HP_METHOD } from '../../lib/constants'
 
 export const Ui = () => {
 	const { playerHp, playerMaxHp, playerExp, playerMaxExp, playerGold, playerDiamond, playerHpPercent } = usePlayer()
 	const [showHpMethod, setShowHpMethod] = useState<'default' | 'percent' | 'short'>('default')
-
-	// const dispatch = useDispatch()
-	// const { monsterData, loadingMonsterType, loadingMonsterData } = useMonster()
 
 	const toggleShowHpMethod = useCallback(() => {
 		if (showHpMethod === 'default') {
