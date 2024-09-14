@@ -1,4 +1,4 @@
-import { Flex, Progress, Spinner, Text } from '@chakra-ui/react'
+import { Flex, Progress, Spinner, Text, Tooltip } from '@chakra-ui/react'
 import { isEmpty } from 'lodash'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDispatch } from 'react-redux'
@@ -189,46 +189,89 @@ export const Monster = () => {
 				</S.FetchMonsterCountDownContainer>
 			)}
 			{!isEmpty(monsterData) && !isEmpty(monsterType) && !hideMonster && (
-				<S.MonsterContainer
-					isdead={monsterIsDead.toString()}
-					doattack={(!!monsterIsAttacking && !!startMonsterAttack && !monsterIsDead).toString()}
-				>
-					<S.MonsterTypeText monstertype={monsterType?.name} namecolor={monsterType?.color}>
-						{monsterType?.name}
-					</S.MonsterTypeText>
-					<S.NameText monstertype={monsterType?.name} namecolor={monsterType?.color}>
-						{monsterData?.name}
-					</S.NameText>
+				<Tooltip
+					isDisabled={monsterIsDead || playerIsDead || startMonsterAttack}
+					placement='right'
+					bg='#00000065'
+					color='#ffffff'
+					borderRadius='8px'
+					label={
+						<Flex direction='column' minW='150px'>
+							<Text>Monster info:</Text>
+							<Flex w='100%' justifyContent='space-between'>
+								<Text>Attack</Text>
+								<Text>{monsterAtk} </Text>
+							</Flex>
+							<Flex w='100%' justifyContent='space-between'>
+								<Text>Health</Text>
+								<Text> {monsterHp}</Text>
+							</Flex>
 
-					<S.HealthContainer>
-						<S.HealthProgressBar
-							monstertype={monsterType?.name}
-							barcolor={monsterType?.color}
-							borderRadius='5px'
-							max={monsterMaxHp}
-							value={monsterHp}
-						/>
-						<Flex w='100%' textAlign='center'>
-							<S.HealthText>{numeric(monsterHp, 0)}</S.HealthText>
+							<Flex w='100%' justifyContent='space-between'>
+								<Text>Attack Speed</Text>
+								<Text>{monsterData?.stats.attackSpeed / 1000}s</Text>
+							</Flex>
+
+							<Flex w='100%' justifyContent='space-between'>
+								<Text>Defense</Text>
+								<Text>{monsterData?.stats?.defense}</Text>
+							</Flex>
+
+							<Flex w='100%' justifyContent='space-between'>
+								<Text>Exp</Text>
+								<Text>{monsterExp}</Text>
+							</Flex>
+
+							<Flex w='100%' justifyContent='space-between'>
+								<Text>Gold</Text>
+								<Text>{monsterGold} </Text>
+							</Flex>
+							{/* <pre>{JSON.stringify(monsterData, null, 2)}</pre> */}
 						</Flex>
-					</S.HealthContainer>
-
-					<S.MonterAttackCharger barcolor={monsterType?.color} startmonsterattack={startMonsterAttack.toString()}>
-						<Progress max={maxAttackInterval} value={attackInterval} />
-					</S.MonterAttackCharger>
-
-					<S.MonsterImage
-						isattacking={isAttacking.toString()}
+					}
+					aria-label='Click to attack'
+				>
+					<S.MonsterContainer
 						isdead={monsterIsDead.toString()}
-						onClick={() => {
-							if (!playerCanAttack || monsterHp <= 0 || playerIsDead) return
-							playerAttack()
-						}}
-						draggable={false}
-						src={monsterImage}
-						alt='Monster'
-					/>
-				</S.MonsterContainer>
+						doattack={(!!monsterIsAttacking && !!startMonsterAttack && !monsterIsDead).toString()}
+					>
+						<S.MonsterTypeText monstertype={monsterType?.name} namecolor={monsterType?.color}>
+							{monsterType?.name}
+						</S.MonsterTypeText>
+						<S.NameText monstertype={monsterType?.name} namecolor={monsterType?.color}>
+							{monsterData?.name}
+						</S.NameText>
+
+						<S.HealthContainer>
+							<S.HealthProgressBar
+								monstertype={monsterType?.name}
+								barcolor={monsterType?.color}
+								borderRadius='5px'
+								max={monsterMaxHp}
+								value={monsterHp}
+							/>
+							<Flex w='100%' textAlign='center'>
+								<S.HealthText>{numeric(monsterHp, 0)}</S.HealthText>
+							</Flex>
+						</S.HealthContainer>
+
+						<S.MonterAttackCharger barcolor={monsterType?.color} startmonsterattack={startMonsterAttack.toString()}>
+							<Progress max={maxAttackInterval} value={attackInterval} />
+						</S.MonterAttackCharger>
+
+						<S.MonsterImage
+							isattacking={isAttacking.toString()}
+							isdead={monsterIsDead.toString()}
+							onClick={() => {
+								if (!playerCanAttack || monsterHp <= 0 || playerIsDead) return
+								playerAttack()
+							}}
+							draggable={false}
+							src={monsterImage}
+							alt='Monster'
+						/>
+					</S.MonsterContainer>
+				</Tooltip>
 			)}
 		</>
 	)

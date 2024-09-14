@@ -48,7 +48,7 @@ const useMonster = () => {
 
 	const monsterIsDead = monsterHp <= 0
 	// const monsterIsDead = useMemo(() => monsterHp <= 0, [monsterHp])
-	console.log({ monsterIsAttacking })
+
 	const fetchMonsterData = useCallback(
 		async (monsterId?: number) => {
 			dispatch(setShowMonsterLoot(false))

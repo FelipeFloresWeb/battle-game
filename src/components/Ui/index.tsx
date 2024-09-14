@@ -14,8 +14,8 @@ export const Ui = () => {
 	const { playerHp, playerMaxHp, playerExp, playerMaxExp, playerGold, playerDiamond, playerHpPercent } = usePlayer()
 	const [showHpMethod, setShowHpMethod] = useState<'default' | 'percent' | 'short'>('default')
 
-	const dispatch = useDispatch()
-	const { monsterData, loadingMonsterType, loadingMonsterData } = useMonster()
+	// const dispatch = useDispatch()
+	// const { monsterData, loadingMonsterType, loadingMonsterData } = useMonster()
 
 	const toggleShowHpMethod = useCallback(() => {
 		if (showHpMethod === 'default') {

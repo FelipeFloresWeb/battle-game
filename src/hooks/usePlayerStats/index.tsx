@@ -30,6 +30,7 @@ const usePlayer = () => {
 		() => Math.round(playerStats?.maxExp - playerStats?.exp) || 0,
 		[playerStats?.exp, playerStats?.maxExp]
 	)
+
 	const experienceLost = useMemo(
 		() =>
 			playerExp < 1
