@@ -6,7 +6,7 @@ export const Container = styled(Flex)`
 	width: 'inherit';
 	height: 'inherit';
 	z-index: -1;
-	top: calc(50% + 75px);
+	top: 75px;
 `
 
 export const ToBattle = styled(Image)`
@@ -19,7 +19,7 @@ export const ToBattle = styled(Image)`
 
 export const BackToCity = styled(Image)`
 	position: relative;
-
+	top: 300px;
 	:hover {
 		opacity: 0.8;
 	}

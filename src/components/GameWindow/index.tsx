@@ -1,4 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
+import { Flex } from '@chakra-ui/react'
+
 import useActions from '../../hooks/useActions'
 import usePlayer from '../../hooks/usePlayerStats'
 import { RootState } from '../../store'
@@ -7,28 +9,14 @@ import { selectMyCursor } from '../../store/selectors/cursor'
 import { ChangeScene } from '../ChangeScene'
 import { Monster } from '../Monster'
 import { MonsterLoot } from '../MonsterLoot'
-import * as S from './styles'
-import { Flex, Text } from '@chakra-ui/react'
-import { setPlayerItems, setPlayerStats } from '../../store/reducers/player'
-import { toast } from 'react-toastify'
+import { setPlayerStats } from '../../store/reducers/player'
 import { useLoadPlayerData } from '../../hooks/useLoadPlayer'
-import { setPlayerData } from '../../storage/player/set/stats'
+import { BuyContainer } from './BuyContainer'
+import * as S from './styles'
 
 export const GameWindow = () => {
 	const { scene } = useActions()
-	const {
-		playerIsDead,
-		playerHp,
-		playerMaxHp,
-		playerExp,
-		playerMaxExp,
-		playerGold,
-		playerDiamond,
-		playerHpPercent,
-		playerItems,
-		playerStats,
-		playerAtk,
-	} = usePlayer()
+	const { playerIsDead, playerHp, playerMaxHp, playerStats, playerAtk } = usePlayer()
 
 	useLoadPlayerData()
 
@@ -37,8 +25,6 @@ export const GameWindow = () => {
 	const stage = `images/stages/${scene}.webp`
 	const { stage: currStage, stageMultyplierLoot, stageMultyplierStats } = useActions()
 	const myCursor = useSelector((state: RootState) => selectMyCursor(state))
-
-	const ATTACK_PRICE = 50
 
 	return (
 		<S.GameWindowContainer
@@ -84,48 +70,12 @@ export const GameWindow = () => {
 			)}
 
 			{currStage === 0 && (
-				<Flex
-					onMouseEnter={() => dispatch(setCurrentCursor('images/swords/0.webp'))}
-					onMouseLeave={() => dispatch(setCurrentCursor(myCursor))}
-					onClick={() => {
-						if (playerGold < ATTACK_PRICE) {
-							toast.error(`You need ${ATTACK_PRICE} golds to buy attack`)
-							return
-						}
-
-						dispatch(
-							setPlayerItems({
-								...playerItems,
-								gold: playerItems.gold - ATTACK_PRICE,
-							})
-						)
-
-						dispatch(setPlayerStats({ ...playerStats, attack: playerAtk + 5 }))
-
-						setPlayerData({
-							keys: ['attack', 'gold'],
-							values: [playerAtk + 5, playerItems.gold - ATTACK_PRICE],
-						})
-
-						toast.success('Attack +5')
-					}}
-					_hover={{ bg: '#000000' }}
-					p={4}
-					borderRadius='16px'
-					position={'absolute'}
-					bg='#000000a7'
-					direction={'column'}
-					marginRight={'200px'}
-					marginTop={'150px'}
-				>
-					<Flex gap={4}>
-						<span style={{ fontSize: '26px' }}>Buy Attack</span>
-						<span style={{ fontSize: '26px', color: 'green', fontWeight: '700' }}>+5</span>
-					</Flex>
-					<span style={{ fontSize: '22px', color: '#ff9b57' }}>(cost {ATTACK_PRICE} golds)</span>
-					<span style={{ marginTop: '20px', fontSize: '22px', color: 'white' }}>current attack ({playerAtk})</span>
+				<Flex direction='column' gap={2} marginTop='105px'>
+					<BuyContainer currentStat={playerAtk} price={50} statName='attack' statValue={5} />
+					<BuyContainer currentStat={playerMaxHp} price={100} statName='maxHealth' statValue={50} />
 				</Flex>
 			)}
+
 			<Monster />
 			<ChangeScene />
 			<MonsterLoot />

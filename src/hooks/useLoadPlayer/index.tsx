@@ -44,7 +44,7 @@ export const useLoadPlayerData = () => {
 		}
 
 		const playerStats: IPlayerStats = {
-			health: playerData.health,
+			health: playerData.maxHealth,
 			maxHealth: playerData.maxHealth,
 			attack: playerData.attack,
 			defense: playerData.defense,
@@ -58,7 +58,7 @@ export const useLoadPlayerData = () => {
 			gold: playerData.gold,
 			diamond: playerData.diamond,
 		}
-		console.log({ playerEnabledStages })
+
 		dispatch(setPlayerStats(playerStats))
 		dispatch(setPlayerItems(playerItems))
 
