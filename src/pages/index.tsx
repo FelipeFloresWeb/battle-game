@@ -11,6 +11,7 @@ import { Header } from '../components/Header'
 import { LinksReferers } from '../components/LinksReferers'
 import { StageProgress } from '../components/StageProgress'
 import { Ui } from '../components/Ui'
+
 const inter = Inter({ subsets: ['latin'] })
 
 const AdditionalComponents = () => {
@@ -46,9 +47,11 @@ export default function Home() {
 				<link rel='icon' href='/favicon.ico' />
 			</Head>
 
-			<AdditionalComponents />
+			<Flex direction='column'>
+				<AdditionalComponents />
 
-			<Backgrounds />
+				<Backgrounds />
+			</Flex>
 		</>
 	)
 }

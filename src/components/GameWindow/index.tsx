@@ -67,7 +67,9 @@ export const GameWindow = () => {
 
 			{playerMaxHp - playerHp > 0 && currStage === 0 && (
 				<Flex
-					onClick={() => dispatch(setPlayerStats({ ...playerStats, health: playerMaxHp }))}
+					onClick={() => {
+						dispatch(setPlayerStats({ ...playerStats, health: playerMaxHp }))
+					}}
 					_hover={{ bg: '#000000' }}
 					p={8}
 					borderRadius='16px'
