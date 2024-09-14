@@ -23,8 +23,7 @@ const useActions = () => {
 
 	const stageDigits = `${stage}`.length
 
-	const stageMultyplierStats =
-		stageDigits < 3 ? Number(`${stage}`?.[0]) + 1 : Number(`${stage}`?.slice(0, stageDigits - 1))
+	const stageMultyplierStats = stage <= 10 ? 1 : Math.floor((stage - 1) / 10) + 1
 
 	return {
 		startMonsterAttack,
