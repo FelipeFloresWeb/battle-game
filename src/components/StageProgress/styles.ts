@@ -7,7 +7,7 @@ export const StageProgressContainer = styled(Flex)`
 	width: 100%;
 	max-width: ${MAX_WIDTH}px;
 	max-height: 300px;
-	margin: 15px auto 0;
+	margin: 0 auto 0;
 	padding: 15px 0;
 	overflow-x: scroll;
 
