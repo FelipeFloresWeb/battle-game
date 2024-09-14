@@ -12,13 +12,13 @@ import {
 } from '../../store/reducers/actions'
 import { resetMonsterState } from '../../store/reducers/monster'
 import { battleStarted } from '../../store/selectors/actions'
-import { FETCH_MONSTER_INTERVAL } from '../../utils/constants'
 import * as S from './styles'
+import { FETCH_MONSTER_INTERVAL } from '../../lib/constants'
 
 export const ChangeScene = () => {
 	const dispatch = useDispatch()
 
-	const { showMonsterLoot, stage, fetchMonsterInterval } = useActions()
+	const { showMonsterLoot, stage } = useActions()
 
 	const selectBattleStarted = useSelector((state: RootState) => battleStarted(state))
 

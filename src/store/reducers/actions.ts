@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { FETCH_MONSTER_INTERVAL } from '../../utils/constants'
 import { IActionsState } from './types'
+import { FETCH_MONSTER_INTERVAL } from '../../lib/constants'
 
 const ActionSlice = createSlice({
 	name: 'actions',
